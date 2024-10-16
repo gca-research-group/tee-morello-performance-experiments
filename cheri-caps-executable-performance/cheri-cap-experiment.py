@@ -57,7 +57,7 @@ def main():
         while True:
             # Start a new process
             #process = subprocess.Popen(['./integration_process'])
-            process = subprocess.Popen(['env', 'LD_C18N_LIBRARY_PATH=.', './executable-program'])
+            process = subprocess.Popen(['proccontrol -m cheric18n -s enable', './executable-program'])
 
             process_list.append(process)
 
