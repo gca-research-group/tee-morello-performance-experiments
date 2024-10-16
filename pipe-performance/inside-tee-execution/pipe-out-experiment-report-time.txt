@@ -1,2 +1,1 @@
-
-pipe-out-experiment-report-time
+Total execution time: 8.3 milliseconds
