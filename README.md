@@ -215,7 +215,7 @@ Table [1](#tab:cpu_time_comparison){reference-type="ref"
 reference="tab:cpu_time_comparison"} compares the average execution
 times for each type of operation in the two environments.
 
-::: {#tab:cpu_time_comparison}
+
   Test Type    CPU Time (ms) - Out Compartment   CPU Time (ms) - In Compartment
   ----------- --------------------------------- --------------------------------
   Maths                    46,696                            69,998
@@ -223,8 +223,7 @@ times for each type of operation in the two environments.
   Float                      816                              785
   Array                     1,419                            1,460
 
-  : CPU Time Comparison
-:::
+
 
 **Analysing the results**
 
