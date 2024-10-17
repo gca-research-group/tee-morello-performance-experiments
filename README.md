@@ -333,9 +333,12 @@ configurations.
     Figure 4 shows the block pattern and the
     times for each operation associated with different block sizes.
 
-    ![Memory performance at different block sizes on the Morello board.](figs/memory.png)
-    
-*Figure 4: Memory performance at different block sizes on the Morello board.*
+
+<figure>
+  <img src="figs/memory.png" alt="Memory performance at different block sizes on the Morello board." width="99%">
+  <figcaption><em>Figure: Memory performance at different block sizes on the Morello board.</em></figcaption>
+</figure>
+
 
 
 
