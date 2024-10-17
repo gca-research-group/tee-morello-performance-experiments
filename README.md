@@ -330,13 +330,12 @@ configurations.
 1.  The memory blocks tested range from 100 MB to 1 GB, with increments
     of 100 MB at each step. Each test involves 30 iterations per block
     size. The diagram in the
-    Figure [4](#fig:memoryPerformance){reference-type="ref"
-    reference="fig:memoryPerformance"} shows the block pattern and the
+    Figure 4 shows the block pattern and the
     times for each operation associated with different block sizes.
 
-    ![Memory performance at different block sizes on the Morello
-    board.](figs/memory.png){#fig:memoryPerformance
-    width=".99\\textwidth"}
+    ![Memory performance at different block sizes on the Morello board.](figs/memory.png)
+    *Figure: Memory performance at different block sizes on the Morello board.*
+
 
     The operations measured are:
 
