@@ -48,17 +48,13 @@ Some experimental facts:
 
             $ clang-morello -march=morello+c64 -mabi=purecap -g -o integration_process integration_process.c -L. -lssl -lcrypto -lpthread
 
-3.  `cheri-cap-experiment.py` script is used to create the [replicas of
-    the
-    attestables](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/cheri-caps-executable-performance/cheri-cap-experiment-results.csv),
+3.  `cheri-cap-experiment.py` script is used to create the [replicas of the attestables](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/cheri-caps-executable-performance/cheri-cap-experiment-results.csv),
     and collect metrics. We incremented the number of replicas created
     from 1 to N. See replication of attestable results.
 
 The Figure [1](#fig:exampleFig1) shows the experiment set up:
 
-![Memory exhaustion by attestable
-replicas.](./figs/create_load_atts.png) 
-## Figure 1. Memory exhaustion by attestable replicas.
+![Memory exhaustion by attestable replicas.](./figs/create_load_atts.png) 
 
 The graph, shown in
 Figure [2](#fig:exhaustionGraph), shows the behaviour of memory
