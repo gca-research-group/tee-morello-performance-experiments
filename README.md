@@ -677,8 +677,7 @@ or sensitive data.
 
 **Experimental Configuration**
 
-The Figure [8](#fig:memoryScrapingProcess){reference-type="ref"
-reference="fig:memoryScrapingProcess"} sequence diagram details how a
+The Figure 8 sequence diagram details how a
 programme's memory regions can be accessed directly from the operating
 system. To do this, the process implemented through the Memory Reader
 code asks the Cheri OS for the PID of the target process by name,
@@ -694,9 +693,10 @@ is repeated for all RW regions, ensuring that all memory areas
 accessible for reading and writing are explored. Finally, the Memory
 Reader records the read data in the log, `output(dataReadFromMemory)`.
 
-![Sequence diagram detailing the memory scraping process through direct
-access in the Cheri OS.](figs/security.png){#fig:memoryScrapingProcess
-width=".65\\textwidth"}
+![Sequence diagram detailing the memory scraping process through direct access in the Cheri OS.](figs/security.png)
+
+*Figure 8: Sequence diagram detailing the memory scraping process through direct access in the Cheri OS.*
+
 
 **Test procedure**
 
@@ -736,55 +736,44 @@ following steps on the Morello Board:
 
 **Results**
 
-The Table [6](#tab:access_control_tests){reference-type="ref"
-reference="tab:access_control_tests"} shows the results of tests carried
+The Table 6 shows the results of tests carried
 out to evaluate access to sensitive data stored and processed by
 integration_process running in different environments - inside and
 outside Morello's secure enclosure. Each test varied the user's
 permission level (root or with reduced permissions), recording whether
 memory access was successful and whether sensitive data was visible.
 
-::: {#tab:access_control_tests}
-   Test     Environment     User Permissions   Access Result   Sensitive Data Visible
-  ------ ----------------- ------------------ --------------- ------------------------
-    1     in Compartment          Root            Success               Yes
-    2     in Compartment     Different user       Failure                No
-    3     out Compartment         Root            Success               Yes
-    4     out Compartment    Different user       Failure                No
+## Table 6: Access Control Test Results for Sensitive Data
 
-  : Access control test results for sensitive data.
-:::
+| Test | Environment     | User Permissions | Access Result | Sensitive Data Visible |
+|------|-----------------|------------------|---------------|------------------------|
+| 1    | in Compartment  | Root             | Success       | Yes                    |
+| 2    | in Compartment  | Different user   | Failure       | No                     |
+| 3    | out Compartment | Root             | Success       | Yes                    |
+| 4    | out Compartment | Different user   | Failure       | No                     |
 
-Table [6](#tab:access_control_tests){reference-type="ref"
-reference="tab:access_control_tests"} metadata:
 
-::: description
-Unique identification for each test carried out.
+Table 6 metadata:
 
-Indicates whether the test was carried out inside Morello's secure
-compartment or in the normal operating environment.
+### Description of Test Parameters
 
-Details the user's permission level (e.g., root or a user with reduced
-permissions).
+- **Test ID:** Unique identification for each test carried out.
+- **Environment:** Indicates whether the test was carried out inside Morello's secure compartment or in the normal operating environment.
+- **User Permissions:** Details the user's permission level (e.g., root or a user with reduced permissions).
+- **Access Result:** Result of the access, indicating whether the memory region was successfully accessed.
+- **Sensitive Data Visible:** Indicates whether the test was able to visualize sensitive data or not.
 
-Result of the access, indicating whether the memory region was
-successfully accessed.
-
-Indicates whether the test was able to visualize sensitive data or not.
-:::
 
 **Analysing the results**
 
-The graph in the
-Figure [9](#fig:accessResultsGraph){reference-type="ref"
-reference="fig:accessResultsGraph"} shows the differences in the results
+The graph in the Figure 9 shows the differences in the results
 of access and visibility of confidential data according to the
 environment and user permissions.
 
-![Differences in access results and visibility of confidential data
-based on environment and user
-permissions.](figs/graph_5.png){#fig:accessResultsGraph
-width=".80\\textwidth"}
+![Differences in access results and visibility of confidential data based on environment and user permissions.](figs/graph_5.png)
+
+*Figure 9: Differences in access results and visibility of confidential data based on environment and user permissions.*
+
 
 The results show that access to sensitive data is allowed to any user
 with root permissions, both in Morello's secure compartment and outside
