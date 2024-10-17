@@ -128,22 +128,27 @@ inside the secure compartment and in the Morello Board's normal
 operating environment - and the results were saved in a CSV format file
 for each environment.
 
-<div style="border: 1px solid #ddd; padding: 10px; margin: 20px 0; font-family: monospace;">
+<div style="border: 1px solid #ddd; padding: 10px; margin: 20px 0; font-family: monospace; background-color: #f9f9f9;">
   <strong>Algorithm 1: CPUPerformance</strong>
-  <pre>
-  1. perform_tests(log_file, total_time)
-  2.   begin
-  3.     foreach test_num in NUM_TESTS do
-  4.       start_time = capture_time()
-  5.       execute_operations(WORKLOAD_SIZE)  
-  6.       end_time = capture_time()
-  7.       cpu_time = calculate_cpu_time(start_time, end_time)
-  8.       results(log_file, test_num, cpu_time)
-  9.       total_time += cpu_time
- 10.    endfor
- 11. end
-  </pre>
+  <ol style="padding-left: 20px;">
+    <li>perform_tests(log_file, total_time)</li>
+    <li>begin</li>
+    <ol type="a" style="padding-left: 20px;">
+      <li>for test_num in NUM_TESTS do</li>
+      <ol style="padding-left: 20px;">
+        <li>start_time = capture_time()</li>
+        <li>execute_operations(WORKLOAD_SIZE)</li>
+        <li>end_time = capture_time()</li>
+        <li>cpu_time = calculate_cpu_time(start_time, end_time)</li>
+        <li>results(log_file, test_num, cpu_time)</li>
+        <li>total_time += cpu_time</li>
+      </ol>
+      <li>endfor</li>
+    </ol>
+    <li>end</li>
+  </ol>
 </div>
+
 
 Execution begins with the perform_tests function (line 1), which
 receives as a parameter a log file where the results will be stored and
