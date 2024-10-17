@@ -437,12 +437,13 @@ Tables 2 and 3.
 **Analysing the results**
 
 The results illustrated in the graphs in
-Figure [5](#fig:memoryOperations){reference-type="ref"
-reference="fig:memoryOperations"} reveal some trends in relation to the
+Figure 5 reveal some trends in relation to the
 four main operations: allocating, writing, reading and freeing memory.
 
-![Performance analysis of memory operations on the Morello
-board.](figs/graph_3.png){#fig:memoryOperations width=".99\\textwidth"}
+![Performance analysis of memory operations on the Morello board.](figs/graph_3.png)
+
+*Figure: Performance analysis of memory operations on the Morello board.*
+
 
 -   **Allocation time:** the values resulting from the tests in the
     secure compartment range from 106 ms for 100 MB blocks to 251 ms for
