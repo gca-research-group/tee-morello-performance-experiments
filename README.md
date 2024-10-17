@@ -54,6 +54,7 @@ Some experimental facts:
 The Figure [1](#fig:exampleFig1) shows the experiment set up:
 
 ![Memory exhaustion by attestable replicas.](figs/create_load_atts.png) 
+## Table 1. CPU Time Comparison
 
 The graph, shown in Figure [2](#fig:exhaustionGraph), shows the behaviour of memory
 consumption and elapsed time as the number of testable replicas
