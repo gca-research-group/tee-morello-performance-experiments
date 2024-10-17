@@ -558,9 +558,9 @@ process is repeated until all the tests have been completed (line 17).
 
     The operations measured are:
 
-    -   **Writing to memory:** time taken to write data to the pipe.
+    -   Writing to memory: time taken to write data to the pipe.
 
-    -   **Memory read:** time taken to read the data sent via the pipe.
+    -   Memory read: time taken to read the data sent via the pipe.
 
 2.  The code for the experiment we carried out is available in the
     [tee-morello-performance-experiments
@@ -611,24 +611,19 @@ The results of the tests carried out inside the secure compartment were
 stored in the file `pipe-in-experiment-result.csv`, while the results of
 the normal ambient execution of the Morello Board were stored in
 `pipe-out-experiment-result.csv`. The
-Tables [4](#tab:inside_compartment){reference-type="ref"
-reference="tab:inside_compartment"}
-and [5](#tab:outside_compartment){reference-type="ref"
-reference="tab:outside_compartment"} shows the records for each data
-set:
+Tables 4 and 5 shows the records for each data set:
 
-::: {#tab:inside_compartment}
-   Test  Message Size (Bytes)    Write Time (ms)   Read Time (ms)   Total Time (ms)
-  ------ ---------------------- ----------------- ---------------- -----------------
-    1    1024                         0.016            0.161             0.177
-    2    1024                         0.003            0.068             0.071
-    3    1024                         0.003            0.075             0.078
-    4    1024                         0.003            0.077             0.080
-   \...  \...                         \...              \...             \...
-   100   1024                         0.003            0.079             0.082
+## Table 4: Performance Data Inside the Compartment
 
-  : Performance Data Inside the Compartment
-:::
+| Test | Message Size (Bytes) | Write Time (ms) | Read Time (ms) | Total Time (ms) |
+|------|-----------------------|-----------------|----------------|-----------------|
+| 1    | 1024                  | 0.016           | 0.161          | 0.177           |
+| 2    | 1024                  | 0.003           | 0.068          | 0.071           |
+| 3    | 1024                  | 0.003           | 0.075          | 0.078           |
+| 4    | 1024                  | 0.003           | 0.077          | 0.080           |
+| ...  | ...                   | ...             | ...            | ...             |
+| 100  | 1024                  | 0.003           | 0.079          | 0.082           |
+
 
 ::: {#tab:outside_compartment}
    Test  Message Size (Bytes)    Write Time (ms)   Read Time (ms)   Total Time (ms)
