@@ -334,6 +334,7 @@ configurations.
     times for each operation associated with different block sizes.
 
     ![Memory performance at different block sizes on the Morello board.](figs/memory.png)
+    
 *Figure 4: Memory performance at different block sizes on the Morello board.*
 
 
@@ -353,7 +354,7 @@ configurations.
     4.  **Memory release:** time taken to release the memory block back
         into the system.
 
-2.  The code for the experiment we carried out is available in the
+3.  The code for the experiment we carried out is available in the
     [tee-morello-performance-experiments
     repository](https://github.com/gca-research-group/tee-morello-performance-experiments/tree/main/memory-performance).
 
