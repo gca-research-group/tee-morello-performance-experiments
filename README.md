@@ -135,7 +135,7 @@ operating environment - and the results were saved in a CSV format file
 for each environment.
 
 _____________________________________________________________
-Algorithm 1: CPUPerformance
+##Algorithm 1: CPUPerformance
 _____________________________________________________________
  1. perform_tests(log_file, total_time)
  2.   begin
