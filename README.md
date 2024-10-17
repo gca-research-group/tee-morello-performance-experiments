@@ -111,7 +111,7 @@ floating point arithmetic, and array manipulation. Memory-performance is
 meant to assess the time it takes an attestable to allocate and free
 blocks of memory of different sizes.
 
-# CPU Performance Tests on the Morello Board
+# 2. CPU Performance Tests on the Morello Board
 
 The main aim of this experiment is to measure and analyse the
 performance of the Morello Board's CPU by comparing the results of
@@ -276,7 +276,9 @@ safe compartment can be used efficiently in specific scenarios without
 significantly compromising performance, although the impact is more
 noticeable in operations that require more processing.
 
-# Memory Performance Tests on the Morello Board
+
+
+# 3. Memory Performance Tests on the Morello Board
 
 The main aim of this experiment is to measure and analyse the
 performance of memory operations on a Morello Board by testing memory
@@ -482,7 +484,10 @@ being significantly higher in the secure compartment. These results
 indicate that although the secure compartment imposes some overhead, it
 can still be used efficiently for memory operations.
 
-# Morello Board Pipe Communication Performance Tests
+
+
+
+# 4. Morello Board Pipe Communication Performance Tests
 
 The main objective of this experiment is to measure the performance of
 communication between processes on the Morello Board using pipes,
@@ -662,7 +667,10 @@ differences in the times, which suggests that security configurations or
 differences in the operating environment can significantly influence
 communication efficiency.
 
-# Testing the Exposure of Sensitive Data in Memory Regions through Direct Memory Access (Memory Scraping)
+
+
+
+# 5. Testing the Exposure of Sensitive Data in Memory Regions through Direct Memory Access (Memory Scraping)
 
 The main objective of this experiment is to measure and analyze the
 contents of the memory regions with read and write (RW) permissions of a
