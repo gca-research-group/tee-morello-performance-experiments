@@ -51,7 +51,7 @@ Some experimental facts:
     and collect metrics. We incremented the number of replicas created
     from 1 to N. See replication of attestable results.
 
-The Figure [1](#fig:exampleFig1) shows the experiment set up:
+The Figure 1 shows the experiment set up:
 
 ![Figure 1. Memory exhaustion by attestable replicas.](figs/create_load_atts.png) 
 ## Figure 1. Memory exhaustion by attestable replicas.
