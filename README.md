@@ -289,15 +289,23 @@ for the CHERI architecture and run in a secure compartment of the
 Morello Board; and outside the TEE, where the programme was compiled and
 run in the normal operating environment of the Morello Board.
 
-::: algorithm
-::: algorithmic
-perform_tests(log_file, total_time) begin allocation_time =
-time(malloc(block_size)) write_time = time(write_to_memory(block,
-block_size)) read_time = time(read_from_memory(block, block_size))
-free_time = time(free(block)) log(log_file, block_size, test_num,
-allocation_time, write_time, read_time, free_time) end
-:::
-:::
+<pre style="border: 1px solid #ddd; padding: 10px; background-color: #f9f9f9; font-family: monospace;">
+Algorithm 2: MemoryPerformance
+
+1. perform_tests(log_file, total_time)
+2. begin
+3.     foreach block_size in MIN_BLOCK_SIZE to MAX_BLOCK_SIZE step BLOCK_STEP do
+4.         foreach test_num from 1 to NUM_TESTS do
+5.             allocation_time = time(malloc(block_size))
+6.             write_time = time(write_to_memory(block, block_size))
+7.             read_time = time(read_from_memory(block, block_size))
+8.             free_time = time(free(block))
+9.             log(log_file, block_size, test_num, allocation_time, write_time, read_time, free_time)
+10.        endfor
+11.    endfor
+12. end
+</pre>
+
 
 Algorithm 2 details how to perform memory performance tests and record
 the results. Execution begins with the perform_tests function (line 1),
