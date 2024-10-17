@@ -520,8 +520,9 @@ Algorithm 3: PipeCommunicationPerformance
 14.             start_timer(read_time)      
 15.             stop_timer(read_time)       
 16.             log(log_file, test_num, write_time, read_time) 
-17.     endfor
-18. end
+17.         endif
+18.     endfor
+19. end
 </pre>
 
 
