@@ -53,8 +53,9 @@ Some experimental facts:
 
 The Figure 1 shows the experiment set up:
 
-![Figure 1. Memory exhaustion by attestable replicas.](figs/create_load_atts.png) 
-## Figure 1. Memory exhaustion by attestable replicas.
+![Memory exhaustion by attestable replicas.](./figs/create_load_atts.png)
+*Figura 1: Memory exhaustion by attestable replicas.*
+
 
 The graph, shown in Figure [2](#fig:exhaustionGraph), shows the behaviour of memory
 consumption and elapsed time as the number of testable replicas
