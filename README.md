@@ -799,37 +799,39 @@ need to protect sensitive data.
 
 ![Process memory regions running outside the secure compartment.](figs/2.png)
 
-*Figure: Process memory regions running outside the secure compartment.*
+*Figure 10: Process memory regions running outside the secure compartment.*
 
 
 **Memory regions of the process running inside the secure compartment:**
 
-<figure id="fig:image5">
-<p><img src="figs/3.png" style="width:83.0%" alt="image" /> <span
-id="fig:image3" label="fig:image3"></span></p>
-<p><img src="figs/4.png" style="width:83.0%" alt="image" /> <span
-id="fig:image4" label="fig:image4"></span></p>
-<img src="figs/5.png" style="width:83.0%" />
-<figcaption>Memory regions of the process running inside the secure
-compartment.</figcaption>
-</figure>
+![Memory regions of the process running inside the secure compartment.](figs/3.png)
+
+![Memory regions of the process running inside the secure compartment.](figs/4.png)
+
+![Memory regions of the process running inside the secure compartment.](figs/5.png)
+
+*Figure 11: Memory regions of the process running inside the secure compartment.*
+
 
 **Finalisation of the process by the system**
 
 The process runs for a certain period of time (around 1 hour) and is
 finalised by the system: `killed`.
 
-![Finalisation of the process by the
-system.](figs/killed.png){#fig:finalisationKilled
-width=".99\\textwidth"}
+![Finalisation of the process by the system.](figs/killed.png)
+
+*Figure 12: Finalisation of the process by the system.*
+
 
 **The morello board crashed at this point.**
 
 Regis needs to contact the morello-board s administrator \[erik\] to
 reboot.
 
-![The morello board crashed at this
-point.](figs/crashed_1.png){#fig:crashed1 width=".99\\textwidth"}
+![The morello board crashed at this point.](figs/crashed_1.png)
+
+*Figure 13: The Morello board crashed at this point.*
+
 
 The remote ssh shell that connects to the morello board crashes when the
 mem scanner prog tries to read this range of mem add: 0x4a300000 -
@@ -845,8 +847,10 @@ they are ranges where priviledge soft runs.
 
 This is our preliminary observation.
 
-![client_loop: send disconnect: Broken
-pipe.](figs/crashed_2.png){#fig:crashed2 width=".99\\textwidth"}
+![client_loop: send disconnect: Broken pipe.](figs/crashed_2.png)
+
+*Figure 14: client_loop: send disconnect: Broken pipe.*
+
 
 **Error occurs after server crash and restart \[Erik\].**
 
@@ -860,20 +864,26 @@ be accessed. This may happen if the process does not exist, the PID is
 incorrect, or the script does not have the necessary permissions to
 access this path.
 
-![\[Errno 2\] No such file or directory:
-'/proc/3587/mem'.](figs/error.png){#fig:error width=".99\\textwidth"}
+![\[Errno 2\] No such file or directory: '/proc/3587/mem'.](figs/error.png)
+
+*Figure 15: \[Errno 2\] No such file or directory: '/proc/3587/mem'.*
+
 
 **Procedure for running `memory_reader.py` after MB is rebooted.**
 
 Check that /proc is mounted correctly:
 
-![Check that /proc is mounted correctly.](figs/mount1.png){#fig:mount1
-width=".8\\textwidth"}
+![Check that /proc is mounted correctly.](figs/mount1.png)
+
+*Figure 16: Check that /proc is mounted correctly.*
+
 
 If it's not mounted, you need to try mounting it:
 
-![If it's not mounted, you need to try mounting
-it.](figs/mount2.png){#fig:mount2 width=".85\\textwidth"}
+![If it's not mounted, you need to try mounting it.](figs/mount2.png)
+
+*Figure 17: If it's not mounted, you need to try mounting it.*
+
 
 After the command to mount /proc, it was simply possible to run the
 memory_reader.py script again.
