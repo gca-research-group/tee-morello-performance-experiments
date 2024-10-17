@@ -442,7 +442,7 @@ four main operations: allocating, writing, reading and freeing memory.
 
 ![Performance analysis of memory operations on the Morello board.](figs/graph_3.png)
 
-*Figure: Performance analysis of memory operations on the Morello board.*
+*Figure 5: Performance analysis of memory operations on the Morello board.*
 
 
 -   **Allocation time:** the values resulting from the tests in the
@@ -501,15 +501,29 @@ with each test timing the writing and reading times. The results of
 these tests are recorded in a file in CSV format. Algorithm 3 gives a
 detailed description of the experimental flow.
 
-::: algorithm
-::: algorithmic
-start_test(log_file) begin define STRLEN define NUM_OF_MSG
-start_timer(write_time) write(pipe, message of size STRLEN)
-stop_timer(write_time) write(pipe, write_time) read(pipe, message of
-size STRLEN) read(pipe, write_time) start_timer(read_time)
-stop_timer(read_time) log(log_file, test_num, write_time, read_time) end
-:::
-:::
+<pre style="border: 1px solid #ddd; padding: 10px; background-color: #f9f9f9; font-family: monospace;">
+Algorithm 3: PipeCommunicationPerformance
+
+1.  start_test(log_file)              
+2.  begin
+3.      define STRLEN  
+4.      define NUM_OF_MSG 
+5.      for test_num from 1 to NUM_OF_MSG do
+6.          if child_process
+7.              start_timer(write_time)     
+8.              write(pipe, message of size STRLEN)        
+9.              stop_timer(write_time)      
+10.             write(pipe, write_time)     
+11.         else parent_process
+12.             read(pipe, message of size STRLEN)         
+13.             read(pipe, write_time)      
+14.             start_timer(read_time)      
+15.             stop_timer(read_time)       
+16.             log(log_file, test_num, write_time, read_time) 
+17.     endfor
+18. end
+</pre>
+
 
 In Algorithm 3, the start_test function (line 1) starts a sequence of
 operations involving writing and reading messages through a pipe. First,
