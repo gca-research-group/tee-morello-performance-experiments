@@ -335,21 +335,23 @@ configurations.
 
 
 ![Memory performance at different block sizes on the Morello board.](figs/memory.png)
+
 *Figure 4: Memory performance at different block sizes on the Morello board.*
 
 
 
     The operations measured are:
 
-    1.  Memory allocation: time required to allocate a block of memory.
+    A.  Memory allocation: time required to allocate a block of memory.
 
-    2.  Writing to Memory: time required to write data to the entire allocated memory block.
+    B.  Writing to Memory: time required to write data to the entire allocated memory block.
 
-    3.  Memory read: time taken to read the data from the entire memory block.
+    C.  Memory read: time taken to read the data from the entire memory block.
 
-    4.  Memory release: time taken to release the memory block back into the system.
+    D.  Memory release: time taken to release the memory block back into the system.
 
-3.  The code for the experiment we carried out is available in the [tee-morello-performance-experiments repository](https://github.com/gca-research-group/tee-morello-performance-experiments/tree/main/memory-performance).
+2.  The code for the experiment we carried out is available in the [tee-morello-performance-experiments repository](https://github.com/gca-research-group/tee-morello-performance-experiments/tree/main/memory-performance).
+
 
 **Test procedure**
 
