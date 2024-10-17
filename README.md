@@ -132,8 +132,8 @@ _____________________________________________________________
 Algorithm 1: CPUPerformance
 _____________________________________________________________
  1. perform_tests(log_file, total_time)
- 2.   begin
- 3.     foreach test_num in NUM_TESTS do
+ 2. begin
+ 3.    foreach test_num in NUM_TESTS do
  4.       start_time = capture_time()
  5.       execute_operations(WORKLOAD_SIZE)  
  6.       end_time = capture_time()
