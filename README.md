@@ -210,15 +210,36 @@ reference="tab:cpu_time_comparison"} compares the average execution
 times for each type of operation in the two environments.
 
 
-## Table 1. CPU Time Comparison
-
-| Test Type | CPU Time (ms) - Out Compartment | CPU Time (ms) - In Compartment |
-|-----------|----------------------------------|---------------------------------|
-| Math      | 46696                            | 69998                           |
-| Int       | 923                              | 993                             |
-| Float     | 816                              | 785                             |
-| Array     | 1419                             | 1460                            |
-
+<div align="center">
+  <p><strong>Table 1. CPU Time Comparison</strong></p>
+  <table>
+    <tr>
+      <th>Test Type</th>
+      <th>CPU Time (ms) - Out Compartment</th>
+      <th>CPU Time (ms) - In Compartment</th>
+    </tr>
+    <tr>
+      <td>Math</td>
+      <td>46696</td>
+      <td>69998</td>
+    </tr>
+    <tr>
+      <td>Int</td>
+      <td>923</td>
+      <td>993</td>
+    </tr>
+    <tr>
+      <td>Float</td>
+      <td>816</td>
+      <td>785</td>
+    </tr>
+    <tr>
+      <td>Array</td>
+      <td>1419</td>
+      <td>1460</td>
+    </tr>
+  </table>
+</div>
 
 
 **Analysing the results**
