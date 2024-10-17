@@ -1,5 +1,8 @@
 <h1 style="font-size: 2em;">Results of some performance and security evaluation against library-based compartments created in the Morello Board</h1>
 
+This document presents the results of some performance and security evaluation tests conducted on library--based compartments created on a Morello Board running cheriBSD 24.5.
+
+
 # Evaluation of the number of library--based compartments
 
 In the CAMB project we are interested in using Morello Boards for
