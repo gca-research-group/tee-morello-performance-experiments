@@ -206,9 +206,38 @@ the run in the Morello Board's normal environment were stored in
 Table 1 compares the average execution
 times for each type of operation in the two environments.
 
+<div align="center">
+  <p><strong>Table 1. CPU Time Comparison</strong></p>
+  <table>
+    <tr>
+      <th>Test Type</th>
+      <th>CPU Time (ms) - Out Compartment</th>
+      <th>CPU Time (ms) - In Compartment</th>
+    </tr>
+    <tr>
+      <td>Math</td>
+      <td>46696</td>
+      <td>69998</td>
+    </tr>
+    <tr>
+      <td>Int</td>
+      <td>923</td>
+      <td>993</td>
+    </tr>
+    <tr>
+      <td>Float</td>
+      <td>816</td>
+      <td>785</td>
+    </tr>
+    <tr>
+      <td>Array</td>
+      <td>1419</td>
+      <td>1460</td>
+    </tr>
+  </table>
+</div>
 
-![Comparison of CPU performance times in and out of the secure compartment on the Morello board.](figs/graph_2.png)
-*Figure 1: Comparison of CPU performance times in and out of the secure compartment on the Morello board.*
+
 
 
 **Analysing the results**
@@ -230,10 +259,8 @@ The Figure 3 illustrates the differences in
 performance between operations conducted within and outside the secure
 compartment.
 
-<figure>
-  <img src="figs/graph_2.png" alt="Comparison of CPU performance times in and out of the secure compartment on the Morello board." width="99%">
-  <figcaption><em>Figura: Comparison of CPU performance times in and out of the secure compartment on the Morello board.</em></figcaption>
-</figure>
+![Comparison of CPU performance times in and out of the secure compartment on the Morello board.](figs/graph_2.png)
+*Figure 3: Comparison of CPU performance times in and out of the secure compartment on the Morello board.*
 
 
 These results suggest that the Morello Board's safe compartment
