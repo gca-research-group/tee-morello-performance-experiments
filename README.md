@@ -128,21 +128,21 @@ inside the secure compartment and in the Morello Board's normal
 operating environment - and the results were saved in a CSV format file
 for each environment.
 
-_____________________________________________________________
+<pre style="border: 1px solid #ddd; padding: 10px; background-color: #f9f9f9; font-family: monospace;">
 Algorithm 1: CPUPerformance
-_____________________________________________________________
- 1. perform_tests(log_file, total_time)
- 2. begin
- 3.    foreach test_num in NUM_TESTS do
- 4.       start_time = capture_time()
- 5.       execute_operations(WORKLOAD_SIZE)  
- 6.       end_time = capture_time()
- 7.       cpu_time = calculate_cpu_time(start_time, end_time)
- 8.       results(log_file, test_num, cpu_time)
- 9.       total_time += cpu_time
+
+1. perform_tests(log_file, total_time)
+2. begin
+3.     for test_num in NUM_TESTS do
+4.         start_time = capture_time()
+5.         execute_operations(WORKLOAD_SIZE)
+6.         end_time = capture_time()
+7.         cpu_time = calculate_cpu_time(start_time, end_time)
+8.         results(log_file, test_num, cpu_time)
+9.         total_time += cpu_time
 10.    endfor
 11. end
-_____________________________________________________________
+</pre>
 
 
 Execution begins with the perform_tests function (line 1), which
