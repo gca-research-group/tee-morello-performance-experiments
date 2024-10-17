@@ -334,7 +334,9 @@ configurations.
     times for each operation associated with different block sizes.
 
     ![Memory performance at different block sizes on the Morello board.](figs/memory.png)
-    *Figure: Memory performance at different block sizes on the Morello board.*
+*Figure 4: Memory performance at different block sizes on the Morello board.*
+
+
 
 
     The operations measured are:
