@@ -42,8 +42,7 @@ Some experimental facts:
 
 2.  In the experiments that we conducted, we loaded code of the EAI
     implemented in (see yellow box) -
-    [tee-compartimentalisation-study-case
-    repository](https://github.com/gca-research-group/tee-compartimentalisation-study-case).
+    [tee-compartimentalisation-study-case repository](https://github.com/gca-research-group/tee-compartimentalisation-study-case).
     We compiled as shown below:
 
             $ clang-morello -march=morello+c64 -mabi=purecap -g -o integration_process integration_process.c -L. -lssl -lcrypto -lpthread
@@ -54,7 +53,7 @@ Some experimental facts:
 
 The Figure [1](#fig:exampleFig1) shows the experiment set up:
 
-![Memory exhaustion by attestable replicas.](https://github.com/usuario/repositorio/raw/main/figs/create_load_atts.png)
+![Memory exhaustion by attestable replicas.](figs/create_load_atts.png) 
 
 The graph, shown in Figure [2](#fig:exhaustionGraph), shows the behaviour of memory
 consumption and elapsed time as the number of testable replicas
