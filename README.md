@@ -795,13 +795,12 @@ need to protect sensitive data.
 
 **Process memory regions running outside the secure compartment:**
 
-<figure id="fig:image2">
-<p><img src="figs/1.png" style="width:99.0%" alt="image" /> <span
-id="fig:image1" label="fig:image1"></span></p>
-<img src="figs/2.png" style="width:99.0%" />
-<figcaption>Process memory regions running outside the secure
-compartment.</figcaption>
-</figure>
+![Process memory regions running outside the secure compartment.](figs/1.png)
+
+![Process memory regions running outside the secure compartment.](figs/2.png)
+
+*Figure: Process memory regions running outside the secure compartment.*
+
 
 **Memory regions of the process running inside the secure compartment:**
 
