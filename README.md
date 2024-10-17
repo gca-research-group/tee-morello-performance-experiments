@@ -129,25 +129,20 @@ operating environment - and the results were saved in a CSV format file
 for each environment.
 
 <div style="border: 1px solid #ddd; padding: 10px; margin: 20px 0; font-family: monospace; background-color: #f9f9f9;">
-  <strong>Algorithm 1: CPUPerformance</strong>
-  <ol style="padding-left: 20px;">
-    <li>perform_tests(log_file, total_time)</li>
-    <li>begin</li>
-    <ol type="a" style="padding-left: 20px;">
-      <li>for test_num in NUM_TESTS do</li>
-      <ol style="padding-left: 20px;">
-        <li>start_time = capture_time()</li>
-        <li>execute_operations(WORKLOAD_SIZE)</li>
-        <li>end_time = capture_time()</li>
-        <li>cpu_time = calculate_cpu_time(start_time, end_time)</li>
-        <li>results(log_file, test_num, cpu_time)</li>
-        <li>total_time += cpu_time</li>
-      </ol>
-      <li>endfor</li>
-    </ol>
-    <li>end</li>
-  </ol>
+  <p><strong>Algorithm 1: CPUPerformance</strong></p>
+  <p>1. perform_tests(log_file, total_time)</p>
+  <p>2. begin</p>
+  <p style="padding-left: 20px;">3. for test_num in NUM_TESTS do</p>
+  <p style="padding-left: 40px;">4. start_time = capture_time()</p>
+  <p style="padding-left: 40px;">5. execute_operations(WORKLOAD_SIZE)</p>
+  <p style="padding-left: 40px;">6. end_time = capture_time()</p>
+  <p style="padding-left: 40px;">7. cpu_time = calculate_cpu_time(start_time, end_time)</p>
+  <p style="padding-left: 40px;">8. results(log_file, test_num, cpu_time)</p>
+  <p style="padding-left: 40px;">9. total_time += cpu_time</p>
+  <p style="padding-left: 20px;">10. endfor</p>
+  <p>11. end</p>
 </div>
+
 
 
 Execution begins with the perform_tests function (line 1), which
