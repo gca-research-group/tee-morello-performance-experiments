@@ -544,16 +544,17 @@ process is repeated until all the tests have been completed (line 17).
 **Experimental Configuration**
 
 1.  The following diagram
-    (Figure [6](#fig:pipeCommunication){reference-type="ref"
-    reference="fig:pipeCommunication"}) represents the experimental
+    (Figure 6) represents the experimental
     configuration used to evaluate communication between processes via a
     pipe. The data blocks, in this case represented by messages, vary by
     a standard size of 1024 bytes per message, and a total of 100
     messages are tested to analyse the consistency and efficiency of
     communication between internal processes.
 
-    ![Communication of the process via
-    pipe.](figs/pipe.png){#fig:pipeCommunication width=".65\\textwidth"}
+![Communication of the process via pipe.](figs/pipe.png)
+
+*Figure 6: Communication of the process via pipe.*
+
 
     The operations measured are:
 
