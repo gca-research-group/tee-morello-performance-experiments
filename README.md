@@ -205,8 +205,7 @@ The results of the tests carried out inside the secure compartment were
 stored in the file `cpu-in-experiment-result.csv`, while the results of
 the run in the Morello Board's normal environment were stored in
 `cpu-out-experiment-result.csv`. The
-Table [1](#tab:cpu_time_comparison){reference-type="ref"
-reference="tab:cpu_time_comparison"} compares the average execution
+Table 1 compares the average execution
 times for each type of operation in the two environments.
 
 
@@ -244,8 +243,7 @@ times for each type of operation in the two environments.
 
 **Analysing the results**
 
-According to the
-Table 1, the results show that, on average,
+According to the Table 1, the results show that, on average,
 complex mathematical operations within the secure compartment took
 69,998 ms, while in the normal operating environment the time was 46,696
 ms, representing a difference of approximately 49.74 per cent. For
@@ -258,15 +256,15 @@ for matrix manipulation operations, the time inside the safe compartment
 was 1,460 ms, while in the normal operating environment it was 1,419 ms,
 indicating an increase of 2.89 per cent.
 
-The Figure [3](#fig:performanceComparison){reference-type="ref"
-reference="fig:performanceComparison"} illustrates the differences in
+The Figure 3 illustrates the differences in
 performance between operations conducted within and outside the secure
 compartment.
 
-![Comparison of CPU performance times in and out of the secure
-compartment on the Morello
-board.](figs/graph_2.png){#fig:performanceComparison
-width=".99\\textwidth"}
+<figure>
+  <img src="figs/graph_2.png" alt="Comparison of CPU performance times in and out of the secure compartment on the Morello board." width="99%">
+  <figcaption><em>Figura: Comparison of CPU performance times in and out of the secure compartment on the Morello board.</em></figcaption>
+</figure>
+
 
 These results suggest that the Morello Board's safe compartment
 introduces a small performance overhead in more complex operations, such
