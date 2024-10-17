@@ -3,7 +3,7 @@
 This document presents the results of some performance and security evaluation tests conducted on library--based compartments created on a Morello Board running cheriBSD 24.5.
 
 
-# Evaluation of the number of library--based compartments
+# 1. Evaluation of the number of library-based compartments
 
 In the CAMB project we are interested in using Morello Boards for
 creating attestables (compartments) to support the execution of
@@ -19,7 +19,7 @@ retrieve data. We though that the limit depended on the amount of RAM
 memory of the Morello Board and tried to exhaust it by means of
 systematically increasing the number of compartments.
 
-## Experiment
+## 1.1. Experiment
 
 The main aim of this experiment is to measure and analyse how the memory
 of a Morello Board is consumed by instances (also called replicas) of
