@@ -57,12 +57,11 @@ Some experimental facts:
 The Figure [1](#fig:exampleFig1) shows the experiment set up:
 
 ![Memory exhaustion by attestable
-replicas.](./figs/create_load_atts.png){#fig:exampleFig1
-width=".8\\textwidth"}
+replicas.](./figs/create_load_atts.png) 
+## Figure 1. Memory exhaustion by attestable replicas.
 
 The graph, shown in
-Figure [2](#fig:exhaustionGraph){reference-type="ref"
-reference="fig:exhaustionGraph"}, shows the behaviour of memory
+Figure [2](#fig:exhaustionGraph), shows the behaviour of memory
 consumption and elapsed time as the number of testable replicas
 increases on the Morello Board.
 
