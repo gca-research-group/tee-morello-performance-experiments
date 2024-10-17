@@ -245,8 +245,7 @@ times for each type of operation in the two environments.
 **Analysing the results**
 
 According to the
-Table [1](#tab:cpu_time_comparison){reference-type="ref"
-reference="tab:cpu_time_comparison"}, the results show that, on average,
+Table 1, the results show that, on average,
 complex mathematical operations within the secure compartment took
 69,998 ms, while in the normal operating environment the time was 46,696
 ms, representing a difference of approximately 49.74 per cent. For
