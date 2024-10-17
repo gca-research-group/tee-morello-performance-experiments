@@ -61,9 +61,9 @@ The graph, shown in Figure [2](#fig:exhaustionGraph), shows the behaviour of me
 consumption and elapsed time as the number of testable replicas
 increases on the Morello Board.
 
-![Memory consumption and elapsed time versus number of replicas on the
-Morello board.](figs/graph_1.png){#fig:exhaustionGraph
-width=".99\\textwidth"}
+![Memory consumption and elapsed time versus number of replicas on the Morello board.](figs/graph_1.png)
+*Figura: Memory consumption and elapsed time versus number of replicas on the Morello board.*
+
 
 Imagine that user Alice is conducting the experiment. To create the
 attestables and collect the metrics, Alice executes the following steps:
