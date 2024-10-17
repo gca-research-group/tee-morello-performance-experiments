@@ -158,9 +158,7 @@ recorded in the log file, along with the test number (line 8), and also
 added to total_time, which accumulates the total time spent on all the
 tests (line 9).
 
-The code used for the tests is available from the
-[tee-morello-performance-experiments
-repository](https://github.com/gca-research-group/tee-morello-performance-experiments/tree/main/cpu-performance).
+The code used for the tests is available from the [tee-morello-performance-experiments repository](https://github.com/gca-research-group/tee-morello-performance-experiments/tree/main/cpu-performance).
 
 **Test procedure**
 
@@ -209,36 +207,8 @@ Table 1 compares the average execution
 times for each type of operation in the two environments.
 
 
-<div align="center">
-  <p><strong>Table 1. CPU Time Comparison</strong></p>
-  <table>
-    <tr>
-      <th>Test Type</th>
-      <th>CPU Time (ms) - Out Compartment</th>
-      <th>CPU Time (ms) - In Compartment</th>
-    </tr>
-    <tr>
-      <td>Math</td>
-      <td>46696</td>
-      <td>69998</td>
-    </tr>
-    <tr>
-      <td>Int</td>
-      <td>923</td>
-      <td>993</td>
-    </tr>
-    <tr>
-      <td>Float</td>
-      <td>816</td>
-      <td>785</td>
-    </tr>
-    <tr>
-      <td>Array</td>
-      <td>1419</td>
-      <td>1460</td>
-    </tr>
-  </table>
-</div>
+![Comparison of CPU performance times in and out of the secure compartment on the Morello board.](figs/graph_2.png)
+*Figure 1: Comparison of CPU performance times in and out of the secure compartment on the Morello board.*
 
 
 **Analysing the results**
