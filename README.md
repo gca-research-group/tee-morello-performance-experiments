@@ -134,8 +134,9 @@ inside the secure compartment and in the Morello Board's normal
 operating environment - and the results were saved in a CSV format file
 for each environment.
 
-## Algorithm 1: CPUPerformance
-
+_____________________________________________________________
+Algorithm 1: CPUPerformance
+_____________________________________________________________
  1. perform_tests(log_file, total_time)
  2.   begin
  3.     foreach test_num in NUM_TESTS do
@@ -147,8 +148,7 @@ for each environment.
  9.       total_time += cpu_time
 10.    endfor
 11. end
-
-
+_____________________________________________________________
 
 Execution begins with the perform_tests function (line 1), which
 receives as a parameter a log file where the results will be stored and
