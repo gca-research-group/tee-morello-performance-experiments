@@ -417,7 +417,7 @@ Tables 2 and 3.
 | 1000            | 265                  | 2,951.487       | 2,825.741      | 405            |
 
 
-## Table: Out Compartment
+## Table 3: Out Compartment
 
 | Block Size (MB) | Allocation Time (ms) | Write Time (ms) | Read Time (ms) | Free Time (ms) |
 |-----------------|----------------------|-----------------|----------------|----------------|
