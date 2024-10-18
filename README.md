@@ -516,6 +516,18 @@ However, although compartmentalisation is designed to protect sensitive data by 
 *Figure 11: Memory regions of the process running inside the secure compartment.*
 
 
+**Memory regions of the process running inside the secure compartment:**
+
+<div style="display: flex; flex-direction: row;">
+    <img src="figs/3.png" alt="Memory regions of the process running inside the secure compartment." style="margin-right: 0px;">
+    <img src="figs/4.png" alt="Memory regions of the process running inside the secure compartment." style="margin-right: 0px;">
+    <img src="figs/5.png" alt="Memory regions of the process running inside the secure compartment." style="margin-right: 0px;">
+</div>
+
+*Figure 11: Memory regions of the process running inside the secure compartment.*
+
+
+
 **Finalisation of the process by the system**
 
 The process runs for a certain period of time (around 1 hour) and is finalised by the system: `killed`.
