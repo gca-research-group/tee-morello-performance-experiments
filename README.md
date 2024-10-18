@@ -559,7 +559,7 @@ This is our preliminary observation.
 This error occurs because the file `/proc/{pid}/mem`, which the script tries to access to read a process's memory, is not available or cannot be accessed. This may happen if the process does not exist, the PID is incorrect, or the script does not have the necessary permissions to access this path.
 
 
-![\[Errno 2\] No such file or directory: '/proc/3587/mem'.](figs/error.png)
+![\[Errno 2\] No such file or directory: *Figure 15: \[Errno 2\] No such file or directory: .](figs/error.png)
 
 *Figure 15: \[Errno 2\] No such file or directory: `/proc/3587/mem`.*
 
