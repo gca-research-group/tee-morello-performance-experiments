@@ -18,15 +18,15 @@ In addition to the number of attestables, we took the opportunity to collect met
 
 Some experimental facts:
 
-1.  Of the total memory available on the Morello board, 90 percent amounts to 15,406,567,833.6 bytes (approximately 15,406.5 MB).
+1. Of the total memory available on the Morello board, 90 percent amounts to 15,406,567,833.6 bytes (approximately 15,406.5 MB).
 
-2.  In the experiments that we conducted, we loaded code of the EAI implemented in (see yellow box) - [tee-compartimentalisation-study-case repository](https://github.com/gca-research-group/tee-compartimentalisation-study-case).
+2. In the experiments that we conducted, we loaded code of the EAI implemented in (see yellow box) - [tee-compartimentalisation-study-case repository](https://github.com/gca-research-group/tee-compartimentalisation-study-case).
    
 We compiled as shown below:
 
       $ clang-morello -march=morello+c64 -mabi=purecap -g -o integration_process integration_process.c -L. -lssl -lcrypto -lpthread
 
-4.  `cheri-cap-experiment.py` script is used to create the [replicas of the attestables](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/cheri-caps-executable-performance/cheri-cap-experiment-results.csv), and collect metrics. We incremented the number of replicas created from 1 to N. See replication of attestable results.
+4. `cheri-cap-experiment.py` script is used to create the [replicas of the attestables](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/cheri-caps-executable-performance/cheri-cap-experiment-results.csv), and collect metrics. We incremented the number of replicas created from 1 to N. See replication of attestable results.
 
 The Figure 1 shows the experiment set up:
 
@@ -42,13 +42,13 @@ The graph, shown in Figure 2, shows the behaviour of memory consumption and ela
 
 Imagine that user Alice is conducting the experiment. To create the attestables and collect the metrics, Alice executes the following steps:
 
-1.  **Initiation:** In the Morello board, Alice initiates *cheri-cap-experiment.py*.
+1. **Initiation:** In the Morello board, Alice initiates *cheri-cap-experiment.py*.
 
-2.  **Launch:** To launch *cheri-cap-experiment.py*, Alice executes:
+2. **Launch:** To launch *cheri-cap-experiment.py*, Alice executes:
 
             $ python3 cheri-cap-experiment.py
 
-3.  `python3 cheri-cap-experiment.py` runs incrementally, creating attestable replicas until it detects that the attestables have consumed 90% of the 17,118.4 MB of the Morello Board's memory, that is, about 15,406.5 MB.
+3. `python3 cheri-cap-experiment.py` runs incrementally, creating attestable replicas until it detects that the attestables have consumed 90% of the 17,118.4 MB of the Morello Board's memory, that is, about 15,406.5 MB.
 
 
 **Preliminary observations:**
@@ -68,6 +68,7 @@ The cpu-performance and memory-performance folders contain code and results of s
 # 2. CPU Performance Tests on the Morello Board
 
 The main aim of this experiment is to measure and analyse the performance of the Morello Board's CPU by comparing the results of identical tests carried out inside and outside a secure enclosure. The tests measured the time required to perform computational operations, including complex mathematical functions, arithmetic operations with integers, floating point operations and matrix manipulation. The complex mathematical functions included sine, cosine, tangent, square root and logarithm. The integer arithmetic tests focused on multiplication, division, subtraction and modulo operations. For floating point operations, the focus was also on multiplication, division and subtraction. The matrix manipulation test involved initialising matrices and performing operations such as multiplication and division. The execution time of each operation was measured and recorded. These tests were repeated 100 times for each operation in both environments - inside the secure compartment and in the Morello Board's normal operating environment - and the results were saved in a CSV format file for each environment. Algorithm 1 details how to carry out the CPU performance tests and record the results.
+
 
 <pre style="border: 1px solid #ddd; padding: 10px; background-color: #f9f9f9; font-family: monospace;">
 Algorithm 1: CPUPerformance
@@ -95,26 +96,26 @@ The code used for the tests is available from the [tee-morello-performance-exper
 
 Suppose user Alice is conducting the experiment. To carry out the CPU performance tests and collect the results, Alice takes the following steps:
 
-1.  **Start:** Alice compiles and runs the test program in the two scenarios described above:
+1. **Start:** Alice compiles and runs the test program in the two scenarios described above:
 
-    -   **Inside the compartment:** Alice runs the program `cpu-in-experiment.c` on the Morello Board, using the secure environment.
+    - **Inside the compartment:** Alice runs the program `cpu-in-experiment.c` on the Morello Board, using the secure environment.
 
-        -   **Compile:**
+        - **Compile:**
             `clang-morello -march=morello+c64 -mabi=purecap -g -o cpu-in-experiment cpu-in-experiment.c -L. -lm`
 
-        -   **Run:**
+        - **Run:**
             `proccontrol -m cheric18n -s enable ./cpu-in-experiment`
 
-    -   **Outside the compartment:** Alice runs the program `cpu-out-experiment.c` in the Morello Board's normal operating environment.
+    - **Outside the compartment:** Alice runs the program `cpu-out-experiment.c` in the Morello Board's normal operating environment.
 
-        -   **Compile:**
+        - **Compile:**
             `clang-morello -o cpu-out-experiment cpu-out-experiment.c -lm`
 
-        -   **Run:** `./cpu-out-experiment`
+        - **Run:** `./cpu-out-experiment`
 
-2.  **Execution:** The program iterates automatically through the different types of operations, performing complex mathematical calculations, arithmetic operations with integers, floating point operations, and matrix manipulation.
+2. **Execution:** The program iterates automatically through the different types of operations, performing complex mathematical calculations, arithmetic operations with integers, floating point operations, and matrix manipulation.
 
-3.  **Repetition:** Each operation is repeated 30 times. The time of each operation is recorded in files in CSV format for both environments.
+3. **Repetition:** Each operation is repeated 30 times. The time of each operation is recorded in files in CSV format for both environments.
 
 
 **Results**
@@ -131,7 +132,6 @@ The results of the tests carried out inside the secure compartment were stored i
 | Array     | 1419                             | 1460                          |
 
 
-
 **Analysing the results**
 
 According to the Table 1, the results show that, on average, complex mathematical operations within the secure compartment took 69,998 ms, while in the normal operating environment the time was 46,696 ms, representing a difference of approximately 49.74 per cent. For arithmetic operations with integers, the average time was 993 ms inside the secure compartment and 923 ms in the normal operating environment, a difference of 7.58 per cent. For floating point operations, the time inside the safe compartment was 785 ms compared to the normal operating environment (816 ms), showing a slight improvement of 3.80 per cent. As for matrix manipulation operations, the time inside the safe compartment was 1,460 ms, while in the normal operating environment it was 1,419 ms, indicating an increase of 2.89 per cent.
@@ -142,6 +142,7 @@ The Figure 3 illustrates the differences in performance between operations cond
 *Figure 3: Comparison of CPU performance times in and out of the secure compartment on the Morello board.*
 
 These results suggest that the Morello Board's safe compartment introduces a small performance overhead in more complex operations, such as mathematical calculations. However, for simpler operations, such as floating point, the difference is minimal, with a slight increase in execution time within the secure compartment. This indicates that the safe compartment can be used efficiently in specific scenarios without significantly compromising performance, although the impact is more noticeable in operations that require more processing.
+
 
 
 
@@ -174,7 +175,7 @@ Algorithm 2 details how to perform memory performance tests and record the resul
 
 **Experimental Configuration**
 
-1.  The memory blocks tested range from 100 MB to 1 GB, with increments of 100 MB at each step. Each test involves 30 iterations per block size. The diagram in the Figure 4 shows the block pattern and the times for each operation associated with different block sizes.
+1. The memory blocks tested range from 100 MB to 1 GB, with increments of 100 MB at each step. Each test involves 30 iterations per block size. The diagram in the Figure 4 shows the block pattern and the times for each operation associated with different block sizes.
 
 
 ![Memory performance at different block sizes on the Morello board.](figs/memory.png)
@@ -184,47 +185,48 @@ Algorithm 2 details how to perform memory performance tests and record the resul
 
 The operations measured are:
 
-      a.  Memory allocation: time required to allocate a block of memory.
+      a. Memory allocation: time required to allocate a block of memory.
    
-      b.  Writing to Memory: time required to write data to the entire allocated memory block.
+      b. Writing to Memory: time required to write data to the entire allocated memory block.
 
-      c.  Memory read: time taken to read the data from the entire memory block.
+      c. Memory read: time taken to read the data from the entire memory block.
 
-      d.  Memory release: time taken to release the memory block back into the system.
+      d. Memory release: time taken to release the memory block back into the system.
    
 
-2.  The code for the experiment we carried out is available in the [tee-morello-performance-experiments repository](https://github.com/gca-research-group/tee-morello-performance-experiments/tree/main/memory-performance).
+2. The code for the experiment we carried out is available in the [tee-morello-performance-experiments repository](https://github.com/gca-research-group/tee-morello-performance-experiments/tree/main/memory-performance).
 
 
 **Test procedure**
 
 Imagine that user Alice is conducting the experiment. To carry out the memory performance tests and collect the results, Alice performs the following steps:
 
-1.  **Start:** Alice compiles and runs the test programme in two different scenarios:
+1. **Start:** Alice compiles and runs the test programme in two different scenarios:
 
-    -   **Inside the compartment:** Alice runs the programme `memory-in-experiment-result.c` on the Morello Board, using the secure environment.
+    - **Inside the compartment:** Alice runs the programme `memory-in-experiment-result.c` on the Morello Board, using the secure environment.
 
-        -   **Compile:**
+        - **Compile:**
             `clang-morello -march=morello+c64 -mabi=purecap -g -o memory-in-experiment memory-in-experiment.c -L. -lm`
 
-        -   **Run:**
+        - **Run:**
             `proccontrol -m cheric18n -s enable ./memory-in-experiment`
 
-    -   **Outside the compartment:** Alice runs the programme `memory-out-experiment-result.c` in the normal operating environment of the Morello Board.
+    - **Outside the compartment:** Alice runs the programme `memory-out-experiment-result.c` in the normal operating environment of the Morello Board.
 
-        -   **Compile:**
+        - **Compile:**
             `clang-morello -g -o memory-out-experiment memory-out-experiment.c -lm`
 
-        -   **Run:** `./memory-out-experiment`
+        - **Run:** `./memory-out-experiment`
 
-2.  **Execution:** The programme automatically iterates over the memory block sizes, from 100 MB to 1 GB, performing the following sequence for each block size: allocate the block, write to the block, read the block, and release the block.
+2. **Execution:** The programme automatically iterates over the memory block sizes, from 100 MB to 1 GB, performing the following sequence for each block size: allocate the block, write to the block, read the block, and release the block.
 
-3.  **Repetition:** For each block size, these steps are repeated 30 times, both inside and outside the compartment. The time of each operation is recorded and saved in a CSV file for the environment.
+3. **Repetition:** For each block size, these steps are repeated 30 times, both inside and outside the compartment. The time of each operation is recorded and saved in a CSV file for the environment.
 
 
 **Results**
 
 For each CSV file, the iteration averages were calculated for each memory block size in the Allocation Time, Write Time, Read Time and Free Time attributes. For each memory block value (100 MB, 200 MB, etc.), the times measured in the iterations were added together and the average was obtained for each operation (allocation, write, read and free). This was done separately for the two files, representing in-compartment and out-of-compartment executions, respectively, as shown in the Tables 2 and 3.
+
 
 #### Table 2: In Compartment
 
@@ -242,7 +244,7 @@ For each CSV file, the iteration averages were calculated for each memory block 
 | 1000            | 265                  | 2,951.487       | 2,825.741      | 405            |
 
 
-## Table 3: Out Compartment
+#### Table 3: Out Compartment
 
 | Block Size (MB) | Allocation Time (ms) | Write Time (ms) | Read Time (ms) | Free Time (ms) |
 |-----------------|----------------------|-----------------|----------------|----------------|
@@ -258,76 +260,36 @@ For each CSV file, the iteration averages were calculated for each memory block 
 | 1000            | 2                    | 2,825.742       | 3,229.433      | 9              |
 
 
-
 **Analysing the results**
 
-The results illustrated in the graphs in
-Figure 5 reveal some trends in relation to the
-four main operations: allocating, writing, reading and freeing memory.
+The results illustrated in the graphs in Figure 5 reveal some trends in relation to the four main operations: allocating, writing, reading and freeing memory.
+
 
 ![Performance analysis of memory operations on the Morello board.](figs/graph_3.png)
 
 *Figure 5: Performance analysis of memory operations on the Morello board.*
 
 
--   **Allocation time:** the values resulting from the tests in the
-    secure compartment range from 106 ms for 100 MB blocks to 251 ms for
-    700 MB blocks, with some variations across block sizes. In the
-    Morello Board's normal operating environment, the allocation time is
-    considerably shorter, ranging from 5 ms (100 MB) to 7 ms (900 MB).
+- **Allocation time:** the values resulting from the tests in the secure compartment range from 106 ms for 100 MB blocks to 251 ms for 700 MB blocks, with some variations across block sizes. In the Morello Board's normal operating environment, the allocation time is considerably shorter, ranging from 5 ms (100 MB) to 7 ms (900 MB).
 
--   **Write time:** in both environments, the times follow a linear
-    behaviour as the block size increases. In the secure compartment,
-    the values start at 295,308 ms for 100 MB blocks and reach 2,951,487
-    ms for 1 GB blocks. In the normal operating environment, the times
-    are slightly longer, ranging from 491,512 ms (100 MB) to 4,903,282
-    ms (1 GB).
+- **Write time:** in both environments, the times follow a linear behaviour as the block size increases. In the secure compartment, the values start at 295,308 ms for 100 MB blocks and reach 2,951,487 ms for 1 GB blocks. In the normal operating environment, the times are slightly longer, ranging from 491,512 ms (100 MB) to 4,903,282 ms (1 GB).
 
--   **Read time:** the results also show a linear behaviour in both
-    environments. Inside the secure compartment, the read time starts at
-    282,576 ms (100 MB) and increases up to 2,825,741 ms (1 GB). In the
-    normal operating environment, the times vary from 245,263 ms (100
-    MB) to 2,452,597 ms (1 GB), being slightly longer.
+- **Read time:** the results also show a linear behaviour in both environments. Inside the secure compartment, the read time starts at 282,576 ms (100 MB) and increases up to 2,825,741 ms (1 GB). In the normal operating environment, the times vary from 245,263 ms (100 MB) to 2,452,597 ms (1 GB), being slightly longer.
 
--   **Memory release time:** shows similar behaviour in both
-    environments. In the secure compartment, the time varies from 97 ms
-    (100 MB) to 1,197 ms (900 MB), while in the normal operating
-    environment the times are lower, ranging from 4,499 ms (100 MB) to
-    44,750 ms (1 GB).
+- **Memory release time:** shows similar behaviour in both environments. In the secure compartment, the time varies from 97 ms (100 MB) to 1,197 ms (900 MB), while in the normal operating environment the times are lower, ranging from 4,499 ms (100 MB) to 44,750 ms (1 GB).
 
-Therefore, the results show that the secure environment imposes a
-greater burden on allocation time, with significant variations compared
-to the normal operating environment. On the other hand, write time and
-read time follow similar patterns, with the secure environment showing
-slightly higher results. However, the memory release time stands out,
-being significantly higher in the secure compartment. These results
-indicate that although the secure compartment imposes some overhead, it
-can still be used efficiently for memory operations.
+Therefore, the results show that the secure environment imposes a greater burden on allocation time, with significant variations compared to the normal operating environment. On the other hand, write time and read time follow similar patterns, with the secure environment showing slightly higher results. However, the memory release time stands out, being significantly higher in the secure compartment. These results indicate that although the secure compartment imposes some overhead, it can still be used efficiently for memory operations.
+
 
 
 
 
 # 4. Morello Board Pipe Communication Performance Tests
 
-The main objective of this experiment is to measure the performance of
-communication between processes on the Morello Board using pipes,
-evaluating the time taken to write and read messages. The experiment was
-run both inside a secure compartment and outside the compartment, in the
-normal operating environment of the Morello Board. The aim is to compare
-the performance of these two scenarios and understand the impact of
-secure memory compartmentalisation on the communication time between
-processes.
+The main objective of this experiment is to measure the performance of communication between processes on the Morello Board using pipes, evaluating the time taken to write and read messages. The experiment was run both inside a secure compartment and outside the compartment, in the normal operating environment of the Morello Board. The aim is to compare the performance of these two scenarios and understand the impact of secure memory compartmentalisation on the communication time between processes.
 
-To conduct this experiment, we developed a C programme that automates
-the exchange of messages between parent and child processes via a pipe,
-used here as a communication mechanism between processes. During the
-experiment, the child process is tasked with writing messages of a
-predetermined length to the pipe. At the same time, the parent process
-reads these messages, recording the write and read times. The programme
-has been specifically configured to test messages of a defined size,
-with each test timing the writing and reading times. The results of
-these tests are recorded in a file in CSV format. Algorithm 3 gives a
-detailed description of the experimental flow.
+To conduct this experiment, we developed a C programme that automates the exchange of messages between parent and child processes via a pipe, used here as a communication mechanism between processes. During the experiment, the child process is tasked with writing messages of a predetermined length to the pipe. At the same time, the parent process reads these messages, recording the write and read times. The programme has been specifically configured to test messages of a defined size, with each test timing the writing and reading times. The results of these tests are recorded in a file in CSV format. Algorithm 3 gives a detailed description of the experimental flow.
+
 
 <pre style="border: 1px solid #ddd; padding: 10px; background-color: #f9f9f9; font-family: monospace;">
 Algorithm 3: PipeCommunicationPerformance
@@ -354,84 +316,52 @@ Algorithm 3: PipeCommunicationPerformance
 </pre>
 
 
-In Algorithm 3, the start_test function (line 1) starts a sequence of
-operations involving writing and reading messages through a pipe. First,
-the STRLEN and NUM_OF_MSG parameters are set in lines 3 and 4,
-establishing the size of the messages and the total number of messages
-to be sent. For each test, which iterates from 1 to NUM_OF_MSG (line 5),
-the child process, if active, starts timing the write time (line 7),
-writes a message of size STRLEN to the pipe (line 8) and then records
-the write time (line 9), sending this time back to the parent process
-via the pipe (line 10). In parallel, the parent process reads the
-message and the write time from the pipe (lines 12 and 13), starts
-counting the read time as soon as it starts reading (line 14), and stops
-counting when it finishes reading (line 15). The write and read times,
-along with the test number, are recorded in the log file (line 16). This
-process is repeated until all the tests have been completed (line 17).
+In Algorithm 3, the start_test function (line 1) starts a sequence of operations involving writing and reading messages through a pipe. First, the STRLEN and NUM_OF_MSG parameters are set in lines 3 and 4, establishing the size of the messages and the total number of messages to be sent. For each test, which iterates from 1 to NUM_OF_MSG (line 5), the child process, if active, starts timing the write time (line 7), writes a message of size STRLEN to the pipe (line 8) and then records the write time (line 9), sending this time back to the parent process via the pipe (line 10). In parallel, the parent process reads the message and the write time from the pipe (lines 12 and 13), starts counting the read time as soon as it starts reading (line 14), and stops counting when it finishes reading (line 15). The write and read times, along with the test number, are recorded in the log file (line 16). This process is repeated until all the tests have been completed (line 17).
+
 
 **Experimental Configuration**
 
-1.  The following diagram
-    (Figure 6) represents the experimental
-    configuration used to evaluate communication between processes via a
-    pipe. The data blocks, in this case represented by messages, vary by
-    a standard size of 1024 bytes per message, and a total of 100
-    messages are tested to analyse the consistency and efficiency of
-    communication between internal processes.
+1. The following diagram (Figure 6) represents the experimental configuration used to evaluate communication between processes via a pipe. The data blocks, in this case represented by messages, vary by a standard size of 1024 bytes per message, and a total of 100 messages are tested to analyse the consistency and efficiency of communication between internal processes.
 
 ![Communication of the process via pipe.](figs/pipe.png)
 
 *Figure 6: Communication of the process via pipe.*
 
 
-    The operations measured are:
+The operations measured are:
 
-    -   Writing to memory: time taken to write data to the pipe.
+   - **Writing to memory:** time taken to write data to the pipe.
 
-    -   Memory read: time taken to read the data sent via the pipe.
+   - **Memory read:** time taken to read the data sent via the pipe.
 
-2.  The code for the experiment we carried out is available in the
-    [tee-morello-performance-experiments
-    repository](https://github.com/gca-research-group/tee-morello-performance-experiments/tree/main/pipe-performance).
+
+2. The code for the experiment we carried out is available in the [tee-morello-performance-experiments repository](https://github.com/gca-research-group/tee-morello-performance-experiments/tree/main/pipe-performance).
+
 
 **Test procedure**
 
-Imagine that user Alice is conducting the experiment. To carry out the
-pipe communication tests and collect the results, Alice performs the
-following steps:
+Imagine that user Alice is conducting the experiment. To carry out the pipe communication tests and collect the results, Alice performs the following steps:
 
-1.  **Start:** Alice compiles and runs the test programme in two
-    different scenarios:
+1. **Start:** Alice compiles and runs the test programme in two different scenarios:
 
-    -   **Inside the compartment:** Alice runs the programme
-        `pipe-in-experiment.c` on the Morello Board, using the secure
-        environment.
+    -   **Inside the compartment:** Alice runs the programme `pipe-in-experiment.c` on the Morello Board, using the secure environment.
 
-        -   **Compile:**
+        - **Compile:**
             `clang-morello -march=morello+c64 -mabi=purecap -g -o pipe-in-experiment pipe-in-experiment.c -L.`
 
-        -   **Run:**
+        - **Run:**
             `proccontrol -m cheric18n -s enable ./pipe-in-experiment`
 
-    -   **Outside the compartment:** Alice runs the programme
-        `pipe-out-experiment.c` in the normal operating environment of
-        the Morello Board.
+    - **Outside the compartment:** Alice runs the programme `pipe-out-experiment.c` in the normal operating environment of the Morello Board.
 
-        -   **Compile:**
+        - **Compile:**
             `clang-morello -g -o pipe-out-experiment pipe-out-experiment.c`
 
-        -   **Run:** `./pipe-out-experiment`
+        - **Run:** `./pipe-out-experiment`
 
-2.  **Execution:** The programme sends a total of 100 messages, each of
-    a predefined size of 1024 bytes. For each message sent by the child
-    process, the write time is measured and the message, along with the
-    write time, is transmitted via the pipe to the parent process, which
-    in turn records the read time as soon as the message is received.
+2. **Execution:** The programme sends a total of 100 messages, each of a predefined size of 1024 bytes. For each message sent by the child process, the write time is measured and the message, along with the write time, is transmitted via the pipe to the parent process, which in turn records the read time as soon as the message is received.
 
-3.  **Repetition:** Each set of write and read operations is repeated
-    100 times for each environment - inside the compartment and outside
-    the compartment. The times of each operation are recorded in a file
-    in CSV format for each environment.
+3. **Repetition:** Each set of write and read operations is repeated 100 times for each environment - inside the compartment and outside the compartment. The times of each operation are recorded in a file in CSV format for each environment.
 
 **Results**
 
@@ -440,6 +370,7 @@ stored in the file `pipe-in-experiment-result.csv`, while the results of
 the normal ambient execution of the Morello Board were stored in
 `pipe-out-experiment-result.csv`. The
 Tables 4 and 5 shows the records for each data set:
+
 
 ## Table 4: Performance Data Inside the Compartment
 
@@ -467,44 +398,27 @@ Tables 4 and 5 shows the records for each data set:
 
 The Tables 4 and 5 contain information on the test number, the size of the messages, the write and read times, and the total time for each operation.
 
+
 **Analysing the results**
 
-The graphs in the Figure 7 show the write and read times for each
-test in the two scenarios, inside and outside the secure environment
-(compartment) on the Morelo Board.
+The graphs in the Figure 7 show the write and read times for each test in the two scenarios, inside and outside the secure environment (compartment) on the Morelo Board.
+
 
 ![Comparison of write and read times for pipe communication in secure and normal environments on the Morello Board.](figs/graph_4.png)
 
 *Figure 7: Comparison of write and read times for pipe communication in secure and normal environments on the Morello Board.*
 
 
-As we can see, the graphs reflect variations in write and read times,
-both inside and outside the safe room environment. There are
-fluctuations in the times recorded which may point to variability in the
-pipe's performance under different operating conditions. When comparing
-the graphs for the two environments, it is possible to notice
-differences in the times, which suggests that security configurations or
-differences in the operating environment can significantly influence
-communication efficiency.
+As we can see, the graphs reflect variations in write and read times, both inside and outside the safe room environment. There are fluctuations in the times recorded which may point to variability in the pipe's performance under different operating conditions. When comparing the graphs for the two environments, it is possible to notice differences in the times, which suggests that security configurations or differences in the operating environment can significantly influence communication efficiency.
+
 
 
 
 
 # 5. Testing the Exposure of Sensitive Data in Memory Regions through Direct Memory Access (Memory Scraping)
 
-The main objective of this experiment is to measure and analyze the
-contents of the memory regions with read and write (RW) permissions of a
-target program running on the CheriBSD 24.05 operating system. This
-target program is the same one used in the Attestable's performance
-evaluation experiment, `integration_process`. To do this, the experiment
-identifies the program's RW memory regions and attempts to directly
-extract the content stored in these regions, using the Python script
-`memory_reader.py`, available in the
-[tee-morello-performance-experiments
-repository](https://github.com/gca-research-group/tee-morello-performance-experiments/tree/main/security).
-This experiment evaluates the potential for exposing sensitive data in
-memory by directly accessing areas where the program may store temporary
-or sensitive data.
+The main aim of this experiment is to measure and analyse the contents of the memory regions with read and write (RW) permissions of a running target program. This target program is the same one used in the Attestable's performance evaluation experiment, `integration_process`. To do this, the experiment identifies the program's RW memory regions and attempts to directly extract the content stored in these regions, using the Python script `memory_reader.py`, available in the [tee-morello-performance-experiments repository](https://github.com/gca-research-group/tee-morello-performance-experiments/tree/main/security). This experiment evaluates the potential for exposing sensitive data in memory by directly accessing areas where the program may store temporary or sensitive data.
+
 
 **Experimental Configuration**
 
