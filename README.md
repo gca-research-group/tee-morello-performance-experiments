@@ -498,22 +498,13 @@ However, although compartmentalisation is designed to protect sensitive data by 
 
 **Process memory regions running outside the secure compartment:**
 
-![Process memory regions running outside the secure compartment.](figs/1.png)
-
-![Process memory regions running outside the secure compartment.](figs/2.png)
+<div style="display: flex; padding: 0; margin: 0; gap: 0;">
+    <img src="figs/1.png" alt="Process memory regions running outside the secure compartment." style="padding: 0; margin: 0;">
+    <img src="figs/2.png" alt="Process memory regions running outside the secure compartment." style="padding: 0; margin: 0;">
+</div>
 
 *Figure 10: Process memory regions running outside the secure compartment.*
 
-
-**Memory regions of the process running inside the secure compartment:**
-
-![Memory regions of the process running inside the secure compartment.](figs/3.png)
-
-![Memory regions of the process running inside the secure compartment.](figs/4.png)
-
-![Memory regions of the process running inside the secure compartment.](figs/5.png)
-
-*Figure 11: Memory regions of the process running inside the secure compartment.*
 
 
 **Memory regions of the process running inside the secure compartment:**
@@ -526,9 +517,6 @@ However, although compartmentalisation is designed to protect sensitive data by 
 </div>
 
 *Figure 11: Memory regions of the process running inside the secure compartment.*
-
-
-
 
 
 
