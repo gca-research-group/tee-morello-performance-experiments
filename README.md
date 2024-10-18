@@ -26,9 +26,7 @@ We compiled as shown below:
 
       $ clang-morello -march=morello+c64 -mabi=purecap -g -o integration_process integration_process.c -L. -lssl -lcrypto -lpthread
 
-4.  `cheri-cap-experiment.py` script is used to create the [replicas of the attestables](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/cheri-caps-executable-performance/cheri-cap-experiment-results.csv),
-    and collect metrics. We incremented the number of replicas created
-    from 1 to N. See replication of attestable results.
+4.  `cheri-cap-experiment.py` script is used to create the [replicas of the attestables](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/cheri-caps-executable-performance/cheri-cap-experiment-results.csv), and collect metrics. We incremented the number of replicas created from 1 to N. See replication of attestable results.
 
 The Figure 1 shows the experiment set up:
 
@@ -36,28 +34,22 @@ The Figure 1 shows the experiment set up:
 *Figure 1: Memory exhaustion by attestable replicas.*
 
 
-The graph, shown in Figure 2, shows the behaviour of memory
-consumption and elapsed time as the number of testable replicas
-increases on the Morello Board.
+The graph, shown in Figure 2, shows the behaviour of memory consumption and elapsed time as the number of testable replicas increases on the Morello Board.
 
 ![Memory consumption and elapsed time versus number of replicas on the Morello board.](figs/graph_1.png)
 *Figure 2: Memory consumption and elapsed time versus number of replicas on the Morello board.*
 
 
-Imagine that user Alice is conducting the experiment. To create the
-attestables and collect the metrics, Alice executes the following steps:
+Imagine that user Alice is conducting the experiment. To create the attestables and collect the metrics, Alice executes the following steps:
 
-1.  **Initiation:** In the Morello board, Alice initiates
-    *cheri-cap-experiment.py*.
+1.  **Initiation:** In the Morello board, Alice initiates *cheri-cap-experiment.py*.
 
 2.  **Launch:** To launch *cheri-cap-experiment.py*, Alice executes:
 
-            % python3 cheri-cap-experiment.py
+            $ python3 cheri-cap-experiment.py
 
-3.  `python3 cheri-cap-experiment.py` runs incrementally, creating
-    attestable replicas until it detects that the attestables have
-    consumed 90% of the 17,118.4 MB of the Morello Board's memory, that
-    is, about 15,406.5 MB.
+3.  `python3 cheri-cap-experiment.py` runs incrementally, creating attestable replicas until it detects that the attestables have consumed 90% of the 17,118.4 MB of the Morello Board's memory, that is, about 15,406.5 MB.
+
 
 **Preliminary observations:**
 
