@@ -369,7 +369,7 @@ Imagine that user Alice is conducting the experiment. To carry out the pipe comm
 The results of the tests carried out inside the secure compartment were stored in the file `pipe-in-experiment-result.csv`, while the results of the normal ambient execution of the Morello Board were stored in `pipe-out-experiment-result.csv`. The Tables 4 and 5 shows the records for each data set:
 
 
-## Table 4: Performance Data Inside the Compartment
+#### Table 4: Performance Data Inside the Compartment
 
 | Test | Message Size (Bytes) | Write Time (ms) | Read Time (ms) | Total Time (ms) |
 |------|-----------------------|-----------------|----------------|-----------------|
@@ -381,7 +381,7 @@ The results of the tests carried out inside the secure compartment were stored i
 | 100  | 1024                  | 0.003           | 0.079          | 0.082           |
 
 
-## Table 5: Performance Data Outside the Compartment
+#### Table 5: Performance Data Outside the Compartment
 
 | Test | Message Size (Bytes) | Write Time (ms) | Read Time (ms) | Total Time (ms) |
 |------|----------------------|-----------------|----------------|-----------------|
@@ -460,7 +460,7 @@ The Table 6 shows the results of tests carried out to evaluate access to sensit
 integration_process running in different environments - inside and outside Morello's secure enclosure. Each test varied the user's permission level (root or with reduced permissions), recording whether memory access was successful and whether sensitive data was visible.
 
 
-## Table 6: Access Control Test Results for Sensitive Data
+#### Table 6: Access Control Test Results for Sensitive Data
 
 | Test | Environment     | User Permissions | Access Result | Sensitive Data Visible |
 |------|-----------------|------------------|---------------|------------------------|
@@ -541,7 +541,7 @@ Regis needs to contact the morello-board s administrator \[erik\] to reboot.
 *Figure 13: The Morello board crashed at this point.*
 
 
-The remote ssh shell that connects to the morello board crashes when the mem scanner prog tries to read this range of mem add: 0x4a300000 - 0x4bb00000.
+The remote ssh shell that connects to the morello board crashes when the mem scanner prog tries to read this range of mem add: `0x4a300000 - 0x4bb00000`.
 
 Other ssh shell connections continue working as normal.
 
@@ -559,14 +559,14 @@ This is our preliminary observation.
 
 **Error accessing process memory:**
 
-    [Errno 2] No such file or directory: '/proc/3587/mem'
+    [Errno 2] No such file or directory: `/proc/3587/mem`
 
 This error occurs because the file `/proc/{pid}/mem`, which the script tries to access to read a process's memory, is not available or cannot be accessed. This may happen if the process does not exist, the PID is incorrect, or the script does not have the necessary permissions to access this path.
 
 
 ![\[Errno 2\] No such file or directory: '/proc/3587/mem'.](figs/error.png)
 
-*Figure 15: \[Errno 2\] No such file or directory: '/proc/3587/mem'.*
+*Figure 15: \[Errno 2\] No such file or directory: `/proc/3587/mem`.*
 
 
 **Procedure for running `memory_reader.py` after MB is rebooted.**
@@ -587,4 +587,4 @@ If it's not mounted, you need to try mounting it:
 *Figure 17: If it's not mounted, you need to try mounting it.*
 
 
-After the command to mount /proc, it was simply possible to run the `memory_reader.py´ script again.
+After the command to mount /proc, it was simply possible to run the `memory_reader.py` script again.
