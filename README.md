@@ -219,16 +219,11 @@ The operations measured are:
 
 **Test procedure**
 
-Imagine that user Alice is conducting the experiment. To carry out the
-memory performance tests and collect the results, Alice performs the
-following steps:
+Imagine that user Alice is conducting the experiment. To carry out the memory performance tests and collect the results, Alice performs the following steps:
 
-1.  **Start:** Alice compiles and runs the test programme in two
-    different scenarios:
+1.  **Start:** Alice compiles and runs the test programme in two different scenarios:
 
-    -   **Inside the compartment:** Alice runs the programme
-        `memory-in-experiment-result.c` on the Morello Board, using the
-        secure environment.
+    -   **Inside the compartment:** Alice runs the programme `memory-in-experiment-result.c` on the Morello Board, using the secure environment.
 
         -   **Compile:**
             `clang-morello -march=morello+c64 -mabi=purecap -g -o memory-in-experiment memory-in-experiment.c -L. -lm`
@@ -236,36 +231,23 @@ following steps:
         -   **Run:**
             `proccontrol -m cheric18n -s enable ./memory-in-experiment`
 
-    -   **Outside the compartment:** Alice runs the programme
-        `memory-out-experiment-result.c` in the normal operating
-        environment of the Morello Board.
+    -   **Outside the compartment:** Alice runs the programme `memory-out-experiment-result.c` in the normal operating environment of the Morello Board.
 
         -   **Compile:**
             `clang-morello -g -o memory-out-experiment memory-out-experiment.c -lm`
 
         -   **Run:** `./memory-out-experiment`
 
-2.  **Execution:** The programme automatically iterates over the memory
-    block sizes, from 100 MB to 1 GB, performing the following sequence
-    for each block size: allocate the block, write to the block, read
-    the block, and release the block.
+2.  **Execution:** The programme automatically iterates over the memory block sizes, from 100 MB to 1 GB, performing the following sequence for each block size: allocate the block, write to the block, read the block, and release the block.
 
-3.  **Repetition:** For each block size, these steps are repeated 30
-    times, both inside and outside the compartment. The time of each
-    operation is recorded and saved in a CSV file for the environment.
+3.  **Repetition:** For each block size, these steps are repeated 30 times, both inside and outside the compartment. The time of each operation is recorded and saved in a CSV file for the environment.
+
 
 **Results**
 
-For each CSV file, the iteration averages were calculated for each
-memory block size in the Allocation Time, Write Time, Read Time and Free
-Time attributes. For each memory block value (100 MB, 200 MB, etc.), the
-times measured in the iterations were added together and the average was
-obtained for each operation (allocation, write, read and free). This was
-done separately for the two files, representing in-compartment and
-out-of-compartment executions, respectively, as shown in the
-Tables 2 and 3.
+For each CSV file, the iteration averages were calculated for each memory block size in the Allocation Time, Write Time, Read Time and Free Time attributes. For each memory block value (100 MB, 200 MB, etc.), the times measured in the iterations were added together and the average was obtained for each operation (allocation, write, read and free). This was done separately for the two files, representing in-compartment and out-of-compartment executions, respectively, as shown in the Tables 2 and 3.
 
-## Table 2: In Compartment
+### Table 2: In Compartment
 
 | Block Size (MB) | Allocation Time (ms) | Write Time (ms) | Read Time (ms) | Free Time (ms) |
 |-----------------|----------------------|-----------------|----------------|----------------|
