@@ -205,13 +205,14 @@ Algorithm 2 details how to perform memory performance tests and record the resul
 
 The operations measured are:
 
-   A.  **Memory allocation:** time required to allocate a block of memory.
+      a.  Memory allocation: time required to allocate a block of memory.
+   
+      b.  Writing to Memory: time required to write data to the entire allocated memory block.
 
-   B.  **Writing to Memory:** time required to write data to the entire allocated memory block.
+      c.  Memory read: time taken to read the data from the entire memory block.
 
-   C.  **Memory read:** time taken to read the data from the entire memory block.
-
-   D.  **Memory release:** time taken to release the memory block back into the system.
+      d.  Memory release: time taken to release the memory block back into the system.
+   
 
 2.  The code for the experiment we carried out is available in the [tee-morello-performance-experiments repository](https://github.com/gca-research-group/tee-morello-performance-experiments/tree/main/memory-performance).
 
