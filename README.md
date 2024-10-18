@@ -1,6 +1,6 @@
 <h1 style="font-size: 2em;">Performance and safety experiments carried out in secure compartments created on a Morello Board</h1>
 
-This repository documents the performance and security evaluation experiments in secure compartments created on a Morello Board with cheriBSD 24.5.
+This repository documents the performance and security evaluation experiments in secure compartments created on a Morello Board with cheriBSD 24.5. The Morello board used to conduct the experiment has 17,118,408,704 bytes (approximately 17,118.4 MB). 
 
 
 # 1. Evaluation of the number of library-based compartments
@@ -18,7 +18,7 @@ In addition to the number of attestables, we took the opportunity to collect met
 
 Some experimental facts:
 
-1.  The Morello board used to conduct the experiment has 17,118,408,704 bytes (approximately 17,118.4 MB). Thus, 90 per cent of its memory is 15,406,567,833.6 bytes (approximately 15,406.5 MB).
+1.  Of the total memory available on the Morello board, 90 percent amounts to 15,406,567,833.6 bytes (approximately 15,406.5 MB).
 
 2.  In the experiments that we conducted, we loaded code of the EAI implemented in (see yellow box) - [tee-compartimentalisation-study-case repository](https://github.com/gca-research-group/tee-compartimentalisation-study-case).
    
@@ -53,51 +53,21 @@ Imagine that user Alice is conducting the experiment. To create the attestables 
 
 **Preliminary observations:**
 
-The results are shown in replication of attestable results and exhibit
-an unexpected behaviour. We expected memory consumption to increase
-steadily from 1,628.3 MB, which corresponds to a single attestable
-replica, to 15,406.5 MB (90% of total memory) consumed by N attestable
-replicas. The aim was to determine the value of N.
+The results are shown in replication of attestable results and exhibit an unexpected behaviour. We expected memory consumption to increase steadily from 1,628.3 MB, which corresponds to a single attestable replica, to 15,406.5 MB (90% of total memory) consumed by N attestable replicas. The aim was to determine the value of N.
 
-However, unexpectedly, memory consumption increased steadily only up to
-the creation of 3,800 attestable replicas, which consumed 14,582.5 MB.
-Beyond that, intriguingly, memory consumption decreases as the number of
-attestable replicas increases. Note that the last metric shows that
-8,991 attestable replicas consume 13,066.4 MB (approximately 76% of the
-total memory).
+However, unexpectedly, memory consumption increased steadily only up to the creation of 3,800 attestable replicas, which consumed 14,582.5 MB. Beyond that, intriguingly, memory consumption decreases as the number of attestable replicas increases. Note that the last metric shows that 8,991 attestable replicas consume 13,066.4 MB (approximately 76% of the total memory).
 
-We do not have an explanation for that yet. We need to double check
-measurements. We are showing this preliminary result only to show that
-this is a pending question in our agenda. The analysis of the time to
-wipe the memory of the attestable replicas is also pending.
+We do not have an explanation for that yet. We need to double check measurements. We are showing this preliminary result only to show that this is a pending question in our agenda. The analysis of the time to wipe the memory of the attestable replicas is also pending.
 
-The cpu-performance and memory-performance folders contain code and
-results of some experiments in progress. Cpu-performance is meant to
-measure the performance of code running inside attestables in the
-computation of some mathematical operations, integer arithmetic,
-floating point arithmetic, and array manipulation. Memory-performance is
-meant to assess the time it takes an attestable to allocate and free
-blocks of memory of different sizes.
+The cpu-performance and memory-performance folders contain code and results of some experiments in progress. Cpu-performance is meant to measure the performance of code running inside attestables in the computation of some mathematical operations, integer arithmetic, floating point arithmetic, and array manipulation. Memory-performance is meant to assess the time it takes an attestable to allocate and free blocks of memory of different sizes.
+
+
+
+
 
 # 2. CPU Performance Tests on the Morello Board
 
-The main aim of this experiment is to measure and analyse the
-performance of the Morello Board's CPU by comparing the results of
-identical tests carried out inside and outside a secure enclosure. The
-tests measured the time required to perform computational operations,
-including complex mathematical functions, arithmetic operations with
-integers, floating point operations and matrix manipulation. The complex
-mathematical functions included sine, cosine, tangent, square root and
-logarithm. The integer arithmetic tests focused on multiplication,
-division, subtraction and modulo operations. For floating point
-operations, the focus was also on multiplication, division and
-subtraction. The matrix manipulation test involved initialising matrices
-and performing operations such as multiplication and division. The
-execution time of each operation was measured and recorded. These tests
-were repeated 100 times for each operation, in both environments -
-inside the secure compartment and in the Morello Board's normal
-operating environment - and the results were saved in a CSV format file
-for each environment.
+The main aim of this experiment is to measure and analyse the performance of the Morello Board's CPU by comparing the results of identical tests carried out inside and outside a secure enclosure. The tests measured the time required to perform computational operations, including complex mathematical functions, arithmetic operations with integers, floating point operations and matrix manipulation. The complex mathematical functions included sine, cosine, tangent, square root and logarithm. The integer arithmetic tests focused on multiplication, division, subtraction and modulo operations. For floating point operations, the focus was also on multiplication, division and subtraction. The matrix manipulation test involved initialising matrices and performing operations such as multiplication and division. The execution time of each operation was measured and recorded. These tests were repeated 100 times for each operation in both environments - inside the secure compartment and in the Morello Board's normal operating environment - and the results were saved in a CSV format file for each environment. Algorithm 1 details how to carry out the CPU performance tests and record the results.
 
 <pre style="border: 1px solid #ddd; padding: 10px; background-color: #f9f9f9; font-family: monospace;">
 Algorithm 1: CPUPerformance
@@ -116,34 +86,18 @@ Algorithm 1: CPUPerformance
 </pre>
 
 
-Execution begins with the perform_tests function (line 1), which
-receives as a parameter a log file where the results will be stored and
-the total accumulated time needed to run the tests. The function enters
-a repeat loop that is repeated the number of times specified by
-NUM_TESTS (line 3), where each iteration represents a test identified by
-test_num. In each iteration, the initial test time is recorded (line 4),
-followed by the execution of the computational operations determined by
-WORKLOAD_SIZE (line 5). At the end of execution, the final time is
-recorded (line 6), and the total CPU time used is calculated by
-subtracting the start_time from the end_time (line 7). This time is then
-recorded in the log file, along with the test number (line 8), and also
-added to total_time, which accumulates the total time spent on all the
-tests (line 9).
+Execution begins with the perform_tests function (line 1), which receives as a parameter a log file where the results will be stored and the total accumulated time needed to run the tests. The function enters a repeat loop that is repeated the number of times specified by NUM_TESTS (line 3), where each iteration represents a test identified by test_num. In each iteration, the initial test time is recorded (line 4), followed by the execution of the computational operations determined by WORKLOAD_SIZE (line 5). At the end of execution, the final time is recorded (line 6), and the total CPU time used is calculated by subtracting the start_time from the end_time (line 7). This time is then recorded in the log file, along with the test number (line 8), and added to total_time, accumulating the total time spent on all the tests (line 9).
 
 The code used for the tests is available from the [tee-morello-performance-experiments repository](https://github.com/gca-research-group/tee-morello-performance-experiments/tree/main/cpu-performance).
 
+
 **Test procedure**
 
-Suppose user Alice is conducting the experiment. To carry out the CPU
-performance tests and collect the results, Alice takes the following
-steps:
+Suppose user Alice is conducting the experiment. To carry out the CPU performance tests and collect the results, Alice takes the following steps:
 
-1.  **Start:** Alice compiles and runs the test program in the two
-    scenarios described above:
+1.  **Start:** Alice compiles and runs the test program in the two scenarios described above:
 
-    -   **Inside the compartment:** Alice runs the program
-        `cpu-in-experiment.c` on the Morello Board, using the secure
-        environment.
+    -   **Inside the compartment:** Alice runs the program `cpu-in-experiment.c` on the Morello Board, using the secure environment.
 
         -   **Compile:**
             `clang-morello -march=morello+c64 -mabi=purecap -g -o cpu-in-experiment cpu-in-experiment.c -L. -lm`
@@ -151,32 +105,21 @@ steps:
         -   **Run:**
             `proccontrol -m cheric18n -s enable ./cpu-in-experiment`
 
-    -   **Outside the compartment:** Alice runs the program
-        `cpu-out-experiment.c` in the Morello Board's normal operating
-        environment.
+    -   **Outside the compartment:** Alice runs the program `cpu-out-experiment.c` in the Morello Board's normal operating environment.
 
         -   **Compile:**
             `clang-morello -o cpu-out-experiment cpu-out-experiment.c -lm`
 
         -   **Run:** `./cpu-out-experiment`
 
-2.  **Execution:** The program iterates automatically through the
-    different types of operations, performing complex mathematical
-    calculations, arithmetic operations with integers, floating point
-    operations, and matrix manipulation.
+2.  **Execution:** The program iterates automatically through the different types of operations, performing complex mathematical calculations, arithmetic operations with integers, floating point operations, and matrix manipulation.
 
-3.  **Repetition:** Each operation is repeated 30 times. The time of
-    each operation is recorded in files in CSV format for both
-    environments.
+3.  **Repetition:** Each operation is repeated 30 times. The time of each operation is recorded in files in CSV format for both environments.
+
 
 **Results**
 
-The results of the tests carried out inside the secure compartment were
-stored in the file `cpu-in-experiment-result.csv`, while the results of
-the run in the Morello Board's normal environment were stored in
-`cpu-out-experiment-result.csv`. The
-Table 1 compares the average execution
-times for each type of operation in the two environments.
+The results of the tests carried out inside the secure compartment were stored in the file `cpu-in-experiment-result.csv`, while the results of the run in the Morello Board's normal environment were stored in `cpu-out-experiment-result.csv`. The Table 1 compares the average execution times for each type of operation in the two environments.
 
 <div align="center">
   <p><strong>Table 1. CPU Time Comparison</strong></p>
@@ -210,57 +153,24 @@ times for each type of operation in the two environments.
 </div>
 
 
-
-
 **Analysing the results**
 
-According to the Table 1, the results show that, on average,
-complex mathematical operations within the secure compartment took
-69,998 ms, while in the normal operating environment the time was 46,696
-ms, representing a difference of approximately 49.74 per cent. For
-arithmetic operations with integers, the average time was 993 ms inside
-the secure compartment and 923 ms in the normal operating environment, a
-difference of 7.58 per cent. For floating point operations, the time
-inside the safe compartment was 785 ms compared to the normal operating
-environment (816 ms), showing a slight improvement of 3.80 per cent. As
-for matrix manipulation operations, the time inside the safe compartment
-was 1,460 ms, while in the normal operating environment it was 1,419 ms,
-indicating an increase of 2.89 per cent.
+According to the Table 1, the results show that, on average, complex mathematical operations within the secure compartment took 69,998 ms, while in the normal operating environment the time was 46,696 ms, representing a difference of approximately 49.74 per cent. For arithmetic operations with integers, the average time was 993 ms inside the secure compartment and 923 ms in the normal operating environment, a difference of 7.58 per cent. For floating point operations, the time inside the safe compartment was 785 ms compared to the normal operating environment (816 ms), showing a slight improvement of 3.80 per cent. As for matrix manipulation operations, the time inside the safe compartment was 1,460 ms, while in the normal operating environment it was 1,419 ms, indicating an increase of 2.89 per cent.
 
-The Figure 3 illustrates the differences in
-performance between operations conducted within and outside the secure
-compartment.
+The Figure 3 illustrates the differences in performance between operations conducted within and outside the secure compartment.
 
 ![Comparison of CPU performance times in and out of the secure compartment on the Morello board.](figs/graph_2.png)
 *Figure 3: Comparison of CPU performance times in and out of the secure compartment on the Morello board.*
 
+These results suggest that the Morello Board's safe compartment introduces a small performance overhead in more complex operations, such as mathematical calculations. However, for simpler operations, such as floating point, the difference is minimal, with a slight increase in execution time within the secure compartment. This indicates that the safe compartment can be used efficiently in specific scenarios without significantly compromising performance, although the impact is more noticeable in operations that require more processing.
 
-These results suggest that the Morello Board's safe compartment
-introduces a small performance overhead in more complex operations, such
-as mathematical calculations. However, for simpler operations, such as
-floating point, the difference is minimal, with a slight increase in
-execution time within the secure compartment. This indicates that the
-safe compartment can be used efficiently in specific scenarios without
-significantly compromising performance, although the impact is more
-noticeable in operations that require more processing.
 
 
 
 # 3. Memory Performance Tests on the Morello Board
 
-The main aim of this experiment is to measure and analyse the
-performance of memory operations on a Morello Board by testing memory
-blocks of different sizes. Specifically, the test evaluates the time
-required to allocate, write, read and free memory blocks. To carry out
-this experiment, a C program was implemented - according to the
-formalism in Algorithm 2 - which automates the memory testing process.
-The programme runs repeated tests, increasing the size of the blocks at
-each stage and recording the times of each operation. The results are
-stored in a file in CSV format. The tests were carried out in two
-different environments: inside the TEE, where the programme was compiled
-for the CHERI architecture and run in a secure compartment of the
-Morello Board; and outside the TEE, where the programme was compiled and
-run in the normal operating environment of the Morello Board.
+The main aim of this experiment is to measure and analyse the performance of memory operations on a Morello Board by testing memory blocks of different sizes. Specifically, the test evaluates the time required to allocate, write, read and free memory blocks. To carry out this experiment, a C program was implemented - according to the formalism in Algorithm 2 - which automates the memory testing process. The programme runs repeated tests, increasing the size of the blocks at each stage and recording the times of each operation. The results are stored in a file in CSV format. The tests were carried out in two different environments: inside the TEE, where the programme was compiled for the CHERI architecture and run in a secure compartment of the Morello Board; and outside the TEE, where the programme was compiled and run in the normal operating environment of the Morello Board.
+
 
 <pre style="border: 1px solid #ddd; padding: 10px; background-color: #f9f9f9; font-family: monospace;">
 Algorithm 2: MemoryPerformance
@@ -280,31 +190,12 @@ Algorithm 2: MemoryPerformance
 </pre>
 
 
-Algorithm 2 details how to perform memory performance tests and record
-the results. Execution begins with the perform_tests function (line 1),
-which receives as parameters a log file where the results will be stored
-and the total accumulated time needed to run the tests. The function
-enters a repeat loop that iterates over different memory block sizes,
-defined from MIN_BLOCK_SIZE to MAX_BLOCK_SIZE with increments specified
-by BLOCK_STEP (line 3). For each block size, another loop is started,
-repeating the tests the number of times defined by NUM_TESTS (line 4).
-At each iteration, the memory allocation time is measured with the
-malloc function (line 5), followed by the time to write to the block
-(line 6), the time to read the block (line 7) and, finally, the time to
-free the memory with the free function (line 8). These times are
-recorded in the log file along with the test number (line 9). After all
-the iterations for all the memory blocks, the process is completed,
-allowing the performance of the memory allocation, write, read and free
-operations to be measured and compared in different block size
-configurations.
+Algorithm 2 details how to perform memory performance tests and record the results. Execution begins with the perform_tests function (line 1), which receives as parameters a log file where the results will be stored and the total accumulated time needed to run the tests. The function enters a repeat loop that iterates over different memory block sizes, defined from MIN_BLOCK_SIZE to MAX_BLOCK_SIZE with increments specified by BLOCK_STEP (line 3). For each block size, another loop is started, repeating the tests the number of times defined by NUM_TESTS (line 4). At each iteration, the memory allocation time is measured with the malloc function (line 5), followed by the time to write to the block (line 6), the time to read the block (line 7) and, finally, the time to free the memory with the free function (line 8). These times are recorded in the log file along with the test number (line 9). After all the iterations for all the memory blocks, the process is completed, allowing the performance of the memory allocation, write, read and free operations to be measured and compared in different block size configurations.
+
 
 **Experimental Configuration**
 
-1.  The memory blocks tested range from 100 MB to 1 GB, with increments
-    of 100 MB at each step. Each test involves 30 iterations per block
-    size. The diagram in the
-    Figure 4 shows the block pattern and the
-    times for each operation associated with different block sizes.
+1.  The memory blocks tested range from 100 MB to 1 GB, with increments of 100 MB at each step. Each test involves 30 iterations per block size. The diagram in the Figure 4 shows the block pattern and the times for each operation associated with different block sizes.
 
 
 ![Memory performance at different block sizes on the Morello board.](figs/memory.png)
@@ -312,10 +203,9 @@ configurations.
 *Figure 4: Memory performance at different block sizes on the Morello board.*
 
 
+The operations measured are:
 
-    The operations measured are:
-
-    A.  Memory allocation: time required to allocate a block of memory.
+    A.  **Memory allocation:** time required to allocate a block of memory.
 
     B.  Writing to Memory: time required to write data to the entire allocated memory block.
 
