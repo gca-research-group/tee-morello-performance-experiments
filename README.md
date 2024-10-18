@@ -519,13 +519,14 @@ However, although compartmentalisation is designed to protect sensitive data by 
 **Memory regions of the process running inside the secure compartment:**
 
 
-<div style="display: flex; padding: 0; margin: 0;">
-    <img src="figs/3.png" alt="Memory regions of the process running inside the secure compartment." style="padding: 0; margin: 0; display: block;">
-    <img src="figs/4.png" alt="Memory regions of the process running inside the secure compartment." style="padding: 0; margin: 0; display: block;">
-    <img src="figs/5.png" alt="Memory regions of the process running inside the secure compartment." style="padding: 0; margin: 0; display: block;">
+<div style="display: flex; padding: 0; margin: 0; gap: 0;">
+    <img src="figs/3.png" alt="Memory regions of the process running inside the secure compartment." style="padding: 0; margin: 0;">
+    <img src="figs/4.png" alt="Memory regions of the process running inside the secure compartment." style="padding: 0; margin: 0;">
+    <img src="figs/5.png" alt="Memory regions of the process running inside the secure compartment." style="padding: 0; margin: 0;">
 </div>
 
 *Figure 11: Memory regions of the process running inside the secure compartment.*
+
 
 
 
