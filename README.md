@@ -497,7 +497,7 @@ However, although compartmentalisation is designed to protect sensitive data by 
 
 # PRINTS
 
-<span style="color:red">Just for note-taking purposes.</span>
+:exclamation: **Just for note-taking purposes.**
 
 
 **Process memory regions running outside the secure compartment:**
