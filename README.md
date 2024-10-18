@@ -321,12 +321,7 @@ In Algorithm 3, the start_test function (line 1) starts a sequence of operations
 
 **Experimental Configuration**
 
-1. The following diagram (Figure 6) represents the experimental configuration used to evaluate communication between processes via a pipe. The data blocks, in this case represented by messages, vary by a standard size of 1024 bytes per message, and a total of 100 messages are tested to analyse the consistency and efficiency of communication between internal processes.
-
-![Communication of the process via pipe.](figs/pipe.png)
-
-*Figure 6: Communication of the process via pipe.*
-
+1. The experimental configuration used to evaluate communication between processes via a pipe was made up of data blocks, represented by messages, with a standard size of 1024 bytes per message. A total of 100 messages were tested in order to analyse the consistency and efficiency of communication between processes.
 
 The operations measured are:
 
