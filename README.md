@@ -247,7 +247,7 @@ Imagine that user Alice is conducting the experiment. To carry out the memory pe
 
 For each CSV file, the iteration averages were calculated for each memory block size in the Allocation Time, Write Time, Read Time and Free Time attributes. For each memory block value (100 MB, 200 MB, etc.), the times measured in the iterations were added together and the average was obtained for each operation (allocation, write, read and free). This was done separately for the two files, representing in-compartment and out-of-compartment executions, respectively, as shown in the Tables 2 and 3.
 
-### Table 2: In Compartment
+#### Table 2: In Compartment
 
 | Block Size (MB) | Allocation Time (ms) | Write Time (ms) | Read Time (ms) | Free Time (ms) |
 |-----------------|----------------------|-----------------|----------------|----------------|
