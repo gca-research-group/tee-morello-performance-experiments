@@ -363,13 +363,10 @@ Imagine that user Alice is conducting the experiment. To carry out the pipe comm
 
 3. **Repetition:** Each set of write and read operations is repeated 100 times for each environment - inside the compartment and outside the compartment. The times of each operation are recorded in a file in CSV format for each environment.
 
+
 **Results**
 
-The results of the tests carried out inside the secure compartment were
-stored in the file `pipe-in-experiment-result.csv`, while the results of
-the normal ambient execution of the Morello Board were stored in
-`pipe-out-experiment-result.csv`. The
-Tables 4 and 5 shows the records for each data set:
+The results of the tests carried out inside the secure compartment were stored in the file `pipe-in-experiment-result.csv`, while the results of the normal ambient execution of the Morello Board were stored in `pipe-out-experiment-result.csv`. The Tables 4 and 5 shows the records for each data set:
 
 
 ## Table 4: Performance Data Inside the Compartment
@@ -422,21 +419,8 @@ The main aim of this experiment is to measure and analyse the contents of the me
 
 **Experimental Configuration**
 
-The Figure 8 sequence diagram details how a
-programme's memory regions can be accessed directly from the operating
-system. To do this, the process implemented through the Memory Reader
-code asks the Cheri OS for the PID of the target process by name,
-`getPID(processName)`, receiving the PID in response. Memory Reader then
-uses this PID to ask Cheri OS for a list of the memory regions that have
-read and write (RW) permissions associated with the process,
-`getMemoryAddresses(PID)`, and the operating system returns the mapped
-regions. The Memory Reader then starts direct memory reading (scraping)
-by accessing the process's memory file and, for each RW region listed,
-fetches the region's starting address, reads the content between the
-starting and ending address, and receives the decoded data. This cycle
-is repeated for all RW regions, ensuring that all memory areas
-accessible for reading and writing are explored. Finally, the Memory
-Reader records the read data in the log, `output(dataReadFromMemory)`.
+The Figure 8 sequence diagram details how a programme's memory regions can be accessed directly from the operating system. To do this, the process implemented through the Memory Reader code asks the Cheri OS for the PID of the target process by name, getPID(processName)`, receiving the PID in response. Memory Reader then uses this PID to ask Cheri OS for a list of the memory regions that have read and write (RW) permissions associated with the process, `getMemoryAddresses(PID)`, and the operating system returns the mapped regions. The Memory Reader then starts direct memory reading (scraping) by accessing the process's memory file and, for each RW region listed, fetches the region's starting address, reads the content between the starting and ending address, and receives the decoded data. This cycle is repeated for all RW regions, ensuring that all memory areas accessible for reading and writing are explored. Finally, the Memory Reader records the read data in the log, `output(dataReadFromMemory)`.
+
 
 ![Sequence diagram detailing the memory scraping process through direct access in the Cheri OS.](figs/security.png)
 
@@ -445,15 +429,11 @@ Reader records the read data in the log, `output(dataReadFromMemory)`.
 
 **Test procedure**
 
-To carry out the direct memory reading experiment, Alice performs the
-following steps on the Morello Board:
+To carry out the direct memory reading experiment, Alice performs the following steps on the Morello Board:
 
-1.  **Start:** Alice compiles and runs the programme `memory_reader.py`
-    in two different scenarios:
+1.  **Start:** Alice compiles and runs the programme `memory_reader.py` in two different scenarios:
 
-    -   **Inside the compartment:** Alice compiles and runs the
-        `integration_process.c` programme on the Morello Board, using
-        the secure environment.
+    -   **Inside the compartment:** Alice compiles and runs the `integration_process.c` programme on the Morello Board, using the secure environment.
 
         -   **Compile:**
             `clang-morello -march=morello+c64 -mabi=purecap -g -o integration_process integration_process.c -L. -lssl -lcrypto -lpthread`
@@ -461,32 +441,24 @@ following steps on the Morello Board:
         -   **Run:**
             `proccontrol -m cheric18n -s enable ./integration_process`
 
-    -   **Outside the compartment:** Alice compiles and runs the
-        `integration_process.c` programme in the Morello Board's normal
-        operating environment.
+    -   **Outside the compartment:** Alice compiles and runs the `integration_process.c` programme in the Morello Board's normal operating environment.
 
         -   **Compile:**
             `clang-morello -o integration_process integration_process.c -lssl -lcrypto -lpthread`
 
         -   **Run:** `./integration_process`
 
-2.  **Launch:** Alice starts the script that performs direct memory
-    reading with the following command:
+2.  **Launch:** Alice starts the script that performs direct memory reading with the following command:
 
     -   **Run:** `python3 memory_reader.py`
 
-3.  **Execution:** `memory_reader.py` cycles through each RW region,
-    directly reading the data between the start and end addresses of
-    each region. Alice observes the results on the terminal output.
+3.  **Execution:** `memory_reader.py` cycles through each RW region, directly reading the data between the start and end addresses of each region. Alice observes the results on the terminal output.
 
 **Results**
 
-The Table 6 shows the results of tests carried
-out to evaluate access to sensitive data stored and processed by
-integration_process running in different environments - inside and
-outside Morello's secure enclosure. Each test varied the user's
-permission level (root or with reduced permissions), recording whether
-memory access was successful and whether sensitive data was visible.
+The Table 6 shows the results of tests carried out to evaluate access to sensitive data stored and processed by
+integration_process running in different environments - inside and outside Morello's secure enclosure. Each test varied the user's permission level (root or with reduced permissions), recording whether memory access was successful and whether sensitive data was visible.
+
 
 ## Table 6: Access Control Test Results for Sensitive Data
 
@@ -511,30 +483,21 @@ Table 6 metadata:
 
 **Analysing the results**
 
-The graph in the Figure 9 shows the differences in the results
-of access and visibility of confidential data according to the
-environment and user permissions.
+The graph in the Figure 9 shows the differences in the results of access and visibility of confidential data according to the environment and user permissions.
+
 
 ![Differences in access results and visibility of confidential data based on environment and user permissions.](figs/graph_5.png)
 
 *Figure 9: Differences in access results and visibility of confidential data based on environment and user permissions.*
 
 
-The results show that access to sensitive data is allowed to any user
-with root permissions, both in Morello's secure compartment and outside
-it, indicating that high permissions grant unrestricted access. In
-contrast, users with reduced permissions are unable to access this data
-in either environment, demonstrating that the secure enclosure
-consistently blocks unauthorised access, while the environment outside
-the enclosure also maintains effective controls.
+The results show that access to sensitive data is allowed to any user with root permissions, both in Morello's secure compartment and outside it, indicating that high permissions grant unrestricted access. In contrast, users with reduced permissions are unable to access this data in either environment, demonstrating that the secure enclosure consistently blocks unauthorised access, while the environment outside the enclosure also maintains effective controls.
 
-However, although compartmentalisation is designed to protect sensitive
-data by restricting access, including to the user who initiated the
-process, the results indicate that the current configuration may not be
-sufficient to guarantee complete isolation. This behaviour highlights
-the importance of investigating further adjustments to the Morello
-Board's compartmentalisation, especially for contexts where there is a
-need to protect sensitive data.
+However, although compartmentalisation is designed to protect sensitive data by restricting access, including to the user who initiated the process, the results indicate that the current configuration may not be sufficient to guarantee complete isolation. This behaviour highlights the importance of investigating further adjustments to the Morello Board's compartmentalisation, especially for contexts where there is a need to protect sensitive data.
+
+
+
+
 
 # PRINTS
 
@@ -560,8 +523,8 @@ need to protect sensitive data.
 
 **Finalisation of the process by the system**
 
-The process runs for a certain period of time (around 1 hour) and is
-finalised by the system: `killed`.
+The process runs for a certain period of time (around 1 hour) and is finalised by the system: `killed`.
+
 
 ![Finalisation of the process by the system.](figs/killed.png)
 
@@ -570,27 +533,22 @@ finalised by the system: `killed`.
 
 **The morello board crashed at this point.**
 
-Regis needs to contact the morello-board s administrator \[erik\] to
-reboot.
+Regis needs to contact the morello-board s administrator \[erik\] to reboot.
+
 
 ![The morello board crashed at this point.](figs/crashed_1.png)
 
 *Figure 13: The Morello board crashed at this point.*
 
 
-The remote ssh shell that connects to the morello board crashes when the
-mem scanner prog tries to read this range of mem add: 0x4a300000 -
-0x4bb00000.
+The remote ssh shell that connects to the morello board crashes when the mem scanner prog tries to read this range of mem add: 0x4a300000 - 0x4bb00000.
 
 Other ssh shell connections continue working as normal.
 
-There are occasion when the prog manage to crash the whole morello board
-\[the actual cheriBSD\] , no more shells can be opened. It seem that
-total crash takes place when the prog tries to read some specific mem
-ranges \[we dont know which ones cause total crashes; we believe that
-they are ranges where priviledge soft runs.
+There are occasion when the prog manage to crash the whole morello board \[the actual cheriBSD\] , no more shells can be opened. It seem that total crash takes place when the prog tries to read some specific mem ranges \[we dont know which ones cause total crashes; we believe that they are ranges where priviledge soft runs.
 
 This is our preliminary observation.
+
 
 ![client_loop: send disconnect: Broken pipe.](figs/crashed_2.png)
 
@@ -603,11 +561,8 @@ This is our preliminary observation.
 
     [Errno 2] No such file or directory: '/proc/3587/mem'
 
-This error occurs because the file `/proc/{pid}/mem`, which the script
-tries to access to read a process's memory, is not available or cannot
-be accessed. This may happen if the process does not exist, the PID is
-incorrect, or the script does not have the necessary permissions to
-access this path.
+This error occurs because the file `/proc/{pid}/mem`, which the script tries to access to read a process's memory, is not available or cannot be accessed. This may happen if the process does not exist, the PID is incorrect, or the script does not have the necessary permissions to access this path.
+
 
 ![\[Errno 2\] No such file or directory: '/proc/3587/mem'.](figs/error.png)
 
@@ -618,6 +573,7 @@ access this path.
 
 Check that /proc is mounted correctly:
 
+
 ![Check that /proc is mounted correctly.](figs/mount1.png)
 
 *Figure 16: Check that /proc is mounted correctly.*
@@ -625,10 +581,10 @@ Check that /proc is mounted correctly:
 
 If it's not mounted, you need to try mounting it:
 
+
 ![If it's not mounted, you need to try mounting it.](figs/mount2.png)
 
 *Figure 17: If it's not mounted, you need to try mounting it.*
 
 
-After the command to mount /proc, it was simply possible to run the
-memory_reader.py script again.
+After the command to mount /proc, it was simply possible to run the `memory_reader.py´ script again.
