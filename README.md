@@ -30,7 +30,7 @@ We compiled as shown below:
 
 The Figure 1 shows the experiment set up:
 
-<img src="./figs/create_load_atts.png" alt="Memory exhaustion by attestable replicas" width="400">
+<img src="./figs/create_load_atts.png" alt="Memory exhaustion by attestable replicas" width="500">
 *Figure 1: Memory exhaustion by attestable replicas.*
 
 
