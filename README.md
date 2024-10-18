@@ -10,7 +10,7 @@ or days. The question that emerges here is how many compartments can be created 
 
 ## 1.1. Experiment
 
-The main aim of this experiment is to measure and analyse how the memory of a Morello Board is consumed by instances (also called replicas) of attestables. To this end, we loaded the attestable with a C program compiled with the library compartmentalisation tool and loaded in a compartment; precisely, we used the enterprise application integration (see yellow box) use case implemented in - [tee-compartimentalisation-study-case repository] https://github.com/gca-research-group/tee-compartimentalisation-study-case).
+The main aim of this experiment is to measure and analyse how the memory of a Morello Board is consumed by instances (also called replicas) of attestables. To this end, we loaded the attestable with a C program compiled with the library compartmentalisation tool and loaded in a compartment; precisely, we used the enterprise application integration (see yellow box) use case implemented in - [tee-compartimentalisation-study-case repository] (https://github.com/gca-research-group/tee-compartimentalisation-study-case).
 
 The metric to measure is the number of attestables that can be created on a Morello Board before consuming 90% of its memory.
 
