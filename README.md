@@ -587,3 +587,12 @@ If it's not mounted, you need to try mounting it:
 
 
 After the command to mount /proc, it was simply possible to run the `memory_reader.py` script again.
+
+
+
+## Corresponding Author
+
+**Regis Rodolfo Schuch**  
+*Applied Computing Research (GCA) Group, Unijui University, Brazil*  
+[regis.schuch@unijui.edu.br](mailto:regis.schuch@unijui.edu.br)
+
