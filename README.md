@@ -30,7 +30,7 @@ We compiled as shown below:
 
 The Figure 1 shows the experiment set up:
 
-![Memory exhaustion by attestable replicas.](./figs/create_load_atts.png)
+<img src="./figs/create_load_atts.png" alt="Memory exhaustion by attestable replicas" width="400">
 *Figure 1: Memory exhaustion by attestable replicas.*
 
 
@@ -495,6 +495,9 @@ However, although compartmentalisation is designed to protect sensitive data by 
 
 
 # PRINTS
+
+<span style="color:red">Just for note-taking purposes.</span>
+
 
 **Process memory regions running outside the secure compartment:**
 
