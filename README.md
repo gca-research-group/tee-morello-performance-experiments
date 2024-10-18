@@ -1,56 +1,32 @@
-<h1 style="font-size: 2em;">Results of some performance and security evaluation against library-based compartments created in the Morello Board</h1>
+<h1 style="font-size: 2em;">Performance and safety experiments carried out in secure compartments created on a Morello Board</h1>
 
-This document presents the results of some performance and security evaluation tests conducted on library--based compartments created on a Morello Board running cheriBSD 24.5.
+This repository documents the performance and security evaluation experiments in secure compartments created on a Morello Board with cheriBSD 24.5.
 
 
 # 1. Evaluation of the number of library-based compartments
 
-In the CAMB project we are interested in using Morello Boards for
-creating attestables (compartments) to support the execution of
-exfiltration sensitive processes. The idea is to create attestables to
-host the executions of the sensitive code of the exfiltration sensitive
-process. We account for attestables that remain active for several hours
-or days. The question that emerges here is how many compartments can be
-created to run simultaneously on a single Morello Board? To find this
-limit, we created and run simultaneously on a Morello Board an
-increasing number of compartments. Within each compartment we deployed
-and integration process that sent requests to remote applications to
-retrieve data. We though that the limit depended on the amount of RAM
-memory of the Morello Board and tried to exhaust it by means of
-systematically increasing the number of compartments.
+In the CAMB project we are interested in using Morello Boards for creating attestables (compartments) to support the execution of exfiltration sensitive processes. The idea is to create attestables to host the executions of the sensitive code of the exfiltration sensitive process. We account for attestables that remain active for several hours
+or days. The question that emerges here is how many compartments can be created to run simultaneously on a single Morello Board? To find this limit, we created and run simultaneously on a Morello Board an increasing number of compartments. Within each compartment we deployed and integration process that sent requests to remote applications to retrieve data. We though that the limit depended on the amount of RAM memory of the Morello Board and tried to exhaust it by means of systematically increasing the number of compartments.
 
 ## 1.1. Experiment
 
-The main aim of this experiment is to measure and analyse how the memory
-of a Morello Board is consumed by instances (also called replicas) of
-attestables. To this end, we loaded the attestable with a C program
-compiled with the library compartmentalisation tool and loaded in a
-compartment; precisely, we used the enterprise application integration
-(see yellow box) use case implemented in -
-[tee-compartimentalisation-study-case
-repository](https://github.com/gca-research-group/tee-compartimentalisation-study-case).
+The main aim of this experiment is to measure and analyse how the memory of a Morello Board is consumed by instances (also called replicas) of attestables. To this end, we loaded the attestable with a C program compiled with the library compartmentalisation tool and loaded in a compartment; precisely, we used the enterprise application integration (see yellow box) use case implemented in - [tee-compartimentalisation-study-case repository] https://github.com/gca-research-group/tee-compartimentalisation-study-case).
 
-The metric to measure is the number of attestables that can be created
-on a Morello Board before consuming 90% of its memory.
+The metric to measure is the number of attestables that can be created on a Morello Board before consuming 90% of its memory.
 
-In addition to the number of attestables, we took the opportunity to
-collect metrics about the time it takes the operating system to wipe the
-memory used by the attestable.
+In addition to the number of attestables, we took the opportunity to collect metrics about the time it takes the operating system to wipe the memory used by the attestable.
 
 Some experimental facts:
 
-1.  The Morello board used to conduct the experiment has 17,118,408,704
-    bytes (approximately 17,118.4 MB). Thus, 90 per cent of its memory
-    is 15,406,567,833.6 bytes (approximately 15,406.5 MB).
+1.  The Morello board used to conduct the experiment has 17,118,408,704 bytes (approximately 17,118.4 MB). Thus, 90 per cent of its memory is 15,406,567,833.6 bytes (approximately 15,406.5 MB).
 
-2.  In the experiments that we conducted, we loaded code of the EAI
-    implemented in (see yellow box) -
-    [tee-compartimentalisation-study-case repository](https://github.com/gca-research-group/tee-compartimentalisation-study-case).
-    We compiled as shown below:
+2.  In the experiments that we conducted, we loaded code of the EAI implemented in (see yellow box) - [tee-compartimentalisation-study-case repository](https://github.com/gca-research-group/tee-compartimentalisation-study-case).
+   
+We compiled as shown below:
 
-            $ clang-morello -march=morello+c64 -mabi=purecap -g -o integration_process integration_process.c -L. -lssl -lcrypto -lpthread
+$ clang-morello -march=morello+c64 -mabi=purecap -g -o integration_process integration_process.c -L. -lssl -lcrypto -lpthread
 
-3.  `cheri-cap-experiment.py` script is used to create the [replicas of the attestables](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/cheri-caps-executable-performance/cheri-cap-experiment-results.csv),
+4.  `cheri-cap-experiment.py` script is used to create the [replicas of the attestables](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/cheri-caps-executable-performance/cheri-cap-experiment-results.csv),
     and collect metrics. We incremented the number of replicas created
     from 1 to N. See replication of attestable results.
 
@@ -722,24 +698,24 @@ following steps on the Morello Board:
         the secure environment.
 
         -   **Compile:**
-            `clang-morello -march=morello+c64 -mabi=purecap -g -o integration\_process integration\_process.c -L. -lssl -lcrypto -lpthread`
+            `clang-morello -march=morello+c64 -mabi=purecap -g -o integration_process integration_process.c -L. -lssl -lcrypto -lpthread`
 
         -   **Run:**
-            `proccontrol -m cheric18n -s enable ./integration\_process`
+            `proccontrol -m cheric18n -s enable ./integration_process`
 
     -   **Outside the compartment:** Alice compiles and runs the
         `integration_process.c` programme in the Morello Board's normal
         operating environment.
 
         -   **Compile:**
-            `clang-morello -o integration\_process integration\_process.c -lssl -lcrypto -lpthread`
+            `clang-morello -o integration_process integration_process.c -lssl -lcrypto -lpthread`
 
-        -   **Run:** `./integration\_process`
+        -   **Run:** `./integration_process`
 
 2.  **Launch:** Alice starts the script that performs direct memory
     reading with the following command:
 
-    -   **Run:** `python3 memory\_reader.py`
+    -   **Run:** `python3 memory_reader.py`
 
 3.  **Execution:** `memory_reader.py` cycles through each RW region,
     directly reading the data between the start and end addresses of
