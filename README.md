@@ -72,10 +72,10 @@ The main aim of this experiment is to measure and analyse the performance of the
 
 
 <pre style="border: 1px solid #ddd; padding: 10px; background-color: #f9f9f9; font-family: monospace;">
-Algorithm 1: CPUPerformance
+**Algorithm 1: CPUPerformance**
 
 1. perform_tests(log_file, total_time)
-2. begin
+2. **begin**
 3.     for test_num in NUM_TESTS do
 4.         start_time = capture_time()
 5.         execute_operations(WORKLOAD_SIZE)
@@ -84,8 +84,9 @@ Algorithm 1: CPUPerformance
 8.         results(log_file, test_num, cpu_time)
 9.         total_time += cpu_time
 10.    endfor
-11. end
+11. **end**
 </pre>
+
 
 
 Execution begins with the `perform_tests` function (line 1), which receives as parameters a log file where the results will be stored and the total accumulated time needed to run the tests. The function enters a repeat loop, repeated the number of times specified by `NUM_TESTS` (line 3), where each iteration represents a test identified by `test_num`. In each iteration, the initial test time is recorded (line 4), followed by the execution of the computational operations determined by `WORKLOAD_SIZE` (line 5). After execution, the final time is recorded (line 6), and the total CPU time used is calculated by subtracting the `start_time` from the `end_time` (line 7). This time is then logged, along with the test number (line 8), and added to `total_time`, which accumulates the total time spent across all tests (line 9).
