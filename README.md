@@ -127,10 +127,10 @@ The results of the tests carried out inside the secure compartment were stored i
 
 | Test Type | CPU Time (ms) - Out Compartment | CPU Time (ms) - In Compartment |
 |-----------|----------------------------------|-------------------------------|
-| Math      | 46696                            | 69998                         |
+| Math      | 46,696                            | 69,998                         |
 | Int       | 923                              | 993                           |
 | Float     | 816                              | 785                           |
-| Array     | 1419                             | 1460                          |
+| Array     | 1,419                             | 1,460                          |
 
 
 **Analysing the results**
