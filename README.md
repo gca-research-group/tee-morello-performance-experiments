@@ -71,7 +71,6 @@ The cpu-performance and memory-performance folders contain code and results of s
 The main aim of this experiment is to measure and analyse the performance of the Morello Board's CPU by comparing the results of identical tests carried out inside and outside a secure enclosure. The tests measured the time required to perform computational operations, including complex mathematical functions, arithmetic operations with integers, floating point operations and matrix manipulation. The complex mathematical functions included sine, cosine, tangent, square root and logarithm. The integer arithmetic tests focused on multiplication, division, subtraction and modulo operations. For floating point operations, the focus was also on multiplication, division and subtraction. The matrix manipulation test involved initialising matrices and performing operations such as multiplication and division. The execution time of each operation was measured and recorded. These tests were repeated 100 times for each operation in both environments - inside the secure compartment and in the Morello Board's normal operating environment - and the results were saved in a CSV format file for each environment. Algorithm 1 details how to carry out the CPU performance tests and record the results.
 
 
-<pre style="border: 1px solid #ddd; padding: 10px; background-color: #f9f9f9; font-family: monospace;">
 **Algorithm 1: CPUPerformance**
 
 1. perform_tests(log_file, total_time)
@@ -85,7 +84,7 @@ The main aim of this experiment is to measure and analyse the performance of the
 9.         total_time += cpu_time
 10.    endfor
 11. **end**
-</pre>
+
 
 
 
