@@ -595,6 +595,11 @@ After the command to mount /proc, it was simply possible to run the `memory_read
 
 
 
+## Acknowledgements
+
+To **Carlos Molina-Jimenez** ([carlos.molina@cl.cam.ac.uk](mailto:carlos.molina@cl.cam.ac.uk)) from the Computer Lab, University of Cambridge, and **Rafael Zancan-Frantz** ([rzfrantz@unijui.edu.br](mailto:rzfrantz@unijui.edu.br)) from the Applied Computing Research Group, Unijuí University, Brazil, for their guidance in defining the types of experiments and in evaluating the results.
+
+
 ## Corresponding Author
 
 **Regis Rodolfo Schuch**  
