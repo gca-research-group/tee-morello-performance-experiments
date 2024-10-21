@@ -88,8 +88,6 @@ Algorithm 1: CPUPerformance
 </pre>
 
 
-
-
 Execution begins with the `perform_tests` function (line 1), which receives as parameters a log file where the results will be stored and the total accumulated time needed to run the tests. The function enters a repeat loop, repeated the number of times specified by `NUM_TESTS` (line 3), where each iteration represents a test identified by `test_num`. In each iteration, the initial test time is recorded (line 4), followed by the execution of the computational operations determined by `WORKLOAD_SIZE` (line 5). After execution, the final time is recorded (line 6), and the total CPU time used is calculated by subtracting the `start_time` from the `end_time` (line 7). This time is then logged, along with the test number (line 8), and added to `total_time`, which accumulates the total time spent across all tests (line 9).
 
 The code used for the tests is available from the [tee-morello-performance-experiments repository](https://github.com/gca-research-group/tee-morello-performance-experiments/tree/main/cpu-performance).
@@ -319,7 +317,8 @@ Algorithm 3: PipeCommunicationPerformance
 </pre>
 
 
-In Algorithm 3, the start_test function (line 1) starts a sequence of operations involving writing and reading messages through a pipe. First, the STRLEN and NUM_OF_MSG parameters are set in lines 3 and 4, establishing the size of the messages and the total number of messages to be sent. For each test, which iterates from 1 to NUM_OF_MSG (line 5), the child process, if active, starts timing the write time (line 7), writes a message of size STRLEN to the pipe (line 8) and then records the write time (line 9), sending this time back to the parent process via the pipe (line 10). In parallel, the parent process reads the message and the write time from the pipe (lines 12 and 13), starts counting the read time as soon as it starts reading (line 14), and stops counting when it finishes reading (line 15). The write and read times, along with the test number, are recorded in the log file (line 16). This process is repeated until all the tests have been completed (line 17).
+In Algorithm 3, the `start_test` function (line 1) starts a sequence of operations involving writing and reading messages through a pipe. First, the `STRLEN` and `NUM_OF_MSG` parameters are set in lines 3 and 4, establishing the size of the messages and the total number of messages to be sent. For each test, which iterates from 1 to `NUM_OF_MSG` (line 5), the child process, if active, starts timing the write time (line 7), writes a message of size `STRLEN` to the pipe (line 8), and then records the write time (line 9), sending this time back to the parent process via the pipe (line 10). In parallel, the parent process reads the message and the write time from the pipe (lines 12 and 13), starts counting the read time as soon as it starts reading (line 14), and stops counting when it finishes reading (line 15). The write and read times, along with the test number, are recorded in the log file (line 16). This process is repeated until all the tests have been completed (line 17).
+
 
 
 **Experimental Configuration**
