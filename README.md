@@ -235,14 +235,14 @@ For each CSV file, the iteration averages were calculated for each memory block 
 |-----------------|----------------------|-----------------|----------------|----------------|
 | 100             | 106                  | 295,308         | 282,576        | 97             |
 | 200             | 138                  | 590,498         | 565,152        | 272            |
-| 300             | 138                  | 885.784         | 847,719        | 318            |
-| 400             | 141                  | 1.180,815       | 1.130,297      | 492            |
-| 500             | 131                  | 1.476,014       | 1.412,881      | 321            |
-| 600             | 168                  | 1.771,086       | 1.695,456      | 399            |
-| 700             | 251                  | 2.066,147       | 1.978,022      | 725            |
-| 800             | 235                  | 2.361,646       | 2.260,586      | 738            |
-| 900             | 312                  | 2.656,590       | 2.543,166      | 1,197          |
-| 1000            | 265                  | 2.951,487       | 2.825,741      | 405            |
+| 300             | 138                  | 885,784         | 847,719        | 318            |
+| 400             | 141                  | 1,180,815       | 1,130,297      | 492            |
+| 500             | 131                  | 1,476,014       | 1,412,881      | 321            |
+| 600             | 168                  | 1,771,086       | 1,695,456      | 399            |
+| 700             | 251                  | 2,066,147       | 1,978,022      | 725            |
+| 800             | 235                  | 2,361,646       | 2,260,586      | 738            |
+| 900             | 312                  | 2,656,590       | 2,543,166      | 1,197          |
+| 1000            | 265                  | 2,951,487       | 2,825,741      | 405            |
 
 
 #### Table 3: Out Compartment
@@ -252,13 +252,13 @@ For each CSV file, the iteration averages were calculated for each memory block 
 | 100             | 2                    | 282,574         | 322,944        | 3              |
 | 200             | 2                    | 565,140         | 645,880        | 4              |
 | 300             | 1                    | 847,708         | 968,814        | 5              |
-| 400             | 3                    | 1.130,294       | 1.291,766      | 7              |
-| 500             | 3                    | 1.412,856       | 1.614,708      | 6              |
-| 600             | 2                    | 1.695,426       | 1.937,630      | 6              |
-| 700             | 2                    | 1.977,999       | 2.260,573      | 8              |
-| 800             | 2                    | 2.260,593       | 2.583,527      | 8              |
-| 900             | 2                    | 2.543,151       | 2.906,485      | 8              |
-| 1000            | 2                    | 2.825,742       | 3.229,433      | 9              |
+| 400             | 3                    | 1,130,294       | 1,291,766      | 7              |
+| 500             | 3                    | 1,412,856       | 1,614,708      | 6              |
+| 600             | 2                    | 1,695,426       | 1,937,630      | 6              |
+| 700             | 2                    | 1,977,999       | 2,260,573      | 8              |
+| 800             | 2                    | 2,260,593       | 2,583,527      | 8              |
+| 900             | 2                    | 2,543,151       | 2,906,485      | 8              |
+| 1000            | 2                    | 2,825,742       | 3,229,433      | 9              |
 
 
 **Analysing the results**
@@ -273,9 +273,9 @@ The results illustrated in the graphs in Figure 5 reveal some trends in relatio
 
 - **Allocation time:** the values resulting from the tests in the secure compartment range from 106 ms for 100 MB blocks to 251 ms for 700 MB blocks, with some variations across block sizes. In the Morello Board's normal operating environment, the allocation time is considerably shorter, ranging from 5 ms (100 MB) to 7 ms (900 MB).
 
-- **Write time:** in both environments, the times follow a linear behaviour as the block size increases. In the secure compartment, the values start at 295,308 ms for 100 MB blocks and reach 2.951,487 ms for 1 GB blocks. In the normal operating environment, the times are slightly longer, ranging from 491,512 ms (100 MB) to 4.903,282 ms (1 GB).
+- **Write time:** in both environments, the times follow a linear behaviour as the block size increases. In the secure compartment, the values start at 295,308 ms for 100 MB blocks and reach 2,951,487 ms for 1 GB blocks. In the normal operating environment, the times are slightly longer, ranging from 491,512 ms (100 MB) to 4,903,282 ms (1 GB).
 
-- **Read time:** the results also show a linear behaviour in both environments. Inside the secure compartment, the read time starts at 282,576 ms (100 MB) and increases up to 2.825,741 ms (1 GB). In the normal operating environment, the times vary from 245,263 ms (100 MB) to 2,452,597 ms (1 GB), being slightly longer.
+- **Read time:** the results also show a linear behaviour in both environments. Inside the secure compartment, the read time starts at 282,576 ms (100 MB) and increases up to 2,825,741 ms (1 GB). In the normal operating environment, the times vary from 245,263 ms (100 MB) to 2,452,597 ms (1 GB), being slightly longer.
 
 - **Memory release time:** shows similar behaviour in both environments. In the secure compartment, the time varies from 97 ms (100 MB) to 1,197 ms (900 MB), while in the normal operating environment the times are lower, ranging from 4,499 ms (100 MB) to 44,750 ms (1 GB).
 
