@@ -60,10 +60,6 @@ However, unexpectedly, memory consumption increased steadily only up to the crea
 
 We do not have an explanation for that yet. We need to double check measurements. We are showing this preliminary result only to show that this is a pending question in our agenda. The analysis of the time to wipe the memory of the attestable replicas is also pending.
 
-The cpu-performance and memory-performance folders contain code and results of some experiments in progress. Cpu-performance is meant to measure the performance of code running inside attestables in the computation of some mathematical operations, integer arithmetic, floating point arithmetic, and array manipulation. Memory-performance is meant to assess the time it takes an attestable to allocate and free blocks of memory of different sizes.
-
-
-
 
 
 # 2. CPU Performance Tests on the Morello Board
