@@ -98,7 +98,7 @@ Suppose user Alice is conducting the experiment. To carry out the CPU performanc
     - **Inside the compartment:** Alice runs the program `cpu-in-experiment.c` on the Morello Board, using the secure environment.
 
         - **Compile:**
-            `clang-morello -march=morello+c64 -mabi=purecap -g -o cpu-in-experiment cpu-in-experiment.c -L. -lm`
+            `clang-morello -march=morello+c64 -mabi=purecap -o cpu-in-experiment cpu-in-experiment.c -lm`
 
         - **Run:**
             `proccontrol -m cheric18n -s enable ./cpu-in-experiment`
@@ -203,7 +203,7 @@ Imagine that user Alice is conducting the experiment. To carry out the memory pe
     - **Inside the compartment:** Alice runs the programme `memory-in-experiment-result.c` on the Morello Board, using the secure environment.
 
         - **Compile:**
-            `clang-morello -march=morello+c64 -mabi=purecap -g -o memory-in-experiment memory-in-experiment.c -L. -lm`
+            `clang-morello -march=morello+c64 -mabi=purecap -o memory-in-experiment memory-in-experiment.c -lm`
 
         - **Run:**
             `proccontrol -m cheric18n -s enable ./memory-in-experiment`
@@ -340,7 +340,7 @@ Imagine that user Alice is conducting the experiment. To carry out the pipe comm
     -   **Inside the compartment:** Alice runs the programme `pipe-in-experiment.c` on the Morello Board, using the secure environment.
 
         - **Compile:**
-            `clang-morello -march=morello+c64 -mabi=purecap -g -o pipe-in-experiment pipe-in-experiment.c -L.`
+            `clang-morello -march=morello+c64 -mabi=purecap -o pipe-in-experiment pipe-in-experiment.c`
 
         - **Run:**
             `proccontrol -m cheric18n -s enable ./pipe-in-experiment`
@@ -427,20 +427,20 @@ To carry out the direct memory reading experiment, Alice performs the following 
 
 1.  **Start:** Alice compiles and runs the programme `memory_reader.py` in two different scenarios:
 
-    -   **Inside the compartment:** Alice compiles and runs the `integration_process.c` programme on the Morello Board, using the secure environment.
+    -   **Inside the compartment:** Alice compiles and runs the `integration_process-in-experiment.c` programme on the Morello Board, using the secure environment.
 
         -   **Compile:**
-            `clang-morello -march=morello+c64 -mabi=purecap -g -o integration_process integration_process.c -L. -lssl -lcrypto -lpthread`
+            `clang-morello -march=morello+c64 -mabi=purecap -g -o integration_process-in-experiment integration_process-in-experiment.c -L. -lssl -lcrypto -lpthread`
 
         -   **Run:**
-            `proccontrol -m cheric18n -s enable ./integration_process`
+            `proccontrol -m cheric18n -s enable ./integration_process-in-experiment`
 
-    -   **Outside the compartment:** Alice compiles and runs the `integration_process.c` programme in the Morello Board's normal operating environment.
+    -   **Outside the compartment:** Alice compiles and runs the `integration_process-out-experiment.c` programme in the Morello Board's normal operating environment.
 
         -   **Compile:**
-            `clang-morello -o integration_process integration_process.c -lssl -lcrypto -lpthread`
+            `clang-morello -o integration_process-out-experiment integration_process-out-experiment.c -lssl -lcrypto -lpthread`
 
-        -   **Run:** `./integration_process`
+        -   **Run:** `./integration_process-out-experiment`
 
 2.  **Launch:** Alice starts the script that performs direct memory reading with the following command:
 
