@@ -24,7 +24,7 @@ Some experimental facts:
    
 We compiled as shown below:
 
-      $ clang-morello -march=morello+c64 -mabi=purecap -g -o integration_process integration_process.c -L. -lssl -lcrypto -lpthread
+      $ clang-morello -march=morello+c64 -mabi=purecap -o integration_process integration_process.c -lssl -lcrypto -lpthread
 
 4. `cheri-cap-experiment.py` script is used to create the [replicas of the attestables](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/cheri-caps-executable-performance/cheri-cap-experiment-results.csv), and collect metrics. We incremented the number of replicas created from 1 to N. See replication of attestable results.
 
@@ -430,7 +430,7 @@ To carry out the direct memory reading experiment, Alice performs the following 
     -   **Inside the compartment:** Alice compiles and runs the `integration-process-in-experiment.c` programme on the Morello Board, using the secure environment.
 
         -   **Compile:**
-            `clang-morello -march=morello+c64 -mabi=purecap -g -o integration-process-in-experiment integration_process-in-experiment.c -L. -lssl -lcrypto -lpthread`
+            `clang-morello -march=morello+c64 -mabi=purecap -o integration-process-in-experiment integration_process-in-experiment.c -lssl -lcrypto -lpthread`
 
         -   **Run:**
             `proccontrol -m cheric18n -s enable ./integration-process-in-experiment`
