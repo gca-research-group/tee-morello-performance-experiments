@@ -427,20 +427,20 @@ To carry out the direct memory reading experiment, Alice performs the following 
 
 1.  **Start:** Alice compiles and runs the programme `memory_reader.py` in two different scenarios:
 
-    -   **Inside the compartment:** Alice compiles and runs the `integration_process-in-experiment.c` programme on the Morello Board, using the secure environment.
+    -   **Inside the compartment:** Alice compiles and runs the `integration-process-in-experiment.c` programme on the Morello Board, using the secure environment.
 
         -   **Compile:**
-            `clang-morello -march=morello+c64 -mabi=purecap -g -o integration_process-in-experiment integration_process-in-experiment.c -L. -lssl -lcrypto -lpthread`
+            `clang-morello -march=morello+c64 -mabi=purecap -g -o integration-process-in-experiment integration_process-in-experiment.c -L. -lssl -lcrypto -lpthread`
 
         -   **Run:**
-            `proccontrol -m cheric18n -s enable ./integration_process-in-experiment`
+            `proccontrol -m cheric18n -s enable ./integration-process-in-experiment`
 
-    -   **Outside the compartment:** Alice compiles and runs the `integration_process-out-experiment.c` programme in the Morello Board's normal operating environment.
+    -   **Outside the compartment:** Alice compiles and runs the `integration-process-out-experiment.c` programme in the Morello Board's normal operating environment.
 
         -   **Compile:**
-            `clang-morello -o integration_process-out-experiment integration_process-out-experiment.c -lssl -lcrypto -lpthread`
+            `clang-morello -o integration_process-out-experiment integration-process-out-experiment.c -lssl -lcrypto -lpthread`
 
-        -   **Run:** `./integration_process-out-experiment`
+        -   **Run:** `./integration-process-out-experiment`
 
 2.  **Launch:** Alice starts the script that performs direct memory reading with the following command:
 
