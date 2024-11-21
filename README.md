@@ -191,13 +191,13 @@ b) **write:** time required to write data to fill the entire memory block.
 c) **read:** time taken to read the data from the entire memory block.  
 d) **free:** time taken to release the memory block back into the main memory.
 
-As shown in Figure 3, we use blocks of `100, 200, 300,...,100 000 MB` as large blocks of memory.  
+As shown in Figure 4, we use blocks of `100, 200, 300,...,100 000 MB` as large blocks of memory.  
 Blocks of these sizes are typical of applications that process images and access databases.
 
 <p align="center">
   <img src="./figs/memory.png" alt="Performance of memory operations on memory blocks of different sizes" width="65%"/>
 </p>
-<p align="center"><em>Figure 3: Performance of memory operations on memory blocks of different sizes.</em></p>
+<p align="center"><em>Figure 4: Performance of memory operations on memory blocks of different sizes.</em></p>
 
 
 <pre style="border: 1px solid #ddd; padding: 10px; background-color: #f9f9f9; font-family: monospace;">
