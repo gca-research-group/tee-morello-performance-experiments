@@ -222,14 +222,89 @@ Execution begins with the `perform_tests` function (line 1), which receives a lo
 The for-loop (line 3) iterates over memory blocks of different sizes ranging from `MIN_BLOCK_SIZE` to `MAX_BLOCK_SIZE` with increments specified by `BLOCK_STEP`.  
 The inner for-loop (line 4) repeats the test `NUM_TESTS` times for each block size. `NUM_TESTS` is defined by the programmer as a constant.
 
-At each iteration:
-- The memory allocation time is measured with the time function (line 5).
-- The time to write to the block is measured in line 6.
-- The time to read the block is measured in line 7.
-- Finally, the time to free the memory is measured in line 8.  
+At each iteration, the memory allocation time is measured with the time function (line 5);   the time to write to the block is measured in line 6, the time to read the block is measured in line and, finally, the time to free the memory is measured in line 8. The metric collected  are recorded in the log file along with the test number (line 9).
 
-The metrics collected are recorded in the log file along with the test number (line 9).
-```
+
+
+## Results
+
+The metrics collected are stored in two separate CSV files:  
+[memory-in-experiment-result.csv](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/memory-performance/inside-tee-execution/memory-in-experiment-resuls.csv) for the run inside a compartment.  
+[memory-out-experiment-result.csv](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/memory-performance/outside-tee-exection/memory-out-experiment-resuls.csv) collects metrics of the run without compartments. We calculate the average time that it takes to allocate, write, read and free for each block size (100 MB, 200 MB, 300 MB, etc.). The results are summarised in Tables 3 and 4.
+
+<div align="center">
+<p><em>Table 3: Metrics of runs inside a compartment, including mean and standard deviation.</em></p>
+
+| **Block Size (MB)** | **Allocation Time (ms)** | **Write Time (ms)** | **Read Time (ms)** | **Free Time (ms)** |
+|---------------------|--------------------------|---------------------|--------------------|--------------------|
+| 100                 | 106 ± 162.81            | 295,308 ± 134.61    | 282,576 ± 9.12     | 97 ± 190.67        |
+| 200                 | 138 ± 184.86            | 590,498 ± 258.80    | 565,152 ± 13.51    | 272 ± 453.06       |
+| 300                 | 138 ± 197.84            | 885,784 ± 352.15    | 847,719 ± 16.11    | 318 ± 553.84       |
+| 400                 | 141 ± 251.11            | 1,180,815 ± 488.16  | 1,130,297 ± 16.14  | 492 ± 837.55       |
+| 500                 | 131 ± 287.53            | 1,476,014 ± 534.18  | 1,412,881 ± 21.82  | 321 ± 649.56       |
+| 600                 | 168 ± 350.89            | 1,771,086 ± 665.76  | 1,695,456 ± 27.63  | 399 ± 800.15       |
+| 700                 | 251 ± 507.21            | 2,066,147 ± 670.82  | 1,978,022 ± 28.73  | 725 ± 1,312.96     |
+| 800                 | 235 ± 601.22            | 2,361,646 ± 980.32  | 2,260,586 ± 36.58  | 738 ± 1,365.85     |
+| 900                 | 312 ± 878.94            | 2,656,590 ± 881.36  | 2,543,166 ± 48.78  | 1,197 ± 1,903.50   |
+| 1000                | 265 ± 878.73            | 2,951,487 ± 1,017.72| 2,825,741 ± 45.21  | 405 ± 921.64       |
+
+</div>
+
+
+<div align="center">
+<p><em>Table 4: Metrics of runs outside a compartment, including mean and standard deviation.</em></p>
+
+| **Block Size (MB)** | **Allocation Time (ms)** | **Write Time (ms)** | **Read Time (ms)** | **Free Time (ms)** |
+|---------------------|--------------------------|---------------------|--------------------|--------------------|
+| 100                 | 2.37 ± 9.60             | 282,573.6 ± 21.01   | 322,943.5 ± 23.47  | 3.3 ± 2.85         |
+| 200                 | 2.47 ± 6.40             | 565,140.4 ± 13.05   | 645,880.3 ± 10.00  | 4.47 ± 2.10        |
+| 300                 | 1.43 ± 1.92             | 847,708.1 ± 15.14   | 968,813.5 ± 15.52  | 4.63 ± 1.99        |
+| 400                 | 2.9 ± 5.79              | 1,130,294.0 ± 22.28 | 1,291,766.3 ± 22.70| 7.37 ± 3.22        |
+| 500                 | 2.63 ± 5.39             | 1,412,856.5 ± 20.91 | 1,614,707.9 ± 23.45| 6.47 ± 1.55        |
+| 600                 | 1.83 ± 2.38             | 1,695,426.4 ± 30.26 | 1,937,629.5 ± 29.14| 6.2 ± 1.86         |
+| 700                 | 1.97 ± 1.83             | 1,977,999.2 ± 34.40 | 2,260,573.3 ± 36.07| 7.67 ± 1.95        |
+| 800                 | 2.4 ± 2.99              | 2,260,592.6 ± 40.55 | 2,583,527.0 ± 30.94| 8.07 ± 1.31        |
+| 900                 | 2.1 ± 0.80              | 2,543,150.9 ± 43.68 | 2,906,485.3 ± 52.49| 8.2 ± 1.79         |
+| 1000                | 1.97 ± 0.96             | 2,825,742.3 ± 47.44 | 3,229,433.5 ± 44.77| 8.77 ± 2.56        |
+
+</div>
+
+<p align="center">
+  <img src="./figs/performancememOperations.png" alt="Time to execute allocate, write, read and release memory operations" width="100%"/>
+</p>
+
+### Observations
+
+- **Allocation time:** A comparison of Table 1 against Table 2 reveals that it takes longer to allocate memory blocks inside compartments. For example, the allocation of 100 MB takes 2 ms without a compartment, while it takes 106 ms inside a compartment. Allocation times vary from 1 to 3 ms without a compartment but from 106 to 265 ms inside a compartment.
+
+- **Write time:** Both tables show a linear increase in write time as the block size increases. However, execution inside a compartment takes longer.
+
+- **Read time:** The time to execute read operations increases linearly in both executions. However, execution within a compartment takes longer than execution without compartments.
+
+- **Free time:** Metrics show contrasting performances. Inside a compartment, times range from 97 to 1,197 ms. Outside a compartment, times range from 3 to 9 ms.
+
+The results from Tables 1 and 2 are plotted in Figure 1. Full records are available at:  
+[memory-in-experiment-result.csv](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/memory-performance/inside-tee-execution/memory-in-experiment-resuls.csv)  
+[memory-out-experiment-result.csv](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/memory-performance/outside-tee-exection/memory-out-experiment-resuls.csv)
+
+### Figure 2: Dispersion of the time to execute allocate, write, read, and free operations.
+
+<p align="center">
+  <img src="./figs/boxplot_allocate_rd_wr_free_mem.png" alt="Dispersion of the time to execute allocate, write, read, and free operations" width="100%"/>
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
