@@ -563,6 +563,33 @@ Fig. 8 shows the steps executed by the `memory_reader.py` script:
 
 
 
+## 6.1. Results
+
+Table 8 summarises the results. The columns have the following meaning:
+
+<div align="center">
+<p><em>Table 8: Memory isolation in executions within and without compartments.</em></p>
+
+| Test num. | Execution env.   | User privileges | Access  | Sensitive Data Visible |
+|-----------|------------------|-----------------|---------|-------------------------|
+| 1         | in Compartment   | Root            | Granted | Yes                     |
+| 2         | in Compartment   | Ordinary user   | Denied  | No                      |
+| 3         | out Compartment  | Root            | Granted | Yes                     |
+| 4         | out Compartment  | Ordinary user   | Denied  | No                      |
+
+</div>
+
+
+- **Test num:** Unique identification number of the test.
+- **Execution env.:** The execution environment where the application is executed, either within a compartments or no compartment.
+- **User privileges:** The privileges granted to the user that executes the `memory_reader.py` script.
+- **Access:** The response of cheriBSD to the `memory_reader.py` script's request to access the memory region.
+- **Sensitive Data Visible:** Visibility of the data retrieved from the memory region. Can the `memory_reader.py` script extract information from the data?
+
+The results shown in Table~\ref{tab:access_control_tests} indicate that a user with root privileges has permission to access any memory region, including memory regions allocated to compartments. However, ordinary users are unable to access memory regions allocated to processes, including processes not executed inside compartments.
+
+These results indicate that the Morello Board implements the traditional asymmetric trust model where user applications trust privileged software. Some applications demand the symmetric trust model where privileged software and user applications distrust each other. Examples of technologies that implement mutual distrust are Intel SGX and AWS Nitro Enclaves.
+
 
 
 
