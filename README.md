@@ -294,6 +294,99 @@ Plots of the results from Tables 3 and 4 shown in Fig. 6. Full records are avail
 
 
 
+# 2. CPU performance in the execution of demanding arithmetic operations
+
+We have carried out this experiment to determine if library--based compartments affect the performance of the CPU. Precisely, we have executed a program with functions that involve the execution of CPU--demanding arithmetic operations and collected metrics about execution time. The program that we have implemented for this purpose includes operations with integers (int), floating point (float), arrays, and complex mathematical functions (such as trigonometric and exponential functions) that are known to be CPU--demanding.
+
+We use a C program that compile and run inside a library-based compartment and without compartments.
+
+- **Compilation and execution inside a compartment**
+
+  The program that we use is available from Git:  
+  [cpu-in-experiment.c](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/cpu-performance/inside-tee-execution/cpu-in-experiment.c)
+
+  We compile and run it as follows:
+  ```bash
+  $ clang-morello -march=morello+c64 -mabi=purecap -o cpu-in-experiment cpu-in-experiment.c -lm
+  
+  $ proccontrol -m cheric18n -s enable cpu-in-experiment
+  ```
+
+- **Compilation and execution without a compartment**
+
+  The program that we use is available from Git:  
+  [cpu-out-experiment.c](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/cpu-performance/outside-tee-exection/cpu-out-experiment.c)
+
+  We compile and run it as follows:
+  ```bash
+  $ clang-morello -o cpu-out-experiment cpu-out-experiment.c -lm
+  
+  $ ./cpu-out-experiment
+  ```
+
+The choice of these operations is based on the variety of typical workloads in computer applications, covering operations that vary in CPU resource usage. Time collection was carried out in both environments, allowing a detailed comparison between performance in the compartmentalised environment and the Morello Board's normal operating environment.
+
+Algorithm 2 contains the code that we have run to produce metrics about the CPU performance and store them in a CSV files.
+
+<pre style="border: 1px solid #ddd; padding: 10px; background-color: #f9f9f9; font-family: monospace;">
+Algorithm 2: CPUPerformance
+
+1. perform_tests(log_file, total_time)
+2. begin
+3.     for test_num in NUM_TESTS do
+4.         start_time = capture_time()
+5.         execute_operations(WORKLOAD_SIZE)
+6.         end_time = capture_time()
+7.         cpu_time = calculate_cpu_time(start_time, end_time)
+8.         results(log_file, test_num, cpu_time)
+9.         total_time += cpu_time
+10.    endfor
+11. end
+</pre>
+
+The execution begins with the perform\_tests function (line 1), which receives the name of as a log file as input parameter to be used to store metrics about the execution of individual operations and the total time to complete the program. The function enters a repeat loop that is repeated the number of times specified by `NUM_TESTS` (line 3), where each iteration represents a test identified by `test_num`. In each iteration, the initial test time is recorded (line 4), followed by the execution of the computational operations determined by `WORKLOAD_SIZE` (line 5). At the end of execution, the final time is recorded (line 6), and the total CPU time elapsed is calculated by subtracting the `start_time` from the `end_time` (line 7). This time is recorded in the log file, along with the test number (line 8), and added to `total_time`, that accumulates the total time spent on all the tests (line 9).
+
+
+
+## Results
+
+The results collected from the execution inside a compartment are available from [cpu-in-experiment-result.csv](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/cpu-performance/inside-tee-execution/cpu_in-experiment-result.csv). Similarly, the results collected from the execution without a compartment are available from [cpu-out-experiment-result.csv](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/cpu-performance/outside-tee-exection/cpu-out-experiment-result.csv).
+
+Table 5 compares the average execution times of different operations in both executions.
+
+<div align="center">
+<p><em>Table 5: Times to execute CPU operations inside and without a compartment.</em></p>
+
+| Test Type                     | CPU Time (ms) - Normal | CPU Time (ms) - Secure |
+|-------------------------------|------------------------|-------------------------|
+| Maths (trigon. and exp. func) | 46,696                | 69,998                 |
+| Int                           | 923                   | 993                    |
+| Float                         | 816                   | 785                    |
+| Array                         | 1,419                 | 1,460                  |
+
+</div>
+
+
+
+
+
+
+The results show that complex mathematical operations (trigonometric and exponential functions) executed within a compartment took 69,998 ms on average. In contrast, the execution of the same operations without a compartment took only 46,696 ms. This represents a performance cost of approximately 49.74%. However, the execution of arithmetic operations with integers without a compartment takes 923 ms. This figure is similar to the 993 ms that it takes to execute the same operation inside a compartment. The difference is only 7.58%. Unexpectedly, the execution of floating point operations inside a compartment took 785 ms, which is slightly lower than the execution without a compartment, which took 816 ms. The difference is 3.80%. Finally, the execution of array manipulation operations took 1,460 ms inside a compartment. This is not very different from the 1,419 ms that it takes to execute the same operation without a compartment; precisely, the difference is only 2.89%.
+
+As visualised in Fig.~\ref{fig:CPUperformance}, these results indicate that there is a noticeable performance cost in the execution of complex math operations inside compartments. However, in the execution of int, float and array operations, the performance is similar with and without compartments; strikingly, it is slightly better in the run inside a compartment.
+
+<p align="center">
+  <img src="./figs/CPUperformance.png" alt="CPU performance in executions within and without compartments" width="100%"/>
+</p>
+<p align="center"><em>Figure~\ref{fig:CPUperformance}: CPU performance in executions within and without compartments.</em></p>
+
+
+
+
+
+
+
+
 
 
 
