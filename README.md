@@ -5,23 +5,17 @@ This report evaluates compartments created using the library--based compartmenta
 
 # Experiments set up
 
-We use a Morello Board, which is physically located in Toronto, within the premises of [TODAQ](https://engineering.todaq.net/), a non-funding partner of the [CAMB project](https://www.cl.cam.ac.uk/research/srg/projects/camb/). 
-
-A laptop connected to the network of the [Applied Computing Research Group (GCA)](http://gca.unijui.edu.br/) at Unijuí, Brazil, is used to access the Morello Board via an SSH connection. Below is the main configuration of the Morello Board and additional parameters, including the CheriBSD commands required to output these configurations directly from the board.
-
-The Figure 1 illustrates the Morello Board's physical location and the network connection used to access it.
+We use a Morello Board, which is physically located in Toronto, within the premises of [TODAQ](https://engineering.todaq.net/), a non-funding partner of the [CAMB project](https://www.cl.cam.ac.uk/research/srg/projects/camb/). A laptop connected to the network of the [Applied Computing Research Group (GCA)](http://gca.unijui.edu.br/) at Unijuí, Brazil, is used to access the Morello Board via an SSH connection. Below is the main configuration of the Morello Board and additional parameters, including the CheriBSD commands required to output these configurations directly from the board. The Figure 1 illustrates the Morello Board's physical location and the network connection used to access it.
 
 <p align="center">
   <img src="figs/experimentsetup_morelloboard.png" alt="Morello Boards location" width="700"/>
 </p>
-
 <p align="center"><em>Figure 1: Morello Boards location.</em></p>
 
 
 We specify the hardware and software configurations of the Morello Board used in the experiments in Table 1.
 
 <div align="center">
-
 <p><em>Table 1. Morello board configuration parameters used in the experiments and the online cheriBSD commands to output them.</em></p>
 
 | **Component**       | **Specification**                                   | **Command**                                      |
