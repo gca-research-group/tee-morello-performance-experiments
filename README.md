@@ -183,16 +183,14 @@ To collect metrics we execute a C program compiled and executed without compartm
   $ proccontrol -m cheric18n -s enable memory-in-experiment
   ```
 
-In this experiment, we use the code shown in Algorithm 1.  
-It executes the following operations on large blocks of memory:
+In this experiment, we use the code shown in Algorithm 1. It executes the following operations on large blocks of memory:
 
 a) **allocation:** time required to allocate a block of memory.  
 b) **write:** time required to write data to fill the entire memory block.  
 c) **read:** time taken to read the data from the entire memory block.  
 d) **free:** time taken to release the memory block back into the main memory.
 
-As shown in Figure 4, we use blocks of `100, 200, 300,...,100 000 MB` as large blocks of memory.  
-Blocks of these sizes are typical of applications that process images and access databases.
+As shown in Figure 4, we use blocks of `100, 200, 300,...,100 000 MB` as large blocks of memory. Blocks of these sizes are typical of applications that process images and access databases.
 
 <p align="center">
   <img src="./figs/memory.png" alt="Performance of memory operations on memory blocks of different sizes" width="65%"/>
@@ -228,9 +226,8 @@ At each iteration, the memory allocation time is measured with the time function
 
 ## Results
 
-The metrics collected are stored in two separate CSV files:  
-[memory-in-experiment-result.csv](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/memory-performance/inside-tee-execution/memory-in-experiment-resuls.csv) for the run inside a compartment.  
-[memory-out-experiment-result.csv](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/memory-performance/outside-tee-exection/memory-out-experiment-resuls.csv) collects metrics of the run without compartments. We calculate the average time that it takes to allocate, write, read and free for each block size (100 MB, 200 MB, 300 MB, etc.). The results are summarised in Tables 3 and 4.
+The results collected from the execution inside a compartment are available from [cpu-in-experiment-result.csv](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/cpu-performance/inside-tee-execution/cpu_in-experiment-result.csv). Similarly, the results collected from the execution without a compartment are available from [cpu-out-experiment-result.csv](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/cpu-performance/outside-tee-exection/cpu-out-experiment-result.csv).
+
 
 <div align="center">
 <p><em>Table 3: Metrics of runs inside a compartment, including mean and standard deviation.</em></p>
