@@ -9,9 +9,7 @@ We use a Morello Board, which is physically located in Toronto, within the premi
 
 A laptop connected to the network of the [Applied Computing Research Group (GCA)](http://gca.unijui.edu.br/) at Unijuí, Brazil, is used to access the Morello Board via an SSH connection. Below is the main configuration of the Morello Board and additional parameters, including the CheriBSD commands required to output these configurations directly from the board.
 
-## Experiment Setup Diagram
-
-The figure below illustrates the Morello Board's physical location and the network connection used to access it.
+The Figure 1 illustrates the Morello Board's physical location and the network connection used to access it.
 
 <p align="center">
   <img src="figs/experimentsetup_morelloboard.png" alt="Morello Boards location" width="600"/>
@@ -20,11 +18,8 @@ The figure below illustrates the Morello Board's physical location and the netwo
 <p align="center"><em>Figure 1: Morello Boards location.</em></p>
 
 
+We specify the hardware and software configurations of the Morello Board used in the experiments in Table 1.
 
-
-## System Configuration
-
-The table below outlines the hardware and software configurations of the Morello Board used in the experiments.
 
 | **Component**       | **Specification**                                   | **Command**                                      |
 |----------------------|-----------------------------------------------------|-------------------------------------------------|
@@ -41,6 +36,9 @@ The table below outlines the hardware and software configurations of the Morello
 | Python               | Python 3 (required for Experiments 1, 5, and 6)     | `python3 --version`                             |
 | Scripts used         | `cheri-cap-experiment.py`<br>`cpu-in-experiment.c`<br>`memory-in-experiment.c`<br>`pipe-in-experiment.c`<br>`pipe-trampoline-in-experiment.c`<br>`library_a.c`<br>`library_b.c`<br>`memory_reader.py`<br>`integration_process` | Not applicable                                  |
 | Access               | Remote via SSH                                      | `ssh -i private_key user@server`               |
+
+<p align="center"><em>Table 1. Morello board configuration parameters used in the experiments and the online cheriBSD commands to output them.</em></p>
+
 
 
 ## Experiment Repetition and Data Collection
