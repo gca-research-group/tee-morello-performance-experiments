@@ -13,8 +13,9 @@ A laptop connected to the network of the [Applied Computing Research Group (GCA)
 
 The figure below illustrates the Morello Board's physical location and the network connection used to access it.
 
-![Morello Boards location](figs/experimentsetup_morelloboard.png)
+<img src="figs/experimentsetup_morelloboard.png" alt="Morello Boards location" width="600"/>
 *Figure 1: Morello Boards location.*
+
 
 
 ## System Configuration
