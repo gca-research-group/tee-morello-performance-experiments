@@ -557,7 +557,7 @@ Fig. 8 shows the steps executed by the `memory_reader.py` script:
 11. The `memory_reader.py` executes `output(dataReadFromMemory)` to record the data read from the memory.
 
 <p align="center">
-  <img src="./figs/memory_scraping.png" alt="Procedure to scrap memory regions" width="100%"/>
+  <img src="./figs/memory_scraping.png" alt="Procedure to scrap memory regions" width="80%"/>
 </p>
 <p align="center"><em>Figure 8: Procedure to scrap memory regions.</em></p>
 
