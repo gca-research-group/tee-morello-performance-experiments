@@ -404,7 +404,7 @@ and without compartments
 To collect metrics, the parent process writes a random string of 1024 bytes — a typical size widely used in inter-process communication applications.
 
 <p align="center">
-  <img src="./figs/parent-child-pipe.png" alt="Parent-child communication over a pipe" width="60%"/>
+  <img src="./figs/parent-child-pipe.png" alt="Parent-child communication over a pipe"/>
 </p>
 <p align="center"><em>Figure 7: Parent--child communication over a pipe.</em></p>
 
