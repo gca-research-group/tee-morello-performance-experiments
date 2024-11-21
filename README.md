@@ -20,6 +20,7 @@ The Figure 1 illustrates the Morello Board's physical location and the network c
 
 We specify the hardware and software configurations of the Morello Board used in the experiments in Table 1.
 
+<div align="center">
 
 | **Component**       | **Specification**                                   | **Command**                                      |
 |----------------------|-----------------------------------------------------|-------------------------------------------------|
@@ -37,7 +38,10 @@ We specify the hardware and software configurations of the Morello Board used in
 | Scripts used         | `cheri-cap-experiment.py`<br>`cpu-in-experiment.c`<br>`memory-in-experiment.c`<br>`pipe-in-experiment.c`<br>`pipe-trampoline-in-experiment.c`<br>`library_a.c`<br>`library_b.c`<br>`memory_reader.py`<br>`integration_process` | Not applicable                                  |
 | Access               | Remote via SSH                                      | `ssh -i private_key user@server`               |
 
-<p align="center"><em>Table 1. Morello board configuration parameters used in the experiments and the online cheriBSD commands to output them.</em></p>
+<p><em>Table 1. Morello board configuration parameters used in the experiments and the online cheriBSD commands to output them.</em></p>
+
+</div>
+
 
 
 
