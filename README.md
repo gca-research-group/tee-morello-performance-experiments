@@ -147,12 +147,12 @@ Let us assume that the experiment stars at time zero, with 0 number of compartme
 The first row shows that it took 514.00 ms to `cheri-cap-experiment.py` to create one compartment that consumes 1628.40 MB of memory.  
 As a second example take the 5th row. It shows that after 10808.39 ms, `cheri-cap-experiment.py` has created 5 compartments that have consumed 1640.39 MB.
 
-The blue line in the plot of Figure 1 illustrates how memory is consumed as the number of compartments increases. The orange line illustrates the elapsed time as the number of compartments increases.
+The blue line in the plot of Figure 2 illustrates how memory is consumed as the number of compartments increases. The orange line illustrates the elapsed time as the number of compartments increases.
 
 <p align="center">
-  <img src="./figs/memconsumedbycompartreplicas.eps" alt="Memory consumed by incremental replication of compartments and time to create compartments" width="100%"/>
+  <img src="./figs/memconsumedbycompartreplicas.png" alt="Memory consumed by incremental replication of compartments and time to create compartments" width="100%"/>
 </p>
-<p align="center"><em>Figure 1: Memory consumed by incremental replication of compartments and time to create compartments.</em></p>
+<p align="center"><em>Figure 2: Memory consumed by incremental replication of compartments and time to create compartments.</em></p>
 
 We initially expected memory consumption to increase steadily from 1,628.3 MB, corresponding to a single attestable replica, to 15,406.5 MB (90% of total memory) consumed by N attestable replicas. The objective was to determine the exact value of N.
 
