@@ -499,6 +499,69 @@ The results suggest the compartments provide significant benefits in terms of se
 
 
 
+# 6. Evaluation of Trust Models in Single-Compartment Environments
+We have conducted this experiment to examine the trust model that the Morello Board implements. It is documented that the current release of the Morello Board implements an asymmetric trust model where the Trusted Computing Based (TCB) is trusted by the applications but the TCB does not trust the applications. It is worth mentioning that the current Morello Board does not support the mutual distrust model where the privileged software and the applications distrust each other.
+
+To the TCB of the current Morello Board belong the firmware and privileged software that includes the bootloader, hypervisor and operating system. The library-based compartments that we examine in this report, consider that the linker belongs to the TCB too [Gao and Watson 202](https://pldi23.sigplan.org/home/plarch-2023).
+
+In this experiment, we use an application written in C [tee-compartmentalisation-study-case](https://github.com/gca-research-group/tee-compartimentalisation-study-case) and run it within a compartment and without compartments to examine memory isolation. We followed the following steps:
+
+1. **Compilation and execution:**
+
+    We compiled and executed the application integration within a compartment and without a compartments:
+    
+    - **Compilation and execution within a compartment:**
+      
+      The application integration is available from Git:  
+      [integration-process-in-experiment.c](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/security-single-compartment-performance/inside-tee-execution/integration_process-in-experiment.c)
+
+      We compile and run it as follows:
+      ```bash
+      $ clang-morello -march=morello+c64 -mabi=purecap -o integration_process-in-experiment integration_process-in-experiment.c -lssl -lcrypto -lpthread
+      
+      $ proccontrol -m cheric18n -s enable integration_process-in-experiment
+      ```
+
+    - **Compilation and execution without a compartment:**
+
+      The application integration is available from Git:  
+      [integration-process-out-experiment.c](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/security-single-compartment-performance/outside-tee-execution/integration_process-out-experiment.c)
+
+      We compile and run it as follows:
+      ```bash
+      $ clang-morello -o integration_process-out-experiment integration_process-out-experiment.c -lssl -lcrypto -lpthread
+      
+      $ ./integration_process-out-experiment
+      ```
+
+2. **Launch python script:** We launched the Python that performs the memory reading.
+
+   ```bash
+   $ python3 memory_reader.py
+   ```
+
+   The [memory_reader.py](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/security-single-compartment-performance/memory_reader.py) script cycles through the memory regions of interest reading the data between the start and end addresses of each region directly.
+
+Fig. 8 shows the steps executed by the `memory_reader.py` script:
+
+1. The Memory Reader requests the Cheri OS for the PID of the target process by its name, using the method `getPID(processName)`.
+2. Cheri OS returns the corresponding PID.
+3. The `memory_reader.py` provides the PID to `getMemoryAddresses(PID)` to request a list of the memory regions associated to the process that have read and write (RW) permissions.
+4. CheriBSD responds with the mapped memory regions.
+5. The `memory_reader.py` starts scraping the memory directly.
+6. For each RW region, it fetches the starting address by calling `seek(startAddress)`.
+7. Acknowledgement is returned.
+8. The `memory_reader.py` executes `read(startAddress to endAddress)` to read the content from the starting address to the end address.
+9. The decoded data is returned.
+10. This cycle is repeated for all RW regions.
+11. The `memory_reader.py` executes `output(dataReadFromMemory)` to record the data read from the memory.
+
+<p align="center">
+  <img src="./figs/memory_scraping.png" alt="Procedure to scrap memory regions" width="100%"/>
+</p>
+<p align="center"><em>Figure 8: Procedure to scrap memory regions.</em></p>
+
+
 
 
 
