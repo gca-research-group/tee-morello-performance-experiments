@@ -1,6 +1,86 @@
-<h1 style="font-size: 2em;">Performance and safety experiments carried out in secure compartments created on a Morello Board</h1>
+<h1 style="font-size: 2em;">Evaluation of performance and security strengths of library--based compartments created on Morello Boards</h1>
 
-This repository documents the performance and security evaluation experiments in secure compartments created on a Morello Board with cheriBSD 24.5. The Morello board used to conduct the experiment has 17,118,408,704 bytes (approximately 17,118.4 MB). 
+This report evaluates compartments created using the library--based compartmentalisation tool available on Morello Boards running the cheriBSD 24.5 operating system. It  evaluates the performance costs incurred by the compartments and the strengths of the memory isolation that they provide. It provides links to the Git repositories that store the C and Python codes used in the evaluation and the metrics collected in CSV files. It also includes the plots of the results, a discussion of our interpretation and detailed instructions to encourage practitioners to repeat our experiments and compare their results against ours. 
+
+
+# Experiments set up
+
+We use a Morello Board, which is physically located in Toronto, within the premises of [TODAQ](https://engineering.todaq.net/), a non-funding partner of the [CAMB project](https://www.cl.cam.ac.uk/research/srg/projects/camb/). 
+
+A laptop connected to the network of the [Applied Computing Research Group (GCA)](http://gca.unijui.edu.br/) at Unijuí, Brazil, is used to access the Morello Board via an SSH connection. Below is the main configuration of the Morello Board and additional parameters, including the CheriBSD commands required to output these configurations directly from the board.
+
+## Experiment Setup Diagram
+
+The figure below illustrates the Morello Board's physical location and the network connection used to access it.
+
+![Morello Boards location](figs/experimentsetup_morelloboard.png)
+
+## System Configuration
+
+The table below outlines the hardware and software configurations of the Morello Board used in the experiments.
+
+| **Component**       | **Specification**                                   | **Command**                                      |
+|----------------------|-----------------------------------------------------|-------------------------------------------------|
+| Operating System     | CheriBSD 24.5 (FreeBSD 15.0-CURRENT)                | `uname -a`                                      |
+| Kernel Version       | FreeBSD 15.0-CURRENT, releng/24.05                  | `uname -v`                                      |
+| Board                | Morello System Development Platform                 | `kenv | grep smbios.system.product`             |
+| RAM                  | 17 GB detected (16 GB DDR4, 2933 MT/s, ECC)         | `dmidecode --type memory`                       |
+| Storage              | SSD                                                | `camcontrol identify ada0`                      |
+| Architecture         | aarch64c (with CHERI support)                       | `sysctl hw.machine_arch`                        |
+| Processor Model      | Research Morello SoC r0p0                           | `sysctl hw.model`                               |
+| Number of CPUs       | 4                                                   | `sysctl hw.ncpu`                                |
+| Compiler             | clang (with Morello support)                        | `clang-morello --version`                       |
+| Tool                 | proccontrol (for CHERI compartments)                | `proccontrol -m cheric18n -s enable ./binary`   |
+| Python               | Python 3 (required for Experiments 1, 5, and 6)     | `python3 --version`                             |
+| Scripts used         | See list below                                      | Not applicable                                  |
+| Access               | Remote via SSH                                      | `ssh -i private_key user@server`               |
+
+### Scripts Used in Experiments
+
+- `cheri-cap-experiment.py`
+- `cpu-in-experiment.c`
+- `memory-in-experiment.c`
+- `pipe-in-experiment.c`
+- `pipe-trampoline-in-experiment.c`
+- `library_a.c`
+- `library_b.c`
+- `memory_reader.py`
+- `integration_process`
+
+## Experiment Repetition and Data Collection
+
+In our experiments, we repeated the execution of each operation 30 times. Measurements were collected and averaged. This approach aligns with the **Central Limit Theorem**, which suggests that a sample size of 30 is often adequate for producing statistically meaningful averages.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # 1. Evaluation of the number of library-based compartments
