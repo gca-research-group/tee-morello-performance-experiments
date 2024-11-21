@@ -109,7 +109,7 @@ Imagine that user Alice is conducting the experiment. To create the attestables 
 
 3. **Execution**: The script incrementally creates attestable replicas until it detects that the attestables have consumed 90% of the Morello Board's 17118.4 MB of memory (about 15406.5 MB).
 
-You can find the script in the [cheri-cap-experiment.py repository](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/cheri-caps-executable-performance/cheri-cap-experiment.py).
+You can find the script in the [cheri-cap-experiment.py](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/cheri-caps-executable-performance/cheri-cap-experiment.py) repository.
 
 
 
@@ -117,9 +117,11 @@ You can find the script in the [cheri-cap-experiment.py repository](https://gith
 
 The results are logged in the CSV file [cheri-cap-experiment-results.csv](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/cheri-caps-executable-performance/cheri-cap-experiment-results.csv), which contains detailed data on the number of compartments, memory usage, and elapsed time.
 
-### Example Rows from the CSV File
+The first few lines of the CSV file are shown in Table 2 to be read as follows:
 
-The table below shows the first few lines of the CSV file:
+
+<div align="center">
+<p><em>Table 2: Metrics of memory consumed by different numbers of attestables and elapsed time.</em></p>
 
 | **Number of Compartments** | **Memory Used (MB)** | **Time Elapsed (ms)** |
 |-----------------------------|----------------------|-----------------------|
@@ -131,29 +133,35 @@ The table below shows the first few lines of the CSV file:
 | ...                         | ...                 | ...                  |
 | 8991                        | 13066.42            | 26773287.54          |
 
-For instance:
-- The first row shows it took 514.99 ms for `cheri-cap-experiment.py` to create one compartment that consumed 1628.40 MB.
-- The fifth row shows that after 10808.39 ms, 5 compartments were created, consuming 1640.39 MB.
+</div>
 
-### Memory Consumption Analysis
 
-The plot below illustrates memory consumption as the number of compartments increases (blue line) and the elapsed time for their creation (orange line):
+The table contains the following measurements:
+
+- **Number of Compartments:** The number of compartments created.
+- **Memory Used (MB):** The amount of memory consumed by the given number of compartments.
+- **Time Elapsed:** The time elapsed since the beginning of the experiment that is assumed to start at time zero.
+
+Let us assume that the experiment stars at time zero, with 0 number of compartments which has consumed zero MB of memory.
+
+The first row shows that it took 514.00 ms to `cheri-cap-experiment.py` to create one compartment that consumes 1628.40 MB of memory.  
+As a second example take the 5th row. It shows that after 10808.39 ms, `cheri-cap-experiment.py` has created 5 compartments that have consumed 1640.39 MB.
+
+The blue line in the plot of Figure 1 illustrates how memory is consumed as the number of compartments increases. The orange line illustrates the elapsed time as the number of compartments increases.
 
 <p align="center">
   <img src="./figs/memconsumedbycompartreplicas.png" alt="Memory consumed by incremental replication of compartments and time to create compartments" width="100%"/>
 </p>
-<p align="center"><em>Figure 2: Memory consumed by incremental replication of compartments and time to create compartments.</em></p>
+<p align="center"><em>Figure 1: Memory consumed by incremental replication of compartments and time to create compartments.</em></p>
 
-### Observations
+We initially expected memory consumption to increase steadily from 1,628.3 MB, corresponding to a single attestable replica, to 15,406.5 MB (90% of total memory) consumed by N attestable replicas. The objective was to determine the exact value of N.
 
-We initially expected memory consumption to increase steadily from 1,628.3 MB (a single attestable replica) to 15,406.5 MB (90% of total memory). The goal was to determine the maximum number of attestable replicas (N).
+However, the results revealed unexpected behaviour: memory consumption increased consistently only until approximately 3,800 attestable replicas consumed 14,582.5 MB. After this point, memory consumption began to decrease as the number of attestable replicas continued to rise. The final data point shows that 8,991 attestable replicas consumed 13,066.4 MB, or roughly 76% of the total memory.
 
-However, the results revealed unexpected behavior:
-- Memory consumption increased consistently until approximately 3,800 replicas consumed 14,582.5 MB.
-- Beyond this point, memory consumption began to decrease despite the number of replicas continuing to rise. 
-- The final data point shows 8,991 replicas consuming only 13,066.4 MB (about 76% of total memory).
+We did not expect the behaviours exhibited by the blue line of Figure 1. We have no sound explanation for it.  
+These preliminary results highlight an area for further exploration. Additionally, the analysis of the time required to wipe the memory of the attestable replicas remains pending.
 
-This unexpected behavior (blue line in Figure 2) remains unexplained and highlights an area for further investigation. Additionally, the time required to wipe the memory of the attestable replicas remains an open topic for future analysis.
+
 
 
 
