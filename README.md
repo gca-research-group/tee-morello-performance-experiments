@@ -88,6 +88,88 @@ We use the example shown above in subsequent sections to compile and execute the
 
 
 
+# Evaluation of the Maximum Number of Library-Based Compartments
+
+The main aim of this experiment is to measure and analyze how the memory of a Morello Board is consumed by instances (also called replicas) of attestables. 
+
+To this end, we create an attestable and load it with a C program compiled using the library compartmentalization tool. We use the enterprise application integration (see yellow box) use case implemented in the [tee-compartimentalisation-study-case repository](https://github.com/gca-research-group/tee-compartimentalisation-study-case).
+
+The parameter to measure is the number of attestables that can be created on a Morello Board before consuming 90% of its memory. In addition to the number of attestables, we collected metrics about the time it takes the operating system to wipe the memory used by the attestables.
+
+The setup of the experiment is shown in the figure below:
+
+<p align="center">
+  <img src="./figs/maxnumberofatts.png" alt="Max number of attestable that can be created before exhausting memory" width="80%"/>
+</p>
+<p align="center"><em>Figure 1: Max number of attestables that can be created before exhausting memory.</em></p>
+
+## Steps of the Experiment
+
+Imagine that user Alice is conducting the experiment. To create the attestables and collect the metrics, Alice executes the following steps:
+
+1. **Initiation**: Alice initiates `cheri-cap-experiment.py` on a Morello Board.
+2. **Launch**: Alice executes `cheri-cap-experiment.py` to launch the attestable:
+
+   ```bash
+   $ python3 cheri-cap-experiment.py
+   ```
+
+3. **Execution**: The script incrementally creates attestable replicas until it detects that the attestables have consumed 90% of the Morello Board's 17118.4 MB of memory (about 15406.5 MB).
+
+You can find the script in the [cheri-cap-experiment.py repository](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/cheri-caps-executable-performance/cheri-cap-experiment.py).
+
+## Results
+
+The results are logged in the CSV file [cheri-cap-experiment-results.csv](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/cheri-caps-executable-performance/cheri-cap-experiment-results.csv), which contains detailed data on the number of compartments, memory usage, and elapsed time.
+
+### Example Rows from the CSV File
+
+The table below shows the first few lines of the CSV file:
+
+| **Number of Compartments** | **Memory Used (MB)** | **Time Elapsed (ms)** |
+|-----------------------------|----------------------|-----------------------|
+| 1                           | 1628.40             | 514.99               |
+| 2                           | 1631.00             | 3070.37              |
+| 3                           | 1634.03             | 5656.81              |
+| 4                           | 1637.11             | 8222.68              |
+| 5                           | 1640.39             | 10808.39             |
+| ...                         | ...                 | ...                  |
+| 8991                        | 13066.42            | 26773287.54          |
+
+For instance:
+- The first row shows it took 514.99 ms for `cheri-cap-experiment.py` to create one compartment that consumed 1628.40 MB.
+- The fifth row shows that after 10808.39 ms, 5 compartments were created, consuming 1640.39 MB.
+
+### Memory Consumption Analysis
+
+The plot below illustrates memory consumption as the number of compartments increases (blue line) and the elapsed time for their creation (orange line):
+
+<p align="center">
+  <img src="./figs/memconsumedbycompartreplicas.png" alt="Memory consumed by incremental replication of compartments and time to create compartments" width="100%"/>
+</p>
+<p align="center"><em>Figure 2: Memory consumed by incremental replication of compartments and time to create compartments.</em></p>
+
+### Observations
+
+We initially expected memory consumption to increase steadily from 1,628.3 MB (a single attestable replica) to 15,406.5 MB (90% of total memory). The goal was to determine the maximum number of attestable replicas (N).
+
+However, the results revealed unexpected behavior:
+- Memory consumption increased consistently until approximately 3,800 replicas consumed 14,582.5 MB.
+- Beyond this point, memory consumption began to decrease despite the number of replicas continuing to rise. 
+- The final data point shows 8,991 replicas consuming only 13,066.4 MB (about 76% of total memory).
+
+This unexpected behavior (blue line in Figure 2) remains unexplained and highlights an area for further investigation. Additionally, the time required to wipe the memory of the attestable replicas remains an open topic for future analysis.
+```
+
+### Ajustes Feitos:
+1. **Imagens:** Incluídas usando `<img>` com alinhamento centralizado e tamanho ajustado (`width`).
+2. **Tabelas:** Convertidas para o formato Markdown.
+3. **Links:** Links adicionados para os repositórios e arquivos relevantes.
+4. **Legendas:** As figuras e tabelas foram acompanhadas de legendas em itálico para clareza.
+5. **Estrutura:** Organizado com títulos (`#`, `##`, `###`) para facilitar a navegação no README.md.
+
+Você pode copiar e colar diretamente no seu arquivo `README.md` para uso no GitHub.
+
 
 
 
