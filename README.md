@@ -97,7 +97,7 @@ The parameter to measure is the number of attestables that can be created on a M
 The setup of the experiment is shown in the Figure 2:
 
 <p align="center">
-  <img src="./figs/maxnumberofatts.png" alt="Max number of attestable that can be created before exhausting memory" width="65%"/>
+  <img src="./figs/maxnumberofatts.png" alt="Max number of attestable that can be created before exhausting memory" width="55%"/>
 </p>
 <p align="center"><em>Figure 2: Max number of attestables that can be created before exhausting memory.</em></p>
 
