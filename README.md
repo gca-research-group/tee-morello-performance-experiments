@@ -404,7 +404,7 @@ and without compartments
 To collect metrics, the parent process writes a random string of 1024 bytes — a typical size widely used in inter-process communication applications.
 
 <p align="center">
-  <img src="./figs/parent-child-pipe.png" alt="Parent-child communication over a pipe" width="100%"/>
+  <img src="./figs/parent-child-pipe.png" alt="Parent-child communication over a pipe" width="80%"/>
 </p>
 <p align="center"><em>Figure 7: Parent--child communication over a pipe.</em></p>
 
@@ -442,8 +442,58 @@ Algorithm 3: Pipe Communication Performance
 </pre>
 
 In Algorithm 3, the `start_test` function (line 1) initiates a sequence of operations that measure the performance of pipe communication between the parent and child processes. The parameters `STRLEN` and `NUM_OF_MSG` (lines 3 and 4) establish the message size and the number of messages to be sent, respectively. For each iteration, from 1 to `NUM_OF_MSG` (line 5), the parent starts the write timer (line 7), writes a message of size `STRLEN` to the pipe (line 8), stops the write timer (line 9), and then sends the recorded `write_time` back through the pipe (line 10). The child process, in turn, reads the message and the `write_time` from the pipe (lines 12 and 13). To collect the metrics, the child process starts the read timer before reading (line 14) and stops it upon completing the reading (line 15). The test number, along with the write and read times, is logged in the log file (line 16). The procedure is repeated for each iteration until all messages are written to and read from the pipe (line 17).
-```
 
+
+
+## 5.1. Results
+
+We store the data collected from this experiment in two separate CSV files: [ppipe-in-experiment-result.csv](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/pipe-performance/inside-tee-execution/pipe-in-experiment-result.csv) for operations executed inside the compartment and [pipe-out-experiment-result.csv](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/pipe-performance/outside-tee-execution/pipe-out-experiment-result.csv) for operations executed without a compartment.
+
+Table 6 and Table 7 contain the results of each iteration, including message size, write time, read time, and total time taken for the operations.
+
+<div align="center">
+<p><em>Table 6: Time to execute write and read from a pipe inside a compartment.</em></p>
+
+| Test | Message Size (Bytes) | Write Time (ms) | Read Time (ms) | Total Time (ms) |
+|------|-----------------------|-----------------|----------------|-----------------|
+| 1    | 1024                 | 0.016           | 0.161          | 0.177           |
+| 2    | 1024                 | 0.003           | 0.068          | 0.071           |
+| 3    | 1024                 | 0.003           | 0.075          | 0.078           |
+| 4    | 1024                 | 0.003           | 0.077          | 0.080           |
+| ...  | ...                  | ...             | ...            | ...             |
+| 100  | 1024                 | 0.003           | 0.079          | 0.082           |
+
+</div>
+
+<div align="center">
+<p><em>Table 7: Time to execute write and read from a pipe without a compartment.</em></p>
+
+| Test | Message Size (Bytes) | Write Time (ms) | Read Time (ms) | Total Time (ms) |
+|------|-----------------------|-----------------|----------------|-----------------|
+| 1    | 1024                 | 0.013           | 0.059          | 0.072           |
+| 2    | 1024                 | 0.001           | 0.001          | 0.003           |
+| 3    | 1024                 | 0.001           | 0.001          | 0.002           |
+| 4    | 1024                 | 0.001           | 0.001          | 0.002           |
+| ...  | ...                  | ...             | ...            | ...             |
+| 100  | 1024                 | 0.001           | 0.002          | 0.003           |
+
+</div>
+
+
+The data shows the differences in the performance of inter--process communication (through pipes) inside a compartment and without compartments.
+
+A graphical view of the results is shown in Fig. 8.
+
+<p align="center">
+  <img src="./figs/pipePerformance.png" alt="Times to write and read a 1024 byte string from a pipe executed in compartments and without compartments" width="100%"/>
+</p>
+<p align="center"><em>Figure 8: Times to write and read a 1024 byte string from a pipe executed in compartments and without compartments.</em></p>
+
+The figure reveals that compartments affect performance. The write operation executed inside compartments consistently shows a higher latency that ranges from 0.016 ms to 0.003 ms. In contrast, the write time outside compartments is notably shorter, closer to 0.001 ms. This discrepancy highlights the additional computational cost introduced by the compartment.
+
+The effect of the compartment on the performance of the read operation is less severe yet, it is visible. The first test shows a read time of 0.161 ms, compared to 0.059 ms in the execution without compartments. As the tests progress, the execution within the compartment consistently exhibits longer read times. This demonstrates that compartmentalisation introduces delays in inter-process communication.
+
+The results suggest the compartments provide significant benefits in terms of security; yet they incur performance costs; the cost might not be negligible in applications that rely on rapid inter--process communication.
 
 
 
