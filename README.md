@@ -94,12 +94,12 @@ To this end, we create an attestable and load it with a C program compiled using
 
 The parameter to measure is the number of attestables that can be created on a Morello Board before consuming 90% of its memory. In addition to the number of attestables, we collected metrics about the time it takes the operating system to wipe the memory used by the attestables.
 
-The setup of the experiment is shown in the figure below:
+The setup of the experiment is shown in the Figure 2:
 
 <p align="center">
   <img src="./figs/maxnumberofatts.png" alt="Max number of attestable that can be created before exhausting memory" width="80%"/>
 </p>
-<p align="center"><em>Figure 1: Max number of attestables that can be created before exhausting memory.</em></p>
+<p align="center"><em>Figure 2: Max number of attestables that can be created before exhausting memory.</em></p>
 
 ## Steps of the Experiment
 
