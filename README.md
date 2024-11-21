@@ -367,18 +367,14 @@ Table 5 compares the average execution times of different operations in both exe
 </div>
 
 
-
-
-
-
 The results show that complex mathematical operations (trigonometric and exponential functions) executed within a compartment took 69,998 ms on average. In contrast, the execution of the same operations without a compartment took only 46,696 ms. This represents a performance cost of approximately 49.74%. However, the execution of arithmetic operations with integers without a compartment takes 923 ms. This figure is similar to the 993 ms that it takes to execute the same operation inside a compartment. The difference is only 7.58%. Unexpectedly, the execution of floating point operations inside a compartment took 785 ms, which is slightly lower than the execution without a compartment, which took 816 ms. The difference is 3.80%. Finally, the execution of array manipulation operations took 1,460 ms inside a compartment. This is not very different from the 1,419 ms that it takes to execute the same operation without a compartment; precisely, the difference is only 2.89%.
 
-As visualised in Fig.~\ref{fig:CPUperformance}, these results indicate that there is a noticeable performance cost in the execution of complex math operations inside compartments. However, in the execution of int, float and array operations, the performance is similar with and without compartments; strikingly, it is slightly better in the run inside a compartment.
+As visualised in Fig. 6, these results indicate that there is a noticeable performance cost in the execution of complex math operations inside compartments. However, in the execution of int, float and array operations, the performance is similar with and without compartments; strikingly, it is slightly better in the run inside a compartment.
 
 <p align="center">
   <img src="./figs/CPUperformance.png" alt="CPU performance in executions within and without compartments" width="100%"/>
 </p>
-<p align="center"><em>Figure~\ref{fig:CPUperformance}: CPU performance in executions within and without compartments.</em></p>
+<p align="center"><em>Figure 6: CPU performance in executions within and without compartments.</em></p>
 
 
 
