@@ -22,6 +22,8 @@ We specify the hardware and software configurations of the Morello Board used in
 
 <div align="center">
 
+<p><em>Table 1. Morello board configuration parameters used in the experiments and the online cheriBSD commands to output them.</em></p>
+
 | **Component**       | **Specification**                                   | **Command**                                      |
 |----------------------|-----------------------------------------------------|-------------------------------------------------|
 | Operating System     | CheriBSD 24.5 (FreeBSD 15.0-CURRENT)                | `uname -a`                                      |
@@ -37,8 +39,6 @@ We specify the hardware and software configurations of the Morello Board used in
 | Python               | Python 3 (required for Experiments 1, 5, and 6)     | `python3 --version`                             |
 | Scripts used         | `cheri-cap-experiment.py`<br>`cpu-in-experiment.c`<br>`memory-in-experiment.c`<br>`pipe-in-experiment.c`<br>`pipe-trampoline-in-experiment.c`<br>`library_a.c`<br>`library_b.c`<br>`memory_reader.py`<br>`integration_process` | Not applicable                                  |
 | Access               | Remote via SSH                                      | `ssh -i private_key user@server`               |
-
-<p><em>Table 1. Morello board configuration parameters used in the experiments and the online cheriBSD commands to output them.</em></p>
 
 </div>
 
