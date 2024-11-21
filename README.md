@@ -195,13 +195,13 @@ As shown in Figure 3, we use blocks of `100, 200, 300,...,100 000 MB` as large b
 Blocks of these sizes are typical of applications that process images and access databases.
 
 <p align="center">
-  <img src="./figs/memory.png" alt="Performance of memory operations on memory blocks of different sizes" width="95%"/>
+  <img src="./figs/memory.png" alt="Performance of memory operations on memory blocks of different sizes" width="65%"/>
 </p>
 <p align="center"><em>Figure 3: Performance of memory operations on memory blocks of different sizes.</em></p>
 
 
 <pre style="border: 1px solid #ddd; padding: 10px; background-color: #f9f9f9; font-family: monospace;">
-Algorithm 2: Execution of memory operations and metric collections of their executions
+Algorithm 1: Execution of memory operations and metric collections of their executions
 
 1. perform_tests(log_file, total_time)
 2. begin
