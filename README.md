@@ -37,7 +37,7 @@ We specify the hardware and software configurations of the Morello Board used in
 </div>
 
 
-It is worth explaining that, as shown in the CSV files available in this repository, we repeated the execution of each operation 30 times during our experiments, collected the measurements, and averaged the results. The choice of 30 repetitions was based on the Central Limit Theorem, which suggests that a sample size of 30 is often adequate to yield a statistically meaningful average [Statistics How To 2023](https://www.statisticshowto.com/probability-and-statistics/normal-distributions/central-limit-theorem-definition-examples/).
+It is worth explaining that, as shown in the CSV files available in this repository, we repeated the execution of each operation 30 times during our experiments, collected the measurements, and averaged the results. The choice of 30 repetitions was based on the Central Limit Theorem, which suggests that a sample size of 30 is often adequate to yield a statistically meaningful average ([Statistics How To 2023])(https://www.statisticshowto.com/probability-and-statistics/normal-distributions/central-limit-theorem-definition-examples/).
 
 
 ## Compilation and Execution
