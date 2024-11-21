@@ -291,7 +291,7 @@ Plots of the results from Tables 3 and 4 shown in Fig. 6. Full records are avail
 
 
 
-# 2. CPU performance in the execution of demanding arithmetic operations
+# 4. CPU performance in the execution of demanding arithmetic operations
 
 We have carried out this experiment to determine if library--based compartments affect the performance of the CPU. Precisely, we have executed a program with functions that involve the execution of CPU--demanding arithmetic operations and collected metrics about execution time. The program that we have implemented for this purpose includes operations with integers (int), floating point (float), arrays, and complex mathematical functions (such as trigonometric and exponential functions) that are known to be CPU--demanding.
 
@@ -345,7 +345,7 @@ The execution begins with the perform\_tests function (line 1), which receives t
 
 
 
-## 2.1. Results
+## 4.1. Results
 
 The results collected from the execution inside a compartment are available from [cpu-in-experiment-result.csv](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/cpu-performance/inside-tee-execution/cpu_in-experiment-result.csv). Similarly, the results collected from the execution without a compartment are available from [cpu-out-experiment-result.csv](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/cpu-performance/outside-tee-exection/cpu-out-experiment-result.csv).
 
@@ -374,6 +374,76 @@ As visualised in Fig. 6, these results indicate that there is a noticeable perfo
 <p align="center"><em>Figure 6: CPU performance in executions within and without compartments.</em></p>
 
 
+
+
+# 5. Communication performance over pipes
+
+This experiment was conducted to evaluate how the use of compartments affects the performance of communication over Unix pipes. To collect metrics, we have implemented a C program that communicates a parent with a child process over a pipe and collects metrics about writing to and reading from a pipe that interconnected them. As shown in Fig. 7, the parent process writes a message to the pipe and the child process reads it.
+
+We run the C program within a compartment  
+[pipe-in-experiment.c](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/pipe-performance/inside-tee-execution/pipe-in-experiment-result.c)  
+and without compartments  
+[pipe-out-experiment.c](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/pipe-performance/outside-tee-execution/pipe-out-experiment-result.c).
+
+- **Compilation and execution inside a compartment**
+
+  ```bash
+  $ clang-morello -march=morello+c64 -mabi=purecap -o pipe-in-experiment pipe-in-experiment.c
+  
+  $ proccontrol -m cheric18n -s enable pipe-in-experiment
+  ```
+
+- **Compilation and execution without a compartment**
+
+  ```bash
+  $ clang-morello -o pipe-out-experiment pipe-out-experiment.c
+  
+  $ ./pipe-out-experiment
+  ```
+
+To collect metrics, the parent process writes a random string of 1024 bytes — a typical size widely used in inter-process communication applications.
+
+<p align="center">
+  <img src="./figs/parent-child-pipe.png" alt="Parent-child communication over a pipe" width="65%"/>
+</p>
+<p align="center"><em>Figure 7: Parent--child communication over a pipe.</em></p>
+
+We collected metrics about the following operations:
+- **write:** Time taken by the parent process to write data to the pipe.
+- **read:** Time taken by the child process to read the data from the other end of the pipe.
+
+The code repeats each operation 100 times. This is in line with the principles of the Central Limit Theorem, which states that a larger sample size helps to detect finer fluctuations in latency patterns [Statistics How To 2023](https://www.statisticshowto.com/probability-and-statistics/normal-distributions/central-limit-theorem-definition-examples/).
+
+Algorithm 3 describes the execution of the operations and the settings of timers to collect the metrics.
+
+
+<pre style="border: 1px solid #ddd; padding: 10px; background-color: #f9f9f9; font-family: monospace;">
+Algorithm 3: Pipe Communication Performance
+
+1.  start_test(log_file)              
+2.  begin
+3.      define STRLEN  
+4.      define NUM_OF_MSG 
+5.      for test_num from 1 to NUM_OF_MSG do
+6.          if parent_process
+7.              start_timer(write_time)     
+8.              write(pipe, message of size STRLEN)        
+9.              stop_timer(write_time)      
+10.             write(pipe, write_time)     
+11.         else 
+12.             read(pipe, message of size STRLEN)         
+13.             read(pipe, write_time)      
+14.             start_timer(read_time)      
+15.             stop_timer(read_time)       
+16.             log(log_file, test_num, write_time, read_time) 
+17.         endif
+18.     endfor
+19. end
+</pre>
+
+
+In Algorithm 3, the `start_test` function (line 1) initiates a sequence of operations that measure the performance of pipe communication between the parent and child processes. The parameters `STRLEN` and `NUM_OF_MSG` (lines 3 and 4) establish the message size and the number of messages to be sent, respectively. For each iteration, from 1 to `NUM_OF_MSG` (line 5), the parent starts the write timer (line 7), writes a message of size `STRLEN` to the pipe (line 8), stops the write timer (line 9), and then sends the recorded `write_time` back through the pipe (line 10). The child process, in turn, reads the message and the `write_time` from the pipe (lines 12 and 13). To collect the metrics, the child process starts the read timer before reading (line 14) and stops it upon completing the reading (line 15). The test number, along with the write and read times, is logged in the log file (line 16). The procedure is repeated for each iteration until all messages are written to and read from the pipe (line 17).
+```
 
 
 
