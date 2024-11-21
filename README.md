@@ -37,7 +37,7 @@ We specify the hardware and software configurations of the Morello Board used in
 </div>
 
 
-It is worth explaining that, as shown in the CSV files available in this repository, we repeated the execution of each operation 30 times during our experiments, collected the measurements, and averaged the results. The choice of 30 repetitions was based on the Central Limit Theorem, which suggests that a sample size of 30 is often adequate to yield a statistically meaningful average ([Statistics How To 2023])(https://www.statisticshowto.com/probability-and-statistics/normal-distributions/central-limit-theorem-definition-examples/).
+It is worth explaining that, as shown in the CSV files available in this repository, we repeated the execution of each operation 30 times during our experiments, collected the measurements, and averaged the results. The choice of 30 repetitions was based on the Central Limit Theorem, which suggests that a sample size of 30 is often adequate to yield a statistically meaningful average [Statistics How To 2023](https://www.statisticshowto.com/probability-and-statistics/normal-distributions/central-limit-theorem-definition-examples/).
 
 
 ## Compilation and Execution
@@ -47,12 +47,44 @@ The inclusion or exclusion of library-based compartments is determined at compil
 - [Cheri Team, 2022](https://github.com/CTSRD-CHERI/cheripedia/wiki/Library-based-%20Compartmentalisation)
 - [Watson, 2019b](https://www.cl.cam.ac.uk/research/security/ctsrd/cheri/cheri-compartmentalization.html)
 
+
+
 ### Compilation and Execution Without Library-Based Compartments
 
 The normal compilation (without the inclusion of library-based compartments) is demonstrated in the following example for a `helloworld.c` program:
 
 ```bash
 $ clang-morello -o hello hello.c
+```
+
+To execute `helloworld`, the programmer can type:
+
+```bash
+$ ./helloworld
+```
+
+### Compilation and Execution With Library-Based Compartments
+
+The following command demonstrates the compilation flags required to enable library-based compartments:
+
+```bash
+$ clang-morello -march=morello+c64 -mabi=purecap -o helloworld helloworld.c
+```
+
+- The `-march=morello+c64` parameter defines the 64-bit Morello architecture.
+- The `-mabi=purecap` flag sets the Application Binary Interface (ABI) for the secure environment, representing all memory references and pointers as capabilities.
+
+To execute the `helloworld` program in a library-based compartment, the programmer can type:
+
+```bash
+$ proccontrol -m cheric18n -s enable helloworld
+```
+
+The binary is executed with library compartmentalisation enabled using `proccontrol`.
+
+We use the example shown above in subsequent sections to compile and execute the programs used in the evaluation.
+```
+
 
 
 
