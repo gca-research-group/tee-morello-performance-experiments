@@ -88,28 +88,39 @@ We use the example shown above in subsequent sections to compile and execute the
 
 # 2. Evaluation of the Maximum Number of Library-Based Compartments
 
-The main aim of this experiment is to measure and analyze how the memory of a Morello Board is consumed by instances (also called replicas) of attestables. To this end, we create an attestable and load it with a C program compiled using the library compartmentalization tool. We use the enterprise application integration (see yellow box) use case implemented in the [tee-compartimentalisation-study-case repository](https://github.com/gca-research-group/tee-compartimentalisation-study-case).
 
-The parameter to measure is the number of attestables that can be created on a Morello Board before consuming 90% of its memory. In addition to the number of attestables, we collected metrics about the time it takes the operating system to wipe the memory used by the attestables. The setup of the experiment is shown in the Figure 2:
+The main aim of this experiment is to measure and analyse how the memory of a Morello Board is consumed by instances (also called replicas) of attestables.  
+To this end, we create an attestable and load it with a C program compiled with the library compartmentalisation tool. We use the enterprise application integration (see yellow box) use case implemented in - [tee-compartimentalisation-study-case](https://github.com/gca-research-group/tee-compartimentalisation-study-case) repository[^1].
+
+The parameter to measure is the number of attestables that can be created on a Morello Board before consuming 90% of its memory.  
+In addition to the number of attestables, we took the opportunity to collect metrics about the time it takes the operating system to wipe the memory used by the attestable.  
+The setup of the experiment is shown in Figure 1.
 
 <p align="center">
-  <img src="./figs/maxnumberofatts.png" alt="Max number of attestable that can be created before exhausting memory" width="55%"/>
+  <img src="./figs/maxnumberofatts.png" alt="Max number of attestable that can be created before exhausting memory" width="80%"/>
 </p>
-<p align="center"><em>Figure 2: Max number of attestables that can be created before exhausting memory.</em></p>
-
+<p align="center"><em>Figure 1: Max number of attestables that can be created before exhausting memory.</em></p>
 
 Imagine that user Alice is conducting the experiment. To create the attestables and collect the metrics, Alice executes the following steps:
 
 1. **Initiation**: Alice initiates `cheri-cap-experiment.py` on a Morello Board.
 2. **Launch**: Alice executes `cheri-cap-experiment.py` to launch the attestable:
-
+   ```bash
+   $ cheri-cap-experiment.py
+   ```
+   Repository available at: [cheri-cap-experiment.py](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/cheri-caps-executable-performance/cheri-cap-experiment.py)[^2].
+3. **Execution**:  
    ```bash
    $ python3 cheri-cap-experiment.py
    ```
+   This command runs incrementally, creating attestable replicas until it detects that the attestables have consumed 90% of the 17118.4 MB of the Morello Board's memory, which is about 15406.5 MB.
 
-3. **Execution**: The script incrementally creates attestable replicas until it detects that the attestables have consumed 90% of the Morello Board's 17118.4 MB of memory (about 15406.5 MB).
+---
 
-You can find the script in the [cheri-cap-experiment.py](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/cheri-caps-executable-performance/cheri-cap-experiment.py) repository.
+[^1]: Repository available at: [https://github.com/gca-research-group/tee-compartimentalisation-study-case](https://github.com/gca-research-group/tee-compartimentalisation-study-case)  
+[^2]: Repository available at: [https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/cheri-caps-executable-performance/cheri-cap-experiment.py](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/cheri-caps-executable-performance/cheri-cap-experiment.py)
+```
+
 
 
 
