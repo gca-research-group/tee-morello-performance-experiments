@@ -150,7 +150,7 @@ As a second example take the 5th row. It shows that after 10808.39 ms, `cheri-ca
 The blue line in the plot of Figure 1 illustrates how memory is consumed as the number of compartments increases. The orange line illustrates the elapsed time as the number of compartments increases.
 
 <p align="center">
-  <img src="./figs/memconsumedbycompartreplicas.png" alt="Memory consumed by incremental replication of compartments and time to create compartments" width="100%"/>
+  <img src="./figs/memconsumedbycompartreplicas.eps" alt="Memory consumed by incremental replication of compartments and time to create compartments" width="100%"/>
 </p>
 <p align="center"><em>Figure 1: Memory consumed by incremental replication of compartments and time to create compartments.</em></p>
 
