@@ -3,7 +3,7 @@
 This report evaluates compartments created using the library--based compartmentalisation tool available on Morello Boards running the cheriBSD 24.5 operating system. It  evaluates the performance costs incurred by the compartments and the strengths of the memory isolation that they provide. It provides links to the Git repositories that store the C and Python codes used in the evaluation and the metrics collected in CSV files. It also includes the plots of the results, a discussion of our interpretation and detailed instructions to encourage practitioners to repeat our experiments and compare their results against ours. 
 
 
-# Experiments set up
+# 1. Experiments set up
 
 We use a Morello Board, which is physically located in Toronto, within the premises of [TODAQ](https://engineering.todaq.net/), a non-funding partner of the [CAMB project](https://www.cl.cam.ac.uk/research/srg/projects/camb/). A laptop connected to the network of the [Applied Computing Research Group (GCA)](http://gca.unijui.edu.br/) at Unijuí, Brazil, is used to access the Morello Board via an SSH connection. Below is the main configuration of the Morello Board and additional parameters, including the CheriBSD commands required to output these configurations directly from the board. The Figure 1 illustrates the Morello Board's physical location and the network connection used to access it.
 
@@ -40,7 +40,7 @@ We specify the hardware and software configurations of the Morello Board used in
 It is worth explaining that, as shown in the CSV files available in this repository, we repeated the execution of each operation 30 times during our experiments, collected the measurements, and averaged the results. The choice of 30 repetitions was based on the Central Limit Theorem, which suggests that a sample size of 30 is often adequate to yield a statistically meaningful average [Statistics How To 2023](https://www.statisticshowto.com/probability-and-statistics/normal-distributions/central-limit-theorem-definition-examples/).
 
 
-## Compilation and Execution
+## 1.1. Compilation and Execution
 
 The inclusion or exclusion of library-based compartments is determined at compilation and execution time, as documented in the manuals:
 - [Gao, 2024](https://man.cheribsd.org/cgi-bin/man.cgi/c18n).
@@ -49,7 +49,7 @@ The inclusion or exclusion of library-based compartments is determined at compil
 
 
 
-### Compilation and Execution Without Library-Based Compartments
+### 1.1.1. Compilation and Execution Without Library-Based Compartments
 
 The normal compilation (without the inclusion of library-based compartments) is demonstrated in the following example for a `helloworld.c` program:
 
@@ -63,7 +63,7 @@ To execute `helloworld`, the programmer can type:
 $ ./helloworld
 ```
 
-### Compilation and Execution With Library-Based Compartments
+### 1.1.2. Compilation and Execution With Library-Based Compartments
 
 The following command demonstrates the compilation flags required to enable library-based compartments:
 
@@ -86,7 +86,7 @@ We use the example shown above in subsequent sections to compile and execute the
 
 
 
-# Evaluation of the Maximum Number of Library-Based Compartments
+# 2. Evaluation of the Maximum Number of Library-Based Compartments
 
 The main aim of this experiment is to measure and analyze how the memory of a Morello Board is consumed by instances (also called replicas) of attestables. To this end, we create an attestable and load it with a C program compiled using the library compartmentalization tool. We use the enterprise application integration (see yellow box) use case implemented in the [tee-compartimentalisation-study-case repository](https://github.com/gca-research-group/tee-compartimentalisation-study-case).
 
@@ -113,7 +113,7 @@ You can find the script in the [cheri-cap-experiment.py](https://github.com/gca-
 
 
 
-## Results
+## 2.1. Results
 
 The results are logged in the CSV file [cheri-cap-experiment-results.csv](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/cheri-caps-executable-performance/cheri-cap-experiment-results.csv), which contains detailed data on the number of compartments, memory usage, and elapsed time.
 
