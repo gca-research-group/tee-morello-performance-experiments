@@ -88,7 +88,6 @@ We use the example shown above in subsequent sections to compile and execute the
 
 # 2. Evaluation of the Maximum Number of Library-Based Compartments
 
-
 The main aim of this experiment is to measure and analyse how the memory of a Morello Board is consumed by instances (also called replicas) of attestables. To this end, we create and attestable and load it with a C program compiled with the library compartmentalisation tool. We use the enterprise application integration (see yellow box) use case implemented in - [tee-compartimentalisation-study-case](https://github.com/gca-research-group/tee-compartimentalisation-study-case) repository (Repository available at: [https://github.com/gca-research-group/tee-compartimentalisation-study-case](https://github.com/gca-research-group/tee-compartimentalisation-study-case)).
 
 The parameter to measure is the number of attestables that can be created on a Morello Board before consuming 90% of its memory. In addition to the number of attestables, we took the opportunity to collect metrics about the time it takes the operating system to wipe the memory used by the attestable. The setup of the experiment is shown in Figure 2.
@@ -107,7 +106,6 @@ Imagine that user Alice is conducting the experiment. To create the attestables 
    [cheri-cap-experiment.py](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/cheri-caps-executable-performance/cheri-cap-experiment.py) (Repository available at: [https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/cheri-caps-executable-performance/cheri-cap-experiment.py](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/cheri-caps-executable-performance/cheri-cap-experiment.py)).
 
 3. `% python3 cheri-cap-experiment.py` runs incrementally, creating attestable replicas until it detects that the attestables have consumed 90% of the 17118.4 MB of the Morello Board's memory, that is, about 15406.5 MB.
-
 
 
 
@@ -145,22 +143,93 @@ Let us assume that the experiment stars at time zero, with 0 number of compartme
 The first row shows that it took 514.00 ms to `cheri-cap-experiment.py` to create one compartment that consumes 1628.40 MB of memory.  
 As a second example take the 5th row. It shows that after 10808.39 ms, `cheri-cap-experiment.py` has created 5 compartments that have consumed 1640.39 MB.
 
-The blue line in the plot of Figure 2 illustrates how memory is consumed as the number of compartments increases. The orange line illustrates the elapsed time as the number of compartments increases.
+The blue line in the plot of Figure 3 illustrates how memory is consumed as the number of compartments increases. The orange line illustrates the elapsed time as the number of compartments increases.
 
 <p align="center">
   <img src="./figs/memconsumedbycompartreplicas.png" alt="Memory consumed by incremental replication of compartments and time to create compartments" width="100%"/>
 </p>
-<p align="center"><em>Figure 2: Memory consumed by incremental replication of compartments and time to create compartments.</em></p>
+<p align="center"><em>Figure 3: Memory consumed by incremental replication of compartments and time to create compartments.</em></p>
 
 We initially expected memory consumption to increase steadily from 1,628.3 MB, corresponding to a single attestable replica, to 15,406.5 MB (90% of total memory) consumed by N attestable replicas. The objective was to determine the exact value of N.
 
 However, the results revealed unexpected behaviour: memory consumption increased consistently only until approximately 3,800 attestable replicas consumed 14,582.5 MB. After this point, memory consumption began to decrease as the number of attestable replicas continued to rise. The final data point shows that 8,991 attestable replicas consumed 13,066.4 MB, or roughly 76% of the total memory.
 
-We did not expect the behaviours exhibited by the blue line of Figure 1. We have no sound explanation for it.  
-These preliminary results highlight an area for further exploration. Additionally, the analysis of the time required to wipe the memory of the attestable replicas remains pending.
+We did not expect the behaviours exhibited by the blue line of Figure 3. We have no sound explanation for it. These preliminary results highlight an area for further exploration. Additionally, the analysis of the time required to wipe the memory of the attestable replicas remains pending.
 
 
 
+
+# 3. Memory performance in the execution of allocate, release, read and write operations
+
+To collect metrics we execute a C program compiled and executed without compartments and with compartments:
+
+- **Compilation and execution without compartments:**  
+  [memory-out-experiment.c](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/memory-performance/outside-tee-exection/memory-out-experiment.c).
+
+  We have compiled and executed it with the following cheriBSD commands:
+
+  ```bash
+  $ clang-morello -o memory-in-experiment memory-in-experiment.c -lm
+  
+  $ ./memory-in-experiment
+  ```
+
+- **Compilation and execution with compartments:**  
+  [memory-in-experiment.c](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/memory-performance/inside-tee-execution/memory-in-experiment.c).
+
+  ```bash
+  $ clang-morello -march=morello+c64 -mabi=purecap -o memory-in-experiment memory-in-experiment.c -lm
+  
+  $ proccontrol -m cheric18n -s enable memory-in-experiment
+  ```
+
+In this experiment, we use the code shown in Algorithm 1.  
+It executes the following operations on large blocks of memory:
+
+a) **allocation:** time required to allocate a block of memory.  
+b) **write:** time required to write data to fill the entire memory block.  
+c) **read:** time taken to read the data from the entire memory block.  
+d) **free:** time taken to release the memory block back into the main memory.
+
+As shown in Figure 3, we use blocks of `100, 200, 300,...,100 000 MB` as large blocks of memory.  
+Blocks of these sizes are typical of applications that process images and access databases.
+
+<p align="center">
+  <img src="./figs/memory.png" alt="Performance of memory operations on memory blocks of different sizes" width="95%"/>
+</p>
+<p align="center"><em>Figure 3: Performance of memory operations on memory blocks of different sizes.</em></p>
+
+
+<pre style="border: 1px solid #ddd; padding: 10px; background-color: #f9f9f9; font-family: monospace;">
+Algorithm 2: Execution of memory operations and metric collections of their executions
+
+1. perform_tests(log_file, total_time)
+2. begin
+3.     foreach block_size in MIN_BLOCK_SIZE to MAX_BLOCK_SIZE step BLOCK_STEP do
+4.         foreach test_num from 1 to NUM_TESTS do
+5.             allocation_time = time(malloc(block_size))
+6.             write_time = time(write_to_memory(block, block_size))
+7.             read_time = time(read_from_memory(block, block_size))
+8.             free_time = time(free(block))
+9.             log(log_file, block_size, test_num, allocation_time, write_time, read_time, free_time)
+10.        endfor
+11.    endfor
+12. end
+</pre>
+
+
+Execution begins with the `perform_tests` function (line 1), which receives a log file as an input parameter to store performance metrics, including the total time taken to run the tests.  
+The for-loop (line 3) iterates over memory blocks of different sizes ranging from `MIN_BLOCK_SIZE` to `MAX_BLOCK_SIZE` with increments specified by `BLOCK_STEP`.  
+The inner for-loop (line 4) repeats the test `NUM_TESTS` times for each block size. `NUM_TESTS` is defined by the programmer as a constant.
+
+At each iteration:
+- The memory allocation time is measured with the time function (line 5).
+- The time to write to the block is measured in line 6.
+- The time to read the block is measured in line 7.
+- Finally, the time to free the memory is measured in line 8.  
+
+The metrics collected are recorded in the log file along with the test number (line 9).
+```
 
 
 
