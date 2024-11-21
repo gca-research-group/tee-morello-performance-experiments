@@ -83,8 +83,6 @@ $ proccontrol -m cheric18n -s enable helloworld
 The binary is executed with library compartmentalisation enabled using `proccontrol`.
 
 We use the example shown above in subsequent sections to compile and execute the programs used in the evaluation.
-```
-
 
 
 
