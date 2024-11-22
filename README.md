@@ -586,13 +586,75 @@ Table 8 summarises the results. The columns have the following meaning:
 - **Access:** The response of cheriBSD to the `memory_reader.py` script's request to access the memory region.
 - **Sensitive Data Visible:** Visibility of the data retrieved from the memory region. Can the `memory_reader.py` script extract information from the data?
 
-The results shown in Table~\ref{tab:access_control_tests} indicate that a user with root privileges has permission to access any memory region, including memory regions allocated to compartments. However, ordinary users are unable to access memory regions allocated to processes, including processes not executed inside compartments.
+The results shown in Table 8 indicate that a user with root privileges has permission to access any memory region, including memory regions allocated to compartments. However, ordinary users are unable to access memory regions allocated to processes, including processes not executed inside compartments.
 
 These results indicate that the Morello Board implements the traditional asymmetric trust model where user applications trust privileged software. Some applications demand the symmetric trust model where privileged software and user applications distrust each other. Examples of technologies that implement mutual distrust are Intel SGX and AWS Nitro Enclaves.
 
 
 
+### Observations runs of the experiment
 
+We observed some unexpected behaviours and crashes of the cheriBSD that demanded reboot to recover. We have no sound explanations, we only suspect that these issues are related to the memory managements in the Morello Board.
+
+- **Process terminated by the OS:**  
+  We have observed that the application was terminated (i.e. killed) automatically by the cheriBSD OS, approximately, after 1 hour of execution. See Fig. 9.  
+
+  This behaviour seems to be related to the CheriBSD system’s resource management. It seems that the operating system terminates processes that are consuming excessive memory or CPU, possibly in response to an infinite loop or undesirable behaviour.  
+
+  Another speculation is that the CHERI security model abruptly terminates processes that systematically attempt to access protected memory regions, illegally.  
+
+  <p align="center">
+    <img src="./figs/abruptkilofproc.png" alt="Abruptly termination of process by the OS" width="99%"/>
+  </p>
+  <p align="center"><em>Figure 9: Abruptly termination of process by the OS.</em></p>
+
+- **Crash of cheriBSD OS:**  
+  We have observed systematic crashes of the cheriBSD OS when the `memory_reader.py` script attempted to read a specific range of memory addresses.
+
+  As shown in Fig. 10, the OS crashed reporting a `Broken pipe` error and the disconnection of the remote SSH shell when the `memory_reader.py` attempted to read addresses in the `0x4a300000` --- `0x4bb00000` range. See Fig. 11.  
+
+  <p align="center">
+    <img src="./figs/crashoutputbrokenpipe.png" alt="client_loop: send disconnect: Broken pipe" width="99%"/>
+  </p>
+  <p align="center"><em>Figure 10: client_loop: send disconnect: Broken pipe.</em></p>
+
+  <p align="center">
+    <img src="./figs/crashmemrange.png" alt="Crashing memory range" width="99%"/>
+  </p>
+  <p align="center"><em>Figure 11: Crashing memory range.</em></p>
+
+  A possible explanation is that the crash is caused by illegal attempts to read memory addresses storing privileged software.  
+
+  This crash raises concerns about a possible failure in memory isolation when accessed by processes, such as the `memory_reader.py` script. Another possibility is that the privileged software running in this memory range is particularly sensitive to illegal read attempts, causing cheriOS crashes. Further investigation is required to determine the exact causes.
+
+- **Error after rebooting the cheriBSD OS:**  
+  Attempt to read memory after rebooting to recover from a crash outputs  
+  `[Errno 2] No such file or directory: '/proc/PID/mem'`  
+  (see Fig. 12). The error indicates that file `/proc/{pid}/mem`, which is used by `memory_reader.py`, is unavailable.
+
+  <p align="center">
+    <img src="./figs/proc_pid_mem_error.png" alt="Error after recovering from a crash: [Errno 2] No such file or directory: '/proc/3587/mem'" width="99%"/>
+  </p>
+  <p align="center"><em>Figure 12: Error after recovering from a crash: [Errno 2] No such file or directory: '/proc/3587/mem'.</em></p>
+
+- **Procedure for running `memory_reader.py` after rebooting:**  
+  After rebooting to recover from a crash, it is necessary to verify that the `/proc` file system is mounted correctly mounted, the `mount` command can be used.
+
+  ```bash
+  $ mount | fgrep proc
+  ```
+
+  The following command can be used to mount `/proc` if it is not mounted.  
+
+  ```bash
+  $ mount -t procfs proc /proc
+  ```
+
+  Once `proc` is mounted, the `memory_reader.py` script  
+  [memory_reader.py](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/security-single-compartment-performance/memory_reader.py)  
+  script can be executed again.  
+
+  We believe that this behaviour is related to the persistence of cheriBSD configurations after rebooting from crashes. It might be useful to examine how resources are locked and released by cheriBSD after crashes.
 
 
 
