@@ -633,7 +633,7 @@ We observed some unexpected behaviours and crashes of the cheriBSD that demanded
   (see Fig. 12). The error indicates that file `/proc/{pid}/mem`, which is used by `memory_reader.py`, is unavailable.
 
   <p align="center">
-    <img src="./figs/proc_pid_mem_error.png" alt="Error after recovering from a crash: [Errno 2] No such file or directory: '/proc/3587/mem'" width="99%"/>
+    <img src="./figs/proc_pid_mem_error.png" alt="Error after recovering from a crash: [Errno 2] No such file or directory: '/proc/3587/mem'" width="75%"/>
   </p>
   <p align="center"><em>Figure 12: Error after recovering from a crash: [Errno 2] No such file or directory: '/proc/3587/mem'.</em></p>
 
