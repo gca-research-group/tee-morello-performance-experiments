@@ -604,7 +604,7 @@ We observed some unexpected behaviours and crashes of the cheriBSD that demanded
   Another speculation is that the CHERI security model abruptly terminates processes that systematically attempt to access protected memory regions, illegally.  
 
   <p align="center">
-    <img src="./figs/abruptkilofproc.png" alt="Abruptly termination of process by the OS" width="99%"/>
+    <img src="./figs/abruptkillofproc.png" alt="Abruptly termination of process by the OS" width="99%"/>
   </p>
   <p align="center"><em>Figure 9: Abruptly termination of process by the OS.</em></p>
 
