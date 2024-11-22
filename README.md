@@ -725,9 +725,7 @@ We have performed the following steps to examine memory:
    We started the `pipe_trampoline` to initiate the parent and the child process. The parent writes a string to one end of the pipe, and the child process reads it from the other end.
 
 2. **Memory reading:**  
-   We executed the `memory_reader.py` script available from  
-   [memory_reader.py](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/security-single-compartment-performance/memory_reader.py)  
-   to attempt direct memory reads:
+   We executed the `memory_reader.py` script available from [memory_reader.py](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/security-single-compartment-performance/memory_reader.py) to attempt direct memory reads:
 
    ```bash
    $ python3 memory_reader.py
