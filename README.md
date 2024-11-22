@@ -642,9 +642,7 @@ We observed some unexpected behaviours and crashes of the cheriBSD that demanded
   $ mount -t procfs proc /proc
   ```
 
-  Once `proc` is mounted, the `memory_reader.py` script  
-  [memory_reader.py](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/security-single-compartment-performance/memory_reader.py)  
-  script can be executed again.  
+  Once `proc` is mounted, the `memory_reader.py` script [memory_reader.py](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/security-single-compartment-performance/memory_reader.py) script can be executed again.  
 
   We believe that this behaviour is related to the persistence of cheriBSD configurations after rebooting from crashes. It might be useful to examine how resources are locked and released by cheriBSD after crashes.
 
