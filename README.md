@@ -364,19 +364,19 @@ Table 5 compares the average execution times of different operations in both exe
 
 The results show that complex mathematical operations (trigonometric and exponential functions) executed within a compartment took 69,998 ms on average. In contrast, the execution of the same operations without a compartment took only 46,696 ms. This represents a performance cost of approximately 49.74%. However, the execution of arithmetic operations with integers without a compartment takes 923 ms. This figure is similar to the 993 ms that it takes to execute the same operation inside a compartment. The difference is only 7.58%. Unexpectedly, the execution of floating point operations inside a compartment took 785 ms, which is slightly lower than the execution without a compartment, which took 816 ms. The difference is 3.80%. Finally, the execution of array manipulation operations took 1,460 ms inside a compartment. This is not very different from the 1,419 ms that it takes to execute the same operation without a compartment; precisely, the difference is only 2.89%.
 
-As visualised in Fig. 6, these results indicate that there is a noticeable performance cost in the execution of complex math operations inside compartments. However, in the execution of int, float and array operations, the performance is similar with and without compartments; strikingly, it is slightly better in the run inside a compartment.
+As visualised in Fig. 7, these results indicate that there is a noticeable performance cost in the execution of complex math operations inside compartments. However, in the execution of int, float and array operations, the performance is similar with and without compartments; strikingly, it is slightly better in the run inside a compartment.
 
 <p align="center">
   <img src="./figs/CPUperformance.png" alt="CPU performance in executions within and without compartments" width="100%"/>
 </p>
-<p align="center"><em>Figure 6: CPU performance in executions within and without compartments.</em></p>
+<p align="center"><em>Figure 7: CPU performance in executions within and without compartments.</em></p>
 
 
 
 
 # 5. Communication performance over pipes
 
-This experiment was conducted to evaluate how the use of compartments affects the performance of communication over Unix pipes. To collect metrics, we have implemented a C program that communicates a parent with a child process over a pipe and collects metrics about writing to and reading from a pipe that interconnected them. As shown in Fig. 7, the parent process writes a message to the pipe and the child process reads it.
+This experiment was conducted to evaluate how the use of compartments affects the performance of communication over Unix pipes. To collect metrics, we have implemented a C program that communicates a parent with a child process over a pipe and collects metrics about writing to and reading from a pipe that interconnected them. As shown in Fig. 8, the parent process writes a message to the pipe and the child process reads it.
 
 We run the C program within a compartment [pipe-in-experiment.c](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/pipe-performance/inside-tee-execution/pipe-in-experiment-result.c) and without compartments [pipe-out-experiment.c](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/pipe-performance/outside-tee-execution/pipe-out-experiment-result.c).
 
@@ -401,7 +401,7 @@ To collect metrics, the parent process writes a random string of 1024 bytes — 
 <p align="center">
   <img src="./figs/parent-child-pipe.png" alt="Parent-child communication over a pipe"/>
 </p>
-<p align="center"><em>Figure 7: Parent--child communication over a pipe.</em></p>
+<p align="center"><em>Figure 8: Parent--child communication over a pipe.</em></p>
 
 We collected metrics about the following operations:
 - **write:** Time taken by the parent process to write data to the pipe.
@@ -477,12 +477,12 @@ Table 6 and Table 7 contain the results of each iteration, including message siz
 
 The data shows the differences in the performance of inter--process communication (through pipes) inside a compartment and without compartments.
 
-A graphical view of the results is shown in Fig. 8.
+A graphical view of the results is shown in Fig. 9.
 
 <p align="center">
   <img src="./figs/pipePerformance.png" alt="Times to write and read a 1024 byte string from a pipe executed in compartments and without compartments" width="100%"/>
 </p>
-<p align="center"><em>Figure 8: Times to write and read a 1024 byte string from a pipe executed in compartments and without compartments.</em></p>
+<p align="center"><em>Figure 9: Times to write and read a 1024 byte string from a pipe executed in compartments and without compartments.</em></p>
 
 The figure reveals that compartments affect performance. The write operation executed inside compartments consistently shows a higher latency that ranges from 0.016 ms to 0.003 ms. In contrast, the write time outside compartments is notably shorter, closer to 0.001 ms. This discrepancy highlights the additional computational cost introduced by the compartment.
 
@@ -554,7 +554,7 @@ Fig. 8 shows the steps executed by the `memory_reader.py` script:
 <p align="center">
   <img src="./figs/memory_scraping.png" alt="Procedure to scrap memory regions" width="65%"/>
 </p>
-<p align="center"><em>Figure 8: Procedure to scrap memory regions.</em></p>
+<p align="center"><em>Figure 10: Procedure to scrap memory regions.</em></p>
 
 
 
@@ -592,37 +592,37 @@ These results indicate that the Morello Board implements the traditional asymmet
 We observed some unexpected behaviours and crashes of the cheriBSD that demanded reboot to recover. We have no sound explanations, we only suspect that these issues are related to the memory managements in the Morello Board.
 
 - **Process terminated by the OS:**  
-  We have observed that the application was terminated (i.e. killed) automatically by the cheriBSD OS, approximately, after 1 hour of execution. See Fig. 9. This behaviour seems to be related to the CheriBSD system’s resource management. It seems that the operating system terminates processes that are consuming excessive memory or CPU, possibly in response to an infinite loop or undesirable behaviour. Another speculation is that the CHERI security model abruptly terminates processes that systematically attempt to access protected memory regions, illegally.  
+  We have observed that the application was terminated (i.e. killed) automatically by the cheriBSD OS, approximately, after 1 hour of execution. See Fig. 11. This behaviour seems to be related to the CheriBSD system’s resource management. It seems that the operating system terminates processes that are consuming excessive memory or CPU, possibly in response to an infinite loop or undesirable behaviour. Another speculation is that the CHERI security model abruptly terminates processes that systematically attempt to access protected memory regions, illegally.  
 
   <p align="center">
     <img src="./figs/abruptkillofproc.png" alt="Abruptly termination of process by the OS" width="75%"/>
   </p>
-  <p align="center"><em>Figure 9: Abruptly termination of process by the OS.</em></p>
+  <p align="center"><em>Figure 11: Abruptly termination of process by the OS.</em></p>
 
 - **Crash of cheriBSD OS:**  
-  We have observed systematic crashes of the cheriBSD OS when the `memory_reader.py` script attempted to read a specific range of memory addresses. As shown in Fig. 10, the OS crashed reporting a `Broken pipe` error and the disconnection of the remote SSH shell when the `memory_reader.py` attempted to read addresses in the `0x4a300000` --- `0x4bb00000` range. See Fig. 11.  
+  We have observed systematic crashes of the cheriBSD OS when the `memory_reader.py` script attempted to read a specific range of memory addresses. As shown in Fig. 12, the OS crashed reporting a `Broken pipe` error and the disconnection of the remote SSH shell when the `memory_reader.py` attempted to read addresses in the `0x4a300000` --- `0x4bb00000` range. See Fig. 13.  
 
   <p align="center">
     <img src="./figs/crashoutputbrokenpipe.png" alt="client_loop: send disconnect: Broken pipe" width="75%"/>
   </p>
-  <p align="center"><em>Figure 10: client_loop: send disconnect: Broken pipe.</em></p>
+  <p align="center"><em>Figure 12: client_loop: send disconnect: Broken pipe.</em></p>
 
   <p align="center">
     <img src="./figs/crashmemrange.png" alt="Crashing memory range" width="75%"/>
   </p>
-  <p align="center"><em>Figure 11: Crashing memory range.</em></p>
+  <p align="center"><em>Figure 13: Crashing memory range.</em></p>
 
   A possible explanation is that the crash is caused by illegal attempts to read memory addresses storing privileged software.  
 
   This crash raises concerns about a possible failure in memory isolation when accessed by processes, such as the `memory_reader.py` script. Another possibility is that the privileged software running in this memory range is particularly sensitive to illegal read attempts, causing cheriOS crashes. Further investigation is required to determine the exact causes.
 
 - **Error after rebooting the cheriBSD OS:**  
-  Attempt to read memory after rebooting to recover from a crash outputs `[Errno 2] No such file or directory: '/proc/PID/mem'` (see Fig. 12). The error indicates that file `/proc/{pid}/mem`, which is used by `memory_reader.py`, is unavailable.
+  Attempt to read memory after rebooting to recover from a crash outputs `[Errno 2] No such file or directory: '/proc/PID/mem'` (see Fig. 14). The error indicates that file `/proc/{pid}/mem`, which is used by `memory_reader.py`, is unavailable.
 
   <p align="center">
     <img src="./figs/proc_pid_mem_error.png" alt="Error after recovering from a crash: [Errno 2] No such file or directory: '/proc/3587/mem'" width="75%"/>
   </p>
-  <p align="center"><em>Figure 12: Error after recovering from a crash: [Errno 2] No such file or directory: '/proc/3587/mem'.</em></p>
+  <p align="center"><em>Figure 14: Error after recovering from a crash: [Errno 2] No such file or directory: '/proc/3587/mem'.</em></p>
 
 - **Procedure for running `memory_reader.py` after rebooting:**  
   After rebooting to recover from a crash, it is necessary to verify that the `/proc` file system is mounted correctly mounted, the `mount` command can be used.
@@ -756,12 +756,12 @@ It is sensible to think that cheriBSD blocked access to the region marked with `
 ### 7.2.2. Memory regions:
 The memory regions are available from [memory-regions-result.txt](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/security-multi-compartment-performance/memory-regions-result.txt) and show different memory regions marked with different access permissions.
 
-Memory regions with `rw-RW` permissions allow read access without crashing the cheriBSD OS; in contrast, regions marked with `rw---` grant read access only to the owner process. Attempts to access these regions from a different process result in crashes; Fig. 13 shows an example. The screenshot shows the content of the memory at crash time.
+Memory regions with `rw-RW` permissions allow read access without crashing the cheriBSD OS; in contrast, regions marked with `rw---` grant read access only to the owner process. Attempts to access these regions from a different process result in crashes; Fig. 15 shows an example. The screenshot shows the content of the memory at crash time.
 
 <p align="center">
   <img src="./figs/memerror_dynamiclibs.png" alt="Memory read error: attempt to read region protected by compartments" width="99%"/>
 </p>
-<p align="center"><em>Figure 13: Memory read error: attempt to read region protected by compartments.</em></p>
+<p align="center"><em>Figure 15: Memory read error: attempt to read region protected by compartments.</em></p>
 
 
 ### 7.2.3. Execution results:
