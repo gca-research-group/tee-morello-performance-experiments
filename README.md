@@ -166,8 +166,6 @@ To collect metrics we execute a C program compiled and executed without compartm
 - **Compilation and execution without compartments:**  
   [memory-out-experiment.c](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/memory-performance/outside-tee-exection/memory-out-experiment.c).
 
-  We have compiled and executed it with the following cheriBSD commands:
-
   ```bash
   $ clang-morello -o memory-in-experiment memory-in-experiment.c -lm
   
