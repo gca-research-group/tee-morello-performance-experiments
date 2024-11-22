@@ -604,7 +604,7 @@ We observed some unexpected behaviours and crashes of the cheriBSD that demanded
   Another speculation is that the CHERI security model abruptly terminates processes that systematically attempt to access protected memory regions, illegally.  
 
   <p align="center">
-    <img src="./figs/abruptkillofproc.png" alt="Abruptly termination of process by the OS" width="99%"/>
+    <img src="./figs/abruptkillofproc.png" alt="Abruptly termination of process by the OS" width="75%"/>
   </p>
   <p align="center"><em>Figure 9: Abruptly termination of process by the OS.</em></p>
 
@@ -614,12 +614,12 @@ We observed some unexpected behaviours and crashes of the cheriBSD that demanded
   As shown in Fig. 10, the OS crashed reporting a `Broken pipe` error and the disconnection of the remote SSH shell when the `memory_reader.py` attempted to read addresses in the `0x4a300000` --- `0x4bb00000` range. See Fig. 11.  
 
   <p align="center">
-    <img src="./figs/crashoutputbrokenpipe.png" alt="client_loop: send disconnect: Broken pipe" width="99%"/>
+    <img src="./figs/crashoutputbrokenpipe.png" alt="client_loop: send disconnect: Broken pipe" width="75%"/>
   </p>
   <p align="center"><em>Figure 10: client_loop: send disconnect: Broken pipe.</em></p>
 
   <p align="center">
-    <img src="./figs/crashmemrange.png" alt="Crashing memory range" width="99%"/>
+    <img src="./figs/crashmemrange.png" alt="Crashing memory range" width="75%"/>
   </p>
   <p align="center"><em>Figure 11: Crashing memory range.</em></p>
 
