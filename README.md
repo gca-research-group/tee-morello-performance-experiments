@@ -31,7 +31,7 @@ We specify the hardware and software configurations of the Morello Board used in
 | Compiler             | clang (with Morello support)                        | `clang-morello --version`                       |
 | Tool                 | proccontrol (for CHERI compartments)                | `proccontrol -m cheric18n -s enable ./binary`   |
 | Python               | Python 3 (required for Experiments 1, 5, and 6)     | `python3 --version`                             |
-| Scripts used         | `cheri-cap-experiment.py`<br>`cpu-in-experiment.c`<br>`memory-in-experiment.c`<br>`pipe-in-experiment.c`<br>`pipe-trampoline-in-experiment.c`<br>`library_a.c`<br>`library_b.c`<br>`memory_reader.py`<br>`integration_process` | Not applicable                                  |
+| Scripts used         | `cheri-cap-experiment.py`<br>`cpu-in-experiment.c`<br>`memory-in-experiment.c`<br>`pipe-in-experiment.c`<br>`pipe-trampoline-in-experiment.c`<br>`library_a.c`<br>`library_b.c`<br>`memory_reader.py`<br>`integration_process.c` | Not applicable                                  |
 | Access               | Remote via SSH                                      | `ssh -i private_key user@server`               |
 
 </div>
