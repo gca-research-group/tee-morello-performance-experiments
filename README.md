@@ -5,7 +5,7 @@ This report evaluates compartments created using the library-based compartmental
 
 # 1. Experiments set up
 
-We use a Morello Board, which is physically located in Toronto, within the premises of [TODAQ](https://engineering.todaq.net/), a non-funding partner of the [CAMB project](https://www.cl.cam.ac.uk/research/srg/projects/camb/). A laptop connected to the network of the [Applied Computing Research Group (GCA)](http://gca.unijui.edu.br/) at Unijuí, Brazil, is used to access the Morello Board via an SSH connection. Below is the main configuration of the Morello Board and additional parameters, including the CheriBSD commands required to output these configurations directly from the board. The Figure 1 illustrates the Morello Board's physical location and the network connection used to access it.
+We use a Morello Board, which is physically located in Toronto, within the premises of [TODAQ](https://engineering.todaq.net/), a non-funding partner of the [CAMB project](https://www.cl.cam.ac.uk/research/srg/projects/camb/). A laptop connected to the network of the [Applied Computing Research Group (GCA)](http://gca.unijui.edu.br/) at Unijuí, Brazil, is used to access the Morello Board via an SSH connection. Below is the main configuration of the Morello Board and additional parameters, including the CheriBSD commands required to output these configurations directly from the board. The Fig. 1 illustrates the Morello Board's physical location and the network connection used to access it.
 
 <p align="center">
   <img src="figs/experimentsetup_morelloboard.png" alt="Morello Boards location" width="700"/>
@@ -90,7 +90,7 @@ We use the example shown above in subsequent sections to compile and execute the
 
 The main aim of this experiment is to measure and analyse how the memory of a Morello Board is consumed by instances (also called replicas) of attestables. To this end, we create and attestable and load it with a C program compiled with the library compartmentalisation tool. We use the enterprise application integration (see yellow box) use case implemented in - [tee-compartimentalisation-study-case](https://github.com/gca-research-group/tee-compartimentalisation-study-case) repository (Repository available at: [https://github.com/gca-research-group/tee-compartimentalisation-study-case](https://github.com/gca-research-group/tee-compartimentalisation-study-case)).
 
-The parameter to measure is the number of attestables that can be created on a Morello Board before consuming 90% of its memory. In addition to the number of attestables, we took the opportunity to collect metrics about the time it takes the operating system to wipe the memory used by the attestable. The setup of the experiment is shown in Figure 2.
+The parameter to measure is the number of attestables that can be created on a Morello Board before consuming 90% of its memory. In addition to the number of attestables, we took the opportunity to collect metrics about the time it takes the operating system to wipe the memory used by the attestable. The setup of the experiment is shown in Fig. 2.
 
 <p align="center">
   <img src="./figs/maxnumberofatts.png" alt="Max number of attestable that can be created before exhausting memory" width="55%"/>
@@ -190,7 +190,7 @@ b) **write:** time required to write data to fill the entire memory block.
 c) **read:** time taken to read the data from the entire memory block.  
 d) **free:** time taken to release the memory block back into the main memory.
 
-As shown in Figure 4, we use blocks of `100, 200, 300,...,100 000 MB` as large blocks of memory. Blocks of these sizes are typical of applications that process images and access databases.
+As shown in Fig. 4, we use blocks of `100, 200, 300,...,100 000 MB` as large blocks of memory. Blocks of these sizes are typical of applications that process images and access databases.
 
 <p align="center">
   <img src="./figs/memory.png" alt="Performance of memory operations on memory blocks of different sizes" width="65%"/>
@@ -537,7 +537,7 @@ In this experiment, we use an application written in C [tee-compartmentalisation
 
    The [memory_reader.py](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/security-single-compartment-performance/memory_reader.py) script cycles through the memory regions of interest reading the data between the start and end addresses of each region directly.
 
-Fig. 8 shows the steps executed by the `memory_reader.py` script:
+Fig. 10 shows the steps executed by the `memory_reader.py` script:
 
 1. The Memory Reader requests the Cheri OS for the PID of the target process by its name, using the method `getPID(processName)`.
 2. Cheri OS returns the corresponding PID.
