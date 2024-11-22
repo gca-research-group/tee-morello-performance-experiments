@@ -597,11 +597,7 @@ These results indicate that the Morello Board implements the traditional asymmet
 We observed some unexpected behaviours and crashes of the cheriBSD that demanded reboot to recover. We have no sound explanations, we only suspect that these issues are related to the memory managements in the Morello Board.
 
 - **Process terminated by the OS:**  
-  We have observed that the application was terminated (i.e. killed) automatically by the cheriBSD OS, approximately, after 1 hour of execution. See Fig. 9.  
-
-  This behaviour seems to be related to the CheriBSD system’s resource management. It seems that the operating system terminates processes that are consuming excessive memory or CPU, possibly in response to an infinite loop or undesirable behaviour.  
-
-  Another speculation is that the CHERI security model abruptly terminates processes that systematically attempt to access protected memory regions, illegally.  
+  We have observed that the application was terminated (i.e. killed) automatically by the cheriBSD OS, approximately, after 1 hour of execution. See Fig. 9. This behaviour seems to be related to the CheriBSD system’s resource management. It seems that the operating system terminates processes that are consuming excessive memory or CPU, possibly in response to an infinite loop or undesirable behaviour. Another speculation is that the CHERI security model abruptly terminates processes that systematically attempt to access protected memory regions, illegally.  
 
   <p align="center">
     <img src="./figs/abruptkillofproc.png" alt="Abruptly termination of process by the OS" width="75%"/>
@@ -609,9 +605,7 @@ We observed some unexpected behaviours and crashes of the cheriBSD that demanded
   <p align="center"><em>Figure 9: Abruptly termination of process by the OS.</em></p>
 
 - **Crash of cheriBSD OS:**  
-  We have observed systematic crashes of the cheriBSD OS when the `memory_reader.py` script attempted to read a specific range of memory addresses.
-
-  As shown in Fig. 10, the OS crashed reporting a `Broken pipe` error and the disconnection of the remote SSH shell when the `memory_reader.py` attempted to read addresses in the `0x4a300000` --- `0x4bb00000` range. See Fig. 11.  
+  We have observed systematic crashes of the cheriBSD OS when the `memory_reader.py` script attempted to read a specific range of memory addresses. As shown in Fig. 10, the OS crashed reporting a `Broken pipe` error and the disconnection of the remote SSH shell when the `memory_reader.py` attempted to read addresses in the `0x4a300000` --- `0x4bb00000` range. See Fig. 11.  
 
   <p align="center">
     <img src="./figs/crashoutputbrokenpipe.png" alt="client_loop: send disconnect: Broken pipe" width="75%"/>
@@ -628,9 +622,7 @@ We observed some unexpected behaviours and crashes of the cheriBSD that demanded
   This crash raises concerns about a possible failure in memory isolation when accessed by processes, such as the `memory_reader.py` script. Another possibility is that the privileged software running in this memory range is particularly sensitive to illegal read attempts, causing cheriOS crashes. Further investigation is required to determine the exact causes.
 
 - **Error after rebooting the cheriBSD OS:**  
-  Attempt to read memory after rebooting to recover from a crash outputs  
-  `[Errno 2] No such file or directory: '/proc/PID/mem'`  
-  (see Fig. 12). The error indicates that file `/proc/{pid}/mem`, which is used by `memory_reader.py`, is unavailable.
+  Attempt to read memory after rebooting to recover from a crash outputs `[Errno 2] No such file or directory: '/proc/PID/mem'` (see Fig. 12). The error indicates that file `/proc/{pid}/mem`, which is used by `memory_reader.py`, is unavailable.
 
   <p align="center">
     <img src="./figs/proc_pid_mem_error.png" alt="Error after recovering from a crash: [Errno 2] No such file or directory: '/proc/3587/mem'" width="75%"/>
