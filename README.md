@@ -649,6 +649,138 @@ We observed some unexpected behaviours and crashes of the cheriBSD that demanded
 
 
 
+# 7. Examination of memory isolation in executions with shared libraries
+
+To explore memory isolation further, we executed a C program that communicates a parent and a child process over a pipe after compiling them using dynamic libraries. In this experiment we have the following C codes:
+
+- `library_a.c`: the parent process that writes a string to one end of the pipe.
+- `library_b.c`: the child process that reads the string from the other end of the pipe.
+- `pipe-trampoline-in-experiment.c`: the main C program that creates the parent and child process when it is executed within compartments.
+
+The compilation process is divided into two steps: Firstly, each individual module is compiled separately to create a dynamic library. Secondly, the main executable is compiled taking the dynamic libraries as input to create the main executable. In this example, we used two modules and therefore, we produce two dynamic libraries.
+
+1. **Compilation of the parent library:**
+
+   To create the object file `library_a.o` from the source file `library_a.c`, execute:
+
+   ```bash
+   $ clang-morello -march=morello+c64 -mabi=purecap -fPIC -c library_a.c -o library_a.o
+   ```
+
+   The CHERI-specific settings used enable position-independent code (`-fPIC`), which is needed for creating dynamic libraries.
+
+   To create the dynamic library `liblibrary_a.so` from the object file `library_a.o`, execute:
+
+   ```bash
+   $ clang-morello -march=morello+c64 -mabi=purecap -shared -o liblibrary_a.so library_a.o
+   ```
+
+   The source C file is available from Git:  
+   [library_a.c](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/security-multi-compartment-performance/library_a.c).
+
+2. **Compilation of the child library:**
+
+   The procedure to produce the library of the child process is similar.
+
+   To create the object file `library_b.o` from `library_b.c`, execute:
+
+   ```bash
+   $ clang-morello -march=morello+c64 -mabi=purecap -fPIC -c library_b.c -o library_b.o
+   ```
+
+   To create the dynamic library `liblibrary_b.so` from the object file `library_b.o`, execute:
+
+   ```bash
+   $ clang-morello -march=morello+c64 -mabi=purecap -shared -o liblibrary_b.so library_b.o
+   ```
+
+   The source file is available from Git:  
+   [library_b.c](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/security-multi-compartment-performance/library_b.c).
+
+3. **Compilation of the main program:**  
+   The main program is compiled and linked with the dynamic libraries (`library_a.so` and `library_b.so`) created above. They are assumed to be located in the current directory specified as `-L.`.
+
+   ```bash
+   $ clang-morello -march=morello+c64 -mabi=purecap pipe-trampoline-in-experiment.c -L. -llibrary_a -llibrary_b -o pipe_trampoline
+   ```
+
+   The source C file is available from Git:  
+   [pipe-trampoline-in-experiment.c](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/security-multi-compartment-performance/pipe-trampoline-in-experiment.c).
+
+4. **Execution of the main program:**  
+   We executed the main program within a compartment.
+
+   - We set the `LD_LIBRARY_PATH` to enable the program to locate the shared libraries in the current directory.
+
+     ```bash
+     $ export LD_LIBRARY_PATH=.
+     ```
+
+   - To run `pipe_trampoline` within compartments, we executed the following command:
+
+     ```bash
+     $ proccontrol -m cheric18n -s enable ./pipe_trampoline
+     ```
+
+## 7.1. Examination of memory isolation
+
+We have performed the following steps to examine memory:
+
+1. **Initiation of the parent and child processes:**  
+   We started the `pipe_trampoline` to initiate the parent and the child process. The parent writes a string to one end of the pipe, and the child process reads it from the other end.
+
+2. **Memory reading:**  
+   We executed the `memory_reader.py` script available from  
+   [memory_reader.py](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/security-single-compartment-performance/memory_reader.py)  
+   to attempt direct memory reads:
+
+   ```bash
+   $ python3 memory_reader.py
+   ```
+
+3. **Reading process:**  
+   We executed the `memory_reader.py` script. It iterates through each RW memory region associated with the PIDs of the parent and child processes, trying to read the data from each region defined by start and end addresses. We displayed the results on the screen (see Fig. 13).
+
+
+
+### 7.2. Results
+
+We have divided the results into three sections.
+
+#### 7.2.1. Data read from memory:
+
+The data read from memory is available from [memory-reading-result.txt](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/security-multi-compartment-performance/memory-reading-result.txt) and shows data read from memory.
+
+The results indicate that, even when running in a multi-compartment environment, a user with root privileges is able to access data from memory. We were able to extract data, including messages and data blocks.
+
+As a specific example, we can report that the cheriBSD crashed when we tried to access the region `0xfbfdbffff000` to `0xfbfdc0000000` which is marked with `rw---`, that is, it is a protected region.
+
+We have stored some examples of data read in [memory-reading-result.txt](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/security-multi-compartment-performance/memory-reading-result.txt).
+
+It is sensible to think that cheriBSD blocked access to the region marked with `rw---` permission. However, the crash of cheriBSD, as a reaction, is intriguing. Further investigation is needed to fully understand the interaction between these permissions and the security policies applied to react to attempts to bypass the permissions.
+
+
+#### 7.2.2. Memory regions:
+The memory regions are available from [memory-regions-result.txt](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/security-multi-compartment-performance/memory-regions-result.txt) and show different memory regions marked with different access permissions.
+
+Memory regions with `rw-RW` permissions allow read access without crashing the cheriBSD OS; in contrast, regions marked with `rw---` grant read access only to the owner process. Attempts to access these regions from a different process result in crashes; Fig. 13 shows an example. The screenshot shows the content of the memory at crash time.
+
+<p align="center">
+  <img src="./figs/memerror_dynamiclibs.png" alt="Memory read error: attempt to read region protected by compartments" width="99%"/>
+</p>
+<p align="center"><em>Figure 13: Memory read error: attempt to read region protected by compartments.</em></p>
+
+
+#### 7.2.3. Execution results:
+The execution results are available from [execution-result.txt](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/security-multi-compartment-performance/execution-result.txt) and show records of parent-child communication over a pipe.
+
+For example, line 205 (``msg received from child process TKYftt85v0l3d05SosZY1 ... iAbqS7D3VokIx'') shows the child process reading one of the strings with random characters sent by the parent process.
+
+We managed to read this string directly from memory too. It is visible in the last lines of the raw version of the [memory-reading-result.txt](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/security-multi-compartment-performance/memory-reading-result.txt) file.
+
+
+
+
 
 
 
