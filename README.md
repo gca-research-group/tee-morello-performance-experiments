@@ -376,6 +376,11 @@ As visualised in Fig. 7, these results indicate that there is a noticeable perfo
 
 This experiment was conducted to evaluate how the use of compartments affects the performance of communication over Unix pipes. To collect metrics, we have implemented a C program that communicates a parent with a child process over a pipe and collects metrics about writing to and reading from a pipe that interconnected them. As shown in Fig. 8, the parent process writes a message to the pipe and the child process reads it.
 
+<p align="center">
+  <img src="./figs/parent-child-pipe.png" alt="Parent-child communication over a pipe"/>
+</p>
+<p align="center"><em>Figure 8: Parent--child communication over a pipe.</em></p>
+
 We run the C program within a compartment [pipe-in-experiment.c](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/pipe-performance/inside-tee-execution/pipe-in-experiment-result.c) and without compartments [pipe-out-experiment.c](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/pipe-performance/outside-tee-execution/pipe-out-experiment-result.c).
 
 - **Compilation and execution inside a compartment**
@@ -395,11 +400,6 @@ We run the C program within a compartment [pipe-in-experiment.c](https://github.
   ```
 
 To collect metrics, the parent process writes a random string of 1024 bytes — a typical size widely used in inter-process communication applications.
-
-<p align="center">
-  <img src="./figs/parent-child-pipe.png" alt="Parent-child communication over a pipe"/>
-</p>
-<p align="center"><em>Figure 8: Parent--child communication over a pipe.</em></p>
 
 We collected metrics about the following operations:
 - **write:** Time taken by the parent process to write data to the pipe.
