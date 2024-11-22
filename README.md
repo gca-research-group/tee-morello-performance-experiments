@@ -22,7 +22,7 @@ We specify the hardware and software configurations of the Morello Board used in
 |----------------------|-----------------------------------------------------|-------------------------------------------------|
 | Operating System     | CheriBSD 24.5 (FreeBSD 15.0-CURRENT)                | `uname -a`                                      |
 | Kernel Version       | FreeBSD 15.0-CURRENT, releng/24.05                  | `uname -v`                                      |
-| Board                | Morello System Development Platform                 | `kenv`<br>`|`<br>`grep smbios.system.product`             |
+| Board                | Morello System Development Platform                 | `kenv``|``grep smbios.system.product`             |
 | RAM                  | 17 GB detected (16 GB DDR4, 2933 MT/s, ECC)         | `dmidecode --type memory`                       |
 | Storage              | SSD                                                | `camcontrol identify ada0`                      |
 | Architecture         | aarch64c (with CHERI support)                       | `sysctl hw.machine_arch`                        |
