@@ -743,11 +743,11 @@ We have performed the following steps to examine memory:
 
 
 
-### 7.2. Results
+## 7.2. Results
 
 We have divided the results into three sections.
 
-#### 7.2.1. Data read from memory:
+### 7.2.1. Data read from memory:
 
 The data read from memory is available from [memory-reading-result.txt](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/security-multi-compartment-performance/memory-reading-result.txt) and shows data read from memory.
 
@@ -760,7 +760,7 @@ We have stored some examples of data read in [memory-reading-result.txt](https:/
 It is sensible to think that cheriBSD blocked access to the region marked with `rw---` permission. However, the crash of cheriBSD, as a reaction, is intriguing. Further investigation is needed to fully understand the interaction between these permissions and the security policies applied to react to attempts to bypass the permissions.
 
 
-#### 7.2.2. Memory regions:
+### 7.2.2. Memory regions:
 The memory regions are available from [memory-regions-result.txt](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/security-multi-compartment-performance/memory-regions-result.txt) and show different memory regions marked with different access permissions.
 
 Memory regions with `rw-RW` permissions allow read access without crashing the cheriBSD OS; in contrast, regions marked with `rw---` grant read access only to the owner process. Attempts to access these regions from a different process result in crashes; Fig. 13 shows an example. The screenshot shows the content of the memory at crash time.
@@ -771,7 +771,7 @@ Memory regions with `rw-RW` permissions allow read access without crashing the c
 <p align="center"><em>Figure 13: Memory read error: attempt to read region protected by compartments.</em></p>
 
 
-#### 7.2.3. Execution results:
+### 7.2.3. Execution results:
 The execution results are available from [execution-result.txt](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/security-multi-compartment-performance/execution-result.txt) and show records of parent-child communication over a pipe.
 
 For example, line 205 (``msg received from child process TKYftt85v0l3d05SosZY1 ... iAbqS7D3VokIx'') shows the child process reading one of the strings with random characters sent by the parent process.
