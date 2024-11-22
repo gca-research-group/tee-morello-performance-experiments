@@ -759,7 +759,7 @@ The memory regions are available from [memory-regions-result.txt](https://github
 Memory regions with `rw-RW` permissions allow read access without crashing the cheriBSD OS; in contrast, regions marked with `rw---` grant read access only to the owner process. Attempts to access these regions from a different process result in crashes; Fig. 15 shows an example. The screenshot shows the content of the memory at crash time.
 
 <p align="center">
-  <img src="./figs/memerror_dynamiclibs.png" alt="Memory read error: attempt to read region protected by compartments" width="99%"/>
+  <img src="./figs/memerror_dynamiclibs.png" alt="Memory read error: attempt to read region protected by compartments" width="75%"/>
 </p>
 <p align="center"><em>Figure 15: Memory read error: attempt to read region protected by compartments.</em></p>
 
