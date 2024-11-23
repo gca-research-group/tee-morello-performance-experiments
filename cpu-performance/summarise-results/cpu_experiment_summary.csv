@@ -1,5 +1,0 @@
-Test Type,CPU Time (ms) - Normal,CPU Time (ms) - Secure
-array,1419.0,1460.0
-float,816.0,785.0
-int,923.0,993.0
-math,46696.0,69998.0
