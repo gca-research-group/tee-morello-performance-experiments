@@ -769,9 +769,9 @@ For example, line 205 (``msg received from child process TKYftt85v0l3d05SosZY1 .
 
 We managed to read this string directly from memory too. It is visible in the last lines of the raw version of the [memory-reading-result.txt](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/security-multi-compartment-performance/memory-reading-result.txt) file.
 
+_________________________________________________________________________________________________________________________________________________________________
 
-
-# Observation: Codes for Summarising and Visualising Results
+# Codes for Summarising and Visualising Results
 
 The repository includes scripts to summarise the raw experimental results and generate visualisations for interpreting the data. These scripts automate the analyses and produce outputs such as aggregated CSV files and comparative graphs.
 
