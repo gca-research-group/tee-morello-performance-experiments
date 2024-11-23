@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 
 # Load data from the CSV file
-input_file = 'cpu_experiment_summary.csv'
+input_file = '../summarise-results/cpu_experiment_summary.csv'
 data = pd.read_csv(input_file)
 
 # Extract data for plotting
