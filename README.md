@@ -45,7 +45,7 @@ It is worth explaining that, as shown in the CSV files available in this reposit
 The inclusion or exclusion of library-based compartments is determined at compilation and execution time, as documented in the manuals:
 - [Gao, 2024](https://man.cheribsd.org/cgi-bin/man.cgi/c18n)
 - [Cheri Team, 2022](https://github.com/CTSRD-CHERI/cheripedia/wiki/Library-based-%20Compartmentalisation)
-- [Watson, 2019b](https://www.cl.cam.ac.uk/research/security/ctsrd/cheri/cheri-compartmentalization.html)
+- [Watson, 2019](https://www.cl.cam.ac.uk/research/security/ctsrd/cheri/cheri-compartmentalization.html)
 
 
 
