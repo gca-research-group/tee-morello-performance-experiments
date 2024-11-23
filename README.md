@@ -776,15 +776,12 @@ We managed to read this string directly from memory too. It is visible in the la
 The repository includes scripts to summarise the raw experimental results and generate visualisations for interpreting the data. These scripts automate the analyses and produce outputs such as aggregated CSV files and comparative graphs.
 
 ## Summarisation Scripts
-Repositories that provide the scripts for aggregating raw experimental data. 
 
 - [Summarise CPU Results](https://github.com/gca-research-group/tee-morello-performance-experiments/tree/main/cpu-performance/summarise-results)
 - [Summarise Memory Results](https://github.com/gca-research-group/tee-morello-performance-experiments/tree/main/memory-performance/summarise-results)
 
 
 ## Visualisation Scripts
-
-Repositories that provide scripts for generating visualisations to interpret experimental data. These scripts produce comparative graphs for the different experiments.
 
 - [Maximum Number of Compartments Graph](https://github.com/gca-research-group/tee-morello-performance-experiments/tree/main/cheri-caps-executable-performance/plot-graph)
    
