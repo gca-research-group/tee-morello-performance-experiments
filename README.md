@@ -784,7 +784,8 @@ The experiments and results reported on this web page are being conducted in col
 *Applied Computing Research (GCA) Group, Unijui University, Brazil*  
 [regis.schuch@unijui.edu.br](mailto:regis.schuch@unijui.edu.br)
 
-**Carlos Molina-Jimenez** 
-*Computer Lab, University of Cambridge*
-([carlos.molina@cl.cam.ac.uk](mailto:carlos.molina@cl.cam.ac.uk)) 
+**Carlos Molina-Jimenez**  
+*Computer Lab, University of Cambridge*  
+[carlos.molina@cl.cam.ac.uk](mailto:carlos.molina@cl.cam.ac.uk)
+
 
