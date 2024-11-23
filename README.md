@@ -778,7 +778,7 @@ This work is part of the CAMB project under the responsibility of Jon ([jon.crow
 The experiments and results reported on this web page are being conducted in collaboration with the [Applied Computing Research (GCA) Group](http://gca.unijui.edu.br/member/), Unijuí, Brazil, led by Rafael Z. Frantz ([rzfrantz@unijui.edu.br](mailto:rzfrantz@unijui.edu.br)). The joint effort emerged from a long-term international collaboration between the two research groups and reflects the interest of the GCA in the [Digital Security by Design (DSbD)](https://www.dsbd.tech/) programme activities, particularly in CHERI capabilities and the Morello platform.
 
 
-## Corresponding Author
+## Corresponding Authors
 
 **Regis Rodolfo Schuch**  
 *Applied Computing Research (GCA) Group, Unijui University, Brazil*  
