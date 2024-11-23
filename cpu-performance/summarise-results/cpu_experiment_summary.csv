@@ -1,0 +1,5 @@
+Test Type,CPU Time (ms) - Normal,CPU Time (ms) - Secure
+Maths (trigon. and exp. func),"46,696","69,998"
+Int,923,993
+Float,816,785
+Array,"1,419","1,460"
