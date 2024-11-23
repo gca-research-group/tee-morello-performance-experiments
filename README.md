@@ -792,6 +792,16 @@ The repository includes scripts to summarise the raw experimental results and ge
 - [Pipe Performance Graphs](https://github.com/gca-research-group/tee-morello-performance-experiments/tree/main/pipe-performance/plot-graph) 
  
 
+_________________________________________________________________________________________________________________________________________________________________
+
+# PDF Version
+
+A PDF version of this document is available for download. Please note that the PDF might be slightly behind this page in terms of updates.
+
+[📄 Download PDF Version](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/documents/Library_based_compartments_evaluation.pdf)
+
+_________________________________________________________________________________________________________________________________________________________________
+
 
 ## Acknowledgements
 
