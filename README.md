@@ -771,17 +771,17 @@ We managed to read this string directly from memory too. It is visible in the la
 
 _________________________________________________________________________________________________________________________________________________________________
 
-# Codes for Summarising and Visualising Results
+# Python scripts that can help to summarise and visualise results
 
-The repository includes scripts to summarise the raw experimental results and generate visualisations for interpreting the data. These scripts automate the analyses and produce outputs such as aggregated CSV files and comparative graphs.
+If needed, these Python scripts can be used to summarise the raw collected metrics and present results graphically. They produce aggregated CSV files and comparative plots.
 
-## Summarisation Scripts
+## Scripst for summary views
 
 - [Summarise CPU Results](https://github.com/gca-research-group/tee-morello-performance-experiments/tree/main/cpu-performance/summarise-results)
 - [Summarise Memory Results](https://github.com/gca-research-group/tee-morello-performance-experiments/tree/main/memory-performance/summarise-results)
 
 
-## Visualisation Scripts
+## Script for visual views
 
 - [Maximum Number of Compartments Graph](https://github.com/gca-research-group/tee-morello-performance-experiments/tree/main/cheri-caps-executable-performance/plot-graph)
    
@@ -796,7 +796,7 @@ ________________________________________________________________________________
 
 # PDF Version
 
-A PDF version of this document is available for download. Please note that the PDF might be slightly behind this page in terms of updates.
+A PDF version of this document is available for download. Please note that the PDF might be slightly behind this page in terms of updates. If it fails to open (Error rendering embedded code), download it first and then open it.
 
 [📄 Download PDF Version](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/documents/Library_based_compartments_evaluation.pdf)
 
