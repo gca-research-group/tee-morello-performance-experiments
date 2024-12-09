@@ -38,11 +38,6 @@ The metrics collected are stored in two separate CSV files: [cpu-in-experiment-r
 | 1000                | 5 ± 0.50                | 2,825,823 ± 47.72   | 2,825,818 ± 41.68  | 18 ± 0.64          |
 
 
-<p align="center">
-  <img src="./figs/performancememOperations.png" alt="Time to execute allocate, write, read and release memory operations" width="100%"/>
-</p>
-<p align="center"><em>Figure 5: Time to execute allocate, write, read and release memory operations.</em></p>
-
 
 - **Allocation time:** A comparison of Table 3 against Table 4 reveals that it takes longer to allocate memory blocks inside compartments. For example, the allocation of 100 MB takes 2 ms without a compartment, while it takes 93 ms inside a compartment. Allocation times vary from 2 to 5 ms without a compartment but from 93 to 288 ms inside a compartment. In contrast, the time to allocate memory within a compartment varies significantly from 93 to 288 ms and depends on the size of the block. Times range from 93 ms for 100 MB blocks to 248 ms for 1000 MB blocks. In contrast, the time to allocate memory without compartments is shorter; it ranges from 2 to 5 ms for all block sizes.
 
