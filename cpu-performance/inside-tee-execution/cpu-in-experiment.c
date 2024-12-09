@@ -31,7 +31,7 @@
  *              :   - Releases the allocated memory. 
  *              :
  * Compile      :
- * Capabilities : clang-morello -march=morello+c64 -mabi=purecap -g -o cpu-in-experiment cpu-in-experiment.c -L. -lm
+ * Capabilities : clang-morello -march=morello+c64 -mabi=purecap -o cpu-in-experiment cpu-in-experiment.c -lm
  *              :
  * run          : proccontrol -m cheric18n -s enable ./cpu-in-experiment	 
  * 
