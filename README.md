@@ -349,7 +349,7 @@ Table 5 compares the average execution times of different operations in both exe
 <div align="center">
 <p><em>Table 5: Times to execute CPU operations inside and without a compartment.</em></p>
 
-| Test Type                     | CPU Time (ms) - Normal | CPU Time (ms) - Secure |
+| Trial Type                     | CPU Time (ms) - Normal | CPU Time (ms) - Secure |
 |-------------------------------|------------------------|-------------------------|
 | Maths (trigon. and exp. func) | 46,759                | 70,780                 |
 | Int                           | 922                   | 993                    |
@@ -412,28 +412,29 @@ Algorithm 3 describes the execution of the operations and the settings of timers
 <pre style="border: 1px solid #ddd; padding: 10px; background-color: #f9f9f9; font-family: monospace;">
 Algorithm 3: Pipe Communication Performance
 
-1.  start_test(log_file)              
+1.  perform_pipe_trial(log_file)              
 2.  begin
-3.      define STRLEN  
-4.      define NUM_OF_MSG 
-5.      for test_num from 1 to NUM_OF_MSG do
+3.      define MESSAGE_SIZE  
+4.      define NUM_OF_TRIALS 
+5.      for trial_num from 1 to NUM_OF_TRIALS do
 6.          if parent_process
-7.              start_timer(write_time)     
-8.              write(pipe, message of size STRLEN)        
-9.              stop_timer(write_time)      
-10.             write(pipe, write_time)     
+7.              start_timer(write_duration)     
+8.              write(pipe, message of size MESSAGE_SIZE)        
+9.              stop_timer(write_duration)      
+10.             write(pipe, write_duration)     
 11.         else 
-12.             read(pipe, message of size STRLEN)         
-13.             read(pipe, write_time)      
-14.             start_timer(read_time)      
-15.             stop_timer(read_time)       
-16.             log(log_file, test_num, write_time, read_time) 
+12.             read(pipe, message of size MESSAGE_SIZE)         
+13.             read(pipe, write_duration)      
+14.             start_timer(read_duration)      
+15.             stop_timer(read_duration)       
+16.             log_results(log_file, trial_num, write_duration, read_duration) 
 17.         endif
 18.     endfor
 19. end
 </pre>
 
-In Algorithm 3, the `start_test` function (line 1) initiates a sequence of operations that measure the performance of pipe communication between the parent and child processes. The parameters `STRLEN` and `NUM_OF_MSG` (lines 3 and 4) establish the message size and the number of messages to be sent, respectively. For each iteration, from 1 to `NUM_OF_MSG` (line 5), the parent starts the write timer (line 7), writes a message of size `STRLEN` to the pipe (line 8), stops the write timer (line 9), and then sends the recorded `write_time` back through the pipe (line 10). The child process, in turn, reads the message and the `write_time` from the pipe (lines 12 and 13). To collect the metrics, the child process starts the read timer before reading (line 14) and stops it upon completing the reading (line 15). The test number, along with the write and read times, is logged in the log file (line 16). The procedure is repeated for each iteration until all messages are written to and read from the pipe (line 17).
+In Algorithm 3, the perform_pipe_trial function (line 1) initiates a sequence of operations that measure the performance of pipe communication between the parent and child processes. The parameters MESSAGE_SIZE and NUM_OF_TRIALS (lines 3 and 4) establish the message size and the number of trials to be executed, respectively. For each iteration, from 1 to NUM_OF_TRIALS (line 5), the parent starts the write timer (line 7), writes a message of size MESSAGE_SIZE to the pipe (line 8), stops the write timer (line 9), and then sends the recorded write_duration back through the pipe (line 10). The child process, in turn, reads the message and the write_duration from the pipe (lines 12 and 13). To collect the metrics, the child process starts the read timer before reading (line 14) and stops it upon completing the reading (line 15). The trial number, along with the write and read durations, is logged in the log file (line 16). The procedure is repeated for each iteration until all trials are completed (line 17).
+
 
 
 
@@ -446,7 +447,7 @@ Table 6 and Table 7 contain the results of each iteration, including message siz
 <div align="center">
 <p><em>Table 6: Time to execute write and read from a pipe inside a compartment.</em></p>
 
-| Test | Message Size (Bytes) | Write Time (ms) | Read Time (ms) | Total Time (ms) |
+| Trial | Message Size (Bytes) | Write Time (ms) | Read Time (ms) | Total Time (ms) |
 |------|-----------------------|-----------------|----------------|-----------------|
 | 1    | 1024                 | 0.016           | 0.161          | 0.177           |
 | 2    | 1024                 | 0.003           | 0.068          | 0.071           |
@@ -460,7 +461,7 @@ Table 6 and Table 7 contain the results of each iteration, including message siz
 <div align="center">
 <p><em>Table 7: Time to execute write and read from a pipe without a compartment.</em></p>
 
-| Test | Message Size (Bytes) | Write Time (ms) | Read Time (ms) | Total Time (ms) |
+| Trial | Message Size (Bytes) | Write Time (ms) | Read Time (ms) | Total Time (ms) |
 |------|-----------------------|-----------------|----------------|-----------------|
 | 1    | 1024                 | 0.013           | 0.059          | 0.072           |
 | 2    | 1024                 | 0.001           | 0.001          | 0.003           |
@@ -562,7 +563,7 @@ Table 8 summarises the results. The columns have the following meaning:
 <div align="center">
 <p><em>Table 8: Memory isolation in executions within and without compartments.</em></p>
 
-| Test num. | Execution env.   | User privileges | Access  | Sensitive Data Visible |
+| Trial num. | Execution env.   | User privileges | Access  | Sensitive Data Visible |
 |-----------|------------------|-----------------|---------|-------------------------|
 | 1         | in Compartment   | Root            | Granted | Yes                     |
 | 2         | in Compartment   | Ordinary user   | Denied  | No                      |
@@ -572,7 +573,7 @@ Table 8 summarises the results. The columns have the following meaning:
 </div>
 
 
-- **Test num:** Unique identification number of the test.
+- **Trial num:** Unique identification number of the test.
 - **Execution env.:** The execution environment where the application is executed, either within a compartments or no compartment.
 - **User privileges:** The privileges granted to the user that executes the `memory_reader.py` script.
 - **Access:** The response of cheriBSD to the `memory_reader.py` script's request to access the memory region.
