@@ -21,7 +21,3 @@ The results show that complex mathematical operations (trigonometric and exponen
 
 As visualised in Fig. 7, these results indicate that there is a noticeable performance cost in the execution of complex math operations inside compartments. However, in the execution of int, float and array operations, the performance is similar with and without compartments; strikingly, the float is is slightly better in the run inside a compartment.
 
-<p align="center">
-  <img src="./figs/CPUperformance.png" alt="CPU performance in executions within and without compartments" width="100%"/>
-</p>
-<p align="center"><em>Figure 7: CPU performance in executions within and without compartments.</em></p>
