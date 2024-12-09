@@ -199,24 +199,23 @@ As shown in Fig. 4, we use blocks of `100, 200, 300,...,100 000 MB` as large blo
 <pre style="border: 1px solid #ddd; padding: 10px; background-color: #f9f9f9; font-family: monospace;">
 Algorithm 1: Execution of memory operations and metric collections of their executions
 
-1. perform_tests(log_file, total_time)
+1. perform_trials(results_file, total_execution_time)
 2. begin
-3.     foreach block_size in MIN_BLOCK_SIZE to MAX_BLOCK_SIZE step BLOCK_STEP do
-4.         foreach test_num from 1 to NUM_TESTS do
-5.             allocation_time = time(malloc(block_size))
-6.             write_time = time(write_to_memory(block, block_size))
-7.             read_time = time(read_from_memory(block, block_size))
-8.             free_time = time(free(block))
-9.             log(log_file, block_size, test_num, allocation_time, write_time, read_time, free_time)
+3.     foreach current_block_size in MIN_BLOCK_SIZE to MAX_BLOCK_SIZE step BLOCK_STEP do
+4.         foreach trial_number from 1 to NUM_TRIALS do
+5.             allocation_duration = time(allocate_memory(current_block_size))
+6.             write_duration = time(write_to_memory(memory_block, current_block_size))
+7.             read_duration = time(read_from_memory(memory_block, current_block_size))
+8.             free_duration = time(deallocate_memory(memory_block))
+9.             log(results_file, current_block_size, trial_number, allocation_duration, write_duration, read_duration, free_duration)
 10.        endfor
 11.    endfor
 12. end
 </pre>
 
+Execution begins with the `perform_trials` function (line 1), which receives a log file as an input parameter to store performance metrics, including the total time taken to run the trials. The for-loop (line 3) iterates over memory blocks of different sizes ranging from `MIN_BLOCK_SIZE` to `MAX_BLOCK_SIZE` with increments specified by `BLOCK_STEP`. The inner for-loop (line 4) repeats the trial `NUM_TRIALS` times for each block size. `NUM_TRIALS` is defined by the programmer as a constant.
 
-Execution begins with the `perform_tests` function (line 1), which receives a log file as an input parameter to store performance metrics, including the total time taken to run the tests. The for-loop (line 3) iterates over memory blocks of different sizes ranging from `MIN_BLOCK_SIZE` to `MAX_BLOCK_SIZE` with increments specified by `BLOCK_STEP`. The inner for-loop (line 4) repeats the test `NUM_TESTS` times for each block size. `NUM_TESTS` is defined by the programmer as a constant.
-
-At each iteration, the memory allocation time is measured with the time function (line 5);   the time to write to the block is measured in line 6, the time to read the block is measured in line and, finally, the time to free the memory is measured in line 8. The metric collected  are recorded in the log file along with the test number (line 9).
+At each iteration, the memory allocation time is measured with the time function (line 5); the time to write to the block is measured in line 6, the time to read the block is measured in line 7 and, finally, the time to free the memory is measured in line 8. The metrics collected are recorded in the log file along with the trial number (line 9).
 
 
 
