@@ -323,20 +323,20 @@ Algorithm 2 contains the code that we have run to produce metrics about the CPU 
 <pre style="border: 1px solid #ddd; padding: 10px; background-color: #f9f9f9; font-family: monospace;">
 Algorithm 2: CPUPerformance
 
-1. perform_tests(log_file, total_time)
+1. perform_trials(log_file, total_execution_time)
 2. begin
-3.     for test_num in NUM_TESTS do
+3.     for trial_num in num_of_trials do
 4.         start_time = capture_time()
 5.         execute_operations(WORKLOAD_SIZE)
 6.         end_time = capture_time()
 7.         cpu_time = calculate_cpu_time(start_time, end_time)
-8.         results(log_file, test_num, cpu_time)
-9.         total_time += cpu_time
+8.         log_results(log_file, trial_num, cpu_time)
+9.         total_execution_time += cpu_time
 10.    endfor
 11. end
 </pre>
 
-The execution begins with the perform\_tests function (line 1), which receives the name of as a log file as input parameter to be used to store metrics about the execution of individual operations and the total time to complete the program. The function enters a repeat loop that is repeated the number of times specified by `NUM_TESTS` (line 3), where each iteration represents a test identified by `test_num`. In each iteration, the initial test time is recorded (line 4), followed by the execution of the computational operations determined by `WORKLOAD_SIZE` (line 5). At the end of execution, the final time is recorded (line 6), and the total CPU time elapsed is calculated by subtracting the `start_time` from the `end_time` (line 7). This time is recorded in the log file, along with the test number (line 8), and added to `total_time`, that accumulates the total time spent on all the tests (line 9).
+The execution begins with the `perform_trials` function (line 1), which receives the name of a log file as an input parameter to be used to store metrics about the execution of individual operations and the total time to complete the program. The function enters a repeat loop that is repeated the number of times specified by `num_of_trials` (line 3), where each iteration represents a trial identified by `trial_num`. In each iteration, the initial trial time is recorded (line 4), followed by the execution of the computational operations determined by `WORKLOAD_SIZE` (line 5). At the end of execution, the final time is recorded (`end_time`, line 6), and the total CPU time elapsed is calculated by subtracting the `start_time` from the `end_time` (line 7). This time is recorded in the log file, along with the trial number (line 8), and added to `total_execution_time`, that accumulates the total time spent on all the trials (line 9).
 
 
 
