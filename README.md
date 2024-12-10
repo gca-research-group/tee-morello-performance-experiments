@@ -433,7 +433,11 @@ Algorithm 3: Pipe Communication Performance
 19. end
 </pre>
 
-In Algorithm 3, the perform_pipe_trial function (line 1) initiates a sequence of operations that measure the performance of pipe communication between the parent and child processes. The parameters MESSAGE_SIZE and NUM_OF_TRIALS (lines 3 and 4) establish the message size and the number of trials to be executed, respectively. For each iteration, from 1 to NUM_OF_TRIALS (line 5), the parent starts the write timer (line 7), writes a message of size MESSAGE_SIZE to the pipe (line 8), stops the write timer (line 9), and then sends the recorded write_duration back through the pipe (line 10). The child process, in turn, reads the message and the write_duration from the pipe (lines 12 and 13). To collect the metrics, the child process starts the read timer before reading (line 14) and stops it upon completing the reading (line 15). The trial number, along with the write and read durations, is logged in the log file (line 16). The procedure is repeated for each iteration until all trials are completed (line 17).
+Here is the text updated with the names from the algorithm, while maintaining the original structure and wording:
+
+
+
+In Algorithm 3, the `perform_pipe_trial` function (line 1) initiates a sequence of operations that measure the performance of pipe communication between the parent and child processes. The parameters `MESSAGE_SIZE` and `NUM_OF_TRIALS` (lines 3 and 4) establish the message size and the number of trials to be executed, respectively. For each iteration, from 1 to `NUM_OF_TRIALS` (line 5), the parent starts the write timer (line 7), writes a message of size `MESSAGE_SIZE` to the pipe (line 8), stops the write timer (line 9), and then sends the recorded `write_duration` back through the pipe (line 10). The child process, in turn, reads the message and the `write_duration` from the pipe (lines 12 and 13). To collect the metrics, the child process starts the read timer before reading (line 14) and stops it upon completing the reading (line 15). The trial number, along with the write and read durations, is logged in the log file (line 16). The procedure is repeated for each iteration until all trials are completed (line 17).
 
 
 
