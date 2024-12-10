@@ -474,9 +474,8 @@ Table 6 and Table 7 contain the results of each iteration, including message siz
 </div>
 
 
-The data shows the differences in the performance of inter--process communication (through pipes) inside a compartment and without compartments.
+The data shows the differences in the performance of inter-process communication (through pipes) inside a compartment and without compartments. A graphical view of the results is shown in Fig. 9.
 
-A graphical view of the results is shown in Fig. 9.
 
 <p align="center">
   <img src="./figs/pipePerformance.png" alt="Times to write and read a 1024 byte string from a pipe executed in compartments and without compartments" width="100%"/>
