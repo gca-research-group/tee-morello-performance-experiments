@@ -340,7 +340,7 @@ The execution begins with the `perform_trials` function (line 1), which receives
 
 
 
-## 4.1. Results
+## 4.1. Results - purecap ABI
 
 The results collected from the execution inside a compartment are available from [cpu-in-experiment-result.csv](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/cpu-performance/inside-tee-execution/cpu_in-experiment-result.csv). Similarly, the results collected from the execution without a compartment are available from [cpu-out-experiment-result.csv](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/cpu-performance/outside-tee-exection/cpu-out-experiment-result.csv).
 
@@ -368,6 +368,31 @@ As visualised in Fig. 7, these results indicate that there is a noticeable perfo
 </p>
 <p align="center"><em>Figure 7: CPU performance in executions within and without compartments.</em></p>
 
+
+## 4.2. Results - purecap benchmark ABI
+
+Table 6 compares the average execution times of different operations in both executions.
+
+<div align="center">
+<p><em>Table 6: Times to execute CPU operations inside and without a compartment.</em></p>
+
+| Trial Type                     | CPU Time (ms) - Normal | CPU Time (ms) - Secure |
+|-------------------------------|------------------------|-------------------------|
+| Maths (trigon. and exp. func) | 46,759                | 52,901                 |
+| Int                           | 922                   | 670                    |
+| Float                         | 830                   | 621                    |
+| Array                         | 1,407                 | 101                    |
+
+</div>
+
+The results show that complex mathematical operations (trigonometric and exponential functions) executed within a compartment took 52,901 ms on average. In contrast, the execution of the same operations without a compartment took only 46,759 ms. This represents a performance cost of approximately 13.12%. However, the execution of arithmetic operations with integers without a compartment takes 922 ms, compared to 670 ms inside a compartment. The difference is a performance gain of 27.32%. Similarly, the execution of floating point operations inside a compartment took 621 ms, which is lower than the execution without a compartment, which took 830 ms. This represents a performance gain of 25.18%. Finally, the execution of array manipulation operations took 101 ms inside a compartment, which is significantly lower than the 1,407 ms that it takes to execute the same operation without a compartment, representing a performance gain of 92.82%.
+
+As visualized in Fig. 8, these results indicate that there is a noticeable performance cost in the execution of complex math operations inside compartments. However, in the execution of int, float, and array operations, the performance is significantly better inside compartments; strikingly, the float operations and array manipulation show substantial performance gains when executed inside a compartment.
+
+<p align="center">
+  <img src="./figs/CPUperformance-benchamarkABI.png" alt="CPU performance in executions within and without compartments" width="100%"/>
+</p>
+<p align="center"><em>Figure 8: CPU performance in executions within and without compartments.</em></p>
 
 
 
