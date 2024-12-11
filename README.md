@@ -454,6 +454,26 @@ As visualized in Fig. 8, these results indicate that there is a noticeable perfo
 
 
 
+## 4.3. Results - comparison between the three experiments
+
+<div align="center">
+<p><em>Table 7: Times to execute CPU operations inside and without a compartment, including benchmark results.</em></p>
+
+| Trial Type                     | CPU Time (ms) - Normal | CPU Time (ms) – Secure – Benchmark | CPU Time (ms) - Secure |
+|-------------------------------|------------------------|-------------------------------------|-------------------------|
+| Maths (trigon. and exp. func) | 46,759                | 52,901                              | 70,780                 |
+| Int                           | 922                   | 670                                 | 993                    |
+| Float                         | 830                   | 621                                 | 804                    |
+| Array                         | 1,407                 | 101                                 | 1,443                  |
+
+</div>
+
+
+
+
+
+
+
 # 5. Communication performance over pipes
 
 This experiment was conducted to evaluate how the use of compartments affects the performance of communication over Unix pipes. To collect metrics, we have implemented a C program that communicates a parent with a child process over a pipe and collects metrics about writing to and reading from a pipe that interconnected them. As shown in Fig. 8, the parent process writes a message to the pipe and the child process reads it.
