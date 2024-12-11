@@ -1,0 +1,5 @@
+Trial Type,CPU Time (ms) - Normal,CPU Time (ms) - Secure,CPU Time (ms) - Secure Benchmark
+Maths (trigon. and exp. func),"46,759","70,780","52,901"
+Int,922,993,670
+Float,830,804,621
+Array,"1,407","1,443",101
