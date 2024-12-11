@@ -434,7 +434,7 @@ Table 6 compares the average execution times of different operations in both exe
 <div align="center">
 <p><em>Table 6: Times to execute CPU operations inside and without a compartment.</em></p>
 
-| Trial Type                     | CPU Time (ms) - Normal | CPU Time (ms) - Secure |
+| Trial Type                     | CPU Time (ms) - Normal | CPU Time (ms) - Secure - Benchmarck |
 |-------------------------------|------------------------|-------------------------|
 | Maths (trigon. and exp. func) | 46,759                | 52,901                 |
 | Int                           | 922                   | 670                    |
