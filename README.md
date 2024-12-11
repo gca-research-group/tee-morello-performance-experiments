@@ -219,7 +219,7 @@ At each iteration, the memory allocation time is measured with the time function
 
 
 
-## 3.1. Results
+## 3.1. Results - purecap ABI
 
 The metrics collected are stored in two separate CSV files: [cpu-in-experiment-result.csv](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/cpu-performance/inside-tee-execution/cpu_in-experiment-result.csv) for the run inside a compartment. The file [cpu-out-experiment-result.csv](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/cpu-performance/outside-tee-exection/cpu-out-experiment-result.csv) collects metrics of the run without compartments. We calculate the average time that it takes to allocate, write, read and free for  each block size of 100 MB, 200 MB, 300 MB, etc.).The results are summarised in Tables 3 and 4.
 
@@ -283,6 +283,52 @@ Plots of the results from Tables 3 and 4 shown in Figs. 5 and 6. Full records ar
   <img src="./figs/boxplot_allocate_rd_wr_free_mem.png" alt="Dispersion of the time to execute allocate, write, read, and free operations" width="100%"/>
 </p>
 <p align="center"><em>Figure 6: Dispersion of the time to execute allocate, write, read, and free operations.</em></p>
+
+
+## 3.2. Results - purecap benchmark ABI
+
+
+<div align="center">
+<p><em>Table 5: Metrics of runs inside a compartment, including mean and standard deviation.</em></p>
+
+| **Block Size (MB)** | **Allocation Time (ms)** | **Write Time (ms)** | **Read Time (ms)** | **Free Time (ms)** |
+|---------------------|--------------------------|---------------------|--------------------|--------------------|
+| 100                 | 81 ± 158.99             | 40,369 ± 4.84       | 80,737 ± 7.56      | 86 ± 178.33        |
+| 200                 | 92 ± 219.79             | 80,737 ± 6.36       | 161,472 ± 10.22    | 210 ± 395.51       |
+| 300                 | 94 ± 295.34             | 121,105 ± 7.88      | 242,209 ± 12.70    | 219 ± 452.59       |
+| 400                 | 122 ± 430.07            | 161,472 ± 8.04      | 322,946 ± 17.29    | 425 ± 783.85       |
+| 500                 | 153 ± 596.27            | 201,842 ± 11.20     | 403,681 ± 14.85    | 215 ± 417.51       |
+| 600                 | 146 ± 646.07            | 242,210 ± 12.87     | 484,417 ± 17.45    | 436 ± 917.23       |
+| 700                 | 191 ± 879.02            | 282,579 ± 13.21     | 565,154 ± 18.71    | 453 ± 987.35       |
+| 800                 | 213 ± 1,088.59          | 322,947 ± 14.35     | 645,893 ± 17.43    | 822 ± 1,529.08     |
+| 900                 | 283 ± 1,535.56          | 363,315 ± 14.68     | 726,626 ± 17.13    | 818 ± 1,587.88     |
+| 1000                | 246 ± 1,538.68          | 403,685 ± 15.61     | 807,368 ± 18.86    | 443 ± 1,004.74     |
+
+</div>
+
+
+<p align="center">
+  <img src="./figs/performancememOperations_benchmarkABI.png" alt="Time to execute allocate, write, read and release memory operations" width="100%"/>
+</p>
+<p align="center"><em>Figure 7: Time to execute allocate, write, read and release memory operations.</em></p>
+
+
+- **Allocation time:** A comparison of Table 4 against Table 5 reveals that it takes longer to allocate memory blocks inside compartments. For example, the allocation of 100 MB takes 2 ms without a compartment, while it takes 81 ms inside a compartment. Allocation times inside compartments range from 81 ms for 100 MB blocks to 283 ms for 900 MB blocks, showing a significant increase as the block size grows. In contrast, the time to allocate memory without compartments is much shorter, varying from 1 to 7 ms for all block sizes.
+
+- **Write time:** Both tables show a linear increase in write time as the block size increases. However, execution inside a compartment takes longer. For instance, writing a 100 MB block takes 40,369 ms inside a compartment compared to significantly shorter times without compartments. The performance gap becomes more pronounced as the block size increases, with a write time of 403,685 ms for 1,000 MB inside compartments.
+
+- **Read time:** The time to execute read operations also increases linearly in both executions. However, execution within a compartment consistently takes longer. For example, reading a 100 MB block takes 80,737 ms inside a compartment, while it takes much less time without compartments. Similarly, for 1,000 MB blocks, read times are 807,368 ms inside a compartment.
+
+- **Free time:** The metrics in the tables show contrasting performances. Inside a compartment, the time to free memory varies from 86 ms for 100 MB blocks to 443 ms for 1,000 MB blocks. In contrast, freeing memory without compartments is significantly faster, with times ranging from 3 to 9 ms for all block sizes. This highlights a notable performance cost associated with memory deallocation inside compartments.
+
+Plots of the results from Tables 4 and 5 shown in Figs. 7 and 8.
+
+<p align="center">
+  <img src="./figs/boxplot_allocate_rd_wr_free_mem_benchmarkABI.png" alt="Dispersion of the time to execute allocate, write, read, and free operations" width="100%"/>
+</p>
+<p align="center"><em>Figure 8: Dispersion of the time to execute allocate, write, read, and free operations.</em></p>
+
+
 
 
 
