@@ -469,7 +469,10 @@ As visualized in Fig. 8, these results indicate that there is a noticeable perfo
 </div>
 
 
-
+<p align="center">
+  <img src="./figs/CPUperformance_benchmarckABI_comparasion.png" alt="CPU performance in executions within and without compartments" width="100%"/>
+</p>
+<p align="center"><em>Figure 8: CPU performance in executions within and without compartments.</em></p>
 
 
 
