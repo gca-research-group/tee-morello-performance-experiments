@@ -329,7 +329,19 @@ Plots of the results from Tables 4 and 5 shown in Figs. 7 and 8.
 <p align="center"><em>Figure 8: Dispersion of the time to execute allocate, write, read, and free operations.</em></p>
 
 
+## 3.3. Results - comparison between the three experiments
 
+<p align="center">
+  <img src="./figs/performancememOperations_benchmarkABI_comparasion.png" alt="Time to execute allocate, write, read and release memory operations" width="100%"/>
+</p>
+<p align="center"><em>Figure 7: Time to execute allocate, write, read and release memory operations.</em></p>
+
+
+
+<p align="center">
+  <img src="./figs/boxplot_allocate_rd_wr_free_mem_benchmarkABI_comparasion.png" alt="Dispersion of the time to execute allocate, write, read, and free operations" width="100%"/>
+</p>
+<p align="center"><em>Figure 8: Dispersion of the time to execute allocate, write, read, and free operations.</em></p>
 
 
 # 4. CPU performance in the execution of demanding arithmetic operations
