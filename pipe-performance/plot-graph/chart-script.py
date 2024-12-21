@@ -1,37 +1,53 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# Carregar os dois arquivos CSV
-data_in = pd.read_csv('../inside-tee-execution/pipe-in-experiment-result.csv')
-data_out = pd.read_csv('../outside-tee-execution/pipe-out-experiment-result.csv')
+# Load the CSV files
+data_in = pd.read_csv('pipe-in-experiment-purecap-results.csv')
+data_benchmark = pd.read_csv('pipe-in-experiment-purecap-benchmark-results.csv')
+data_out = pd.read_csv('pipe-out-experiment-results.csv')
 
-# Determinar o intervalo de tempo máximo para os eixos Y em ambos os gráficos
-max_time = max(data_in[['Write Time (ms)', 'Read Time (ms)']].max().max(),
-               data_out[['Write Time (ms)', 'Read Time (ms)']].max().max())
+# Determine the maximum time range for Y-axis across all graphs
+max_time = max(
+    data_in[['Write Time (ms)', 'Read Time (ms)']].max().max(),
+    data_benchmark[['Write Time (ms)', 'Read Time (ms)']].max().max(),
+    data_out[['Write Time (ms)', 'Read Time (ms)']].max().max()
+)
 
-# Criar uma figura com duas subplots lado a lado (um gráfico para cada arquivo)
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6))
+# Create a figure with a balanced size and appropriate spacing
+fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(14, 6))
 
-# Gráfico para pipe-in-experiment-result.csv
+# Graph for pipe-in-experiment-purecap-results.csv
 ax1.plot(data_in['Test'], data_in['Write Time (ms)'], label='Write Time (ms)', color='blue', marker='o')
 ax1.plot(data_in['Test'], data_in['Read Time (ms)'], label='Read Time (ms)', color='green', marker='x')
-ax1.set_title('Write and Read Time for Each Test (in Compartment)')
-ax1.set_xlabel('Test')
-ax1.set_ylabel('Time (ms)')
-ax1.legend()
+ax1.set_title('Write and Read Time (Purecap)', fontsize=14)
+ax1.set_xlabel('Trial', fontsize=12)  # Change Test to Trial
+ax1.set_ylabel('Time (ms)', fontsize=12, labelpad=4)
+ax1.legend(fontsize=10)
 ax1.grid(True)
-ax1.set_ylim(0, max_time)  # Definir o mesmo intervalo de tempo
+ax1.set_ylim(0, max_time)
 
-# Gráfico para pipe-out-experiment-result.csv
-ax2.plot(data_out['Test'], data_out['Write Time (ms)'], label='Write Time (ms)', color='blue', marker='o')
-ax2.plot(data_out['Test'], data_out['Read Time (ms)'], label='Read Time (ms)', color='green', marker='x')
-ax2.set_title('Write and Read Time for Each Test (out Compartment)')
-ax2.set_xlabel('Test')
-ax2.set_ylabel('Time (ms)')
-ax2.legend()
+# Graph for pipe-in-experiment-purecap-benchmark-results.csv
+ax2.plot(data_benchmark['Test'], data_benchmark['Write Time (ms)'], label='Write Time (ms)', color='blue', marker='o')
+ax2.plot(data_benchmark['Test'], data_benchmark['Read Time (ms)'], label='Read Time (ms)', color='green', marker='x')
+ax2.set_title('Write and Read Time (Benchmark)', fontsize=14)
+ax2.set_xlabel('Trial', fontsize=12)  # Change Test to Trial
+ax2.legend(fontsize=10)
 ax2.grid(True)
-ax2.set_ylim(0, max_time)  # Definir o mesmo intervalo de tempo
+ax2.set_ylim(0, max_time)
+ax2.tick_params(axis='y', left=False, labelleft=False)  # Remove Y-axis labels and ticks
 
-# Ajustar layout
-plt.tight_layout()
+# Graph for pipe-out-experiment-results.csv
+ax3.plot(data_out['Test'], data_out['Write Time (ms)'], label='Write Time (ms)', color='blue', marker='o')
+ax3.plot(data_out['Test'], data_out['Read Time (ms)'], label='Read Time (ms)', color='green', marker='x')
+ax3.set_title('Write and Read Time (Out Compartment)', fontsize=14)
+ax3.set_xlabel('Trial', fontsize=12)  # Change Test to Trial
+ax3.legend(fontsize=10)
+ax3.grid(True)
+ax3.set_ylim(0, max_time)
+ax3.tick_params(axis='y', left=False, labelleft=False)  # Remove Y-axis labels and ticks
+
+# Adjust spacing between graphs and margins
+plt.subplots_adjust(left=0.06, right=0.98, wspace=0.05, bottom=0.15)
+
+# Display the figure
 plt.show()
