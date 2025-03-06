@@ -108,22 +108,86 @@ As shown in the figure below, we evaluate memory blocks ranging from **100 MB to
 
 The following pseudocode outlines the experiment:
 
-<pre style="border: 1px solid #ddd; padding: 10px; background-color: #f9f9f9; font-family: monospace;">
-Algorithm 1: Execution of memory operations and metric collections from their executions.
+```c
+perform_tests(log_file, total_time)
+begin
+ foreach block_size in MIN_BLOCK_SIZE to MAX_BLOCK_SIZE step BLOCK_STEP do        
+   foreach test_num from 1 to num_of_trials do
+      allocation_time= time(malloc(block_size))
+      write_time= time(write_to_memory(block, block_size))
+      read_time= time(read_from_memory(block, block_size))
+      free_time= time(free(block))
+      log(log_file, block_size, test_num, allocation_time, write_time, read_time, free_time)
+   endfor
+ endfor
+end
+```
 
-1. perform_tests(log_file, total_time)
-2. begin
-3.     foreach block_size in MIN_BLOCK_SIZE to MAX_BLOCK_SIZE step BLOCK_STEP do
-4.         foreach test_num from 1 to NUM_TESTS do
-5.             allocation_time = time(malloc(block_size))
-6.             write_time = time(write_to_memory(block, block_size))
-7.             read_time = time(read_from_memory(block, block_size))
-8.             free_time = time(free(block))
-9.             log(log_file, block_size, test_num, allocation_time, write_time, read_time, free_time)
-10.        endfor
-11.    endfor
-12. end
-</pre>
+The experiment iterates over different memory block sizes, measuring the execution time of each operation and logging the results.
+
+## Compilation and Execution
+
+### Without Compartments
+
+```bash
+clang-morello -o memory-out-experiment memory-out-experiment.c -lm
+./memory-out-experiment
+```
+
+Metrics collected are stored in the [CSV file](https://github.com/CAMB-DSbD/tee-morello-performance-experiments/blob/main/memory-performance/outside-tee-execution/memory-out-experiment-results.csv).
+
+### Inside Compartments (Purecap ABI)
+
+```bash
+clang-morello -march=morello+c64 -mabi=purecap -o memory-in-experiment-purecap memory-in-experiment-purecap.c -lm
+proccontrol -m cheric18n -s enable memory-in-experiment-purecap
+```
+
+Metrics are stored in the [CSV file](https://github.com/CAMB-DSbD/tee-morello-performance-experiments/blob/main/memory-performance/inside-tee-execution-purecap/memory-in-experiment-purecap-results.csv).
+
+### Inside Compartments (Purecap-Benchmark ABI)
+
+```bash
+clang-morello -march=morello+c64 -mabi=purecap-benchmark -o memory-in-experiment-purecap-benchmark memory-in-experiment-purecap-benchmark.c -lm
+proccontrol -m cheric18n -s enable memory-in-experiment-purecap-benchmark
+```
+
+Metrics are stored in the [CSV file](https://github.com/CAMB-DSbD/tee-morello-performance-experiments/blob/main/memory-performance/inside-tee-execution-purecap-benchmark/memory-in-experiment-purecap-benchmark-results.csv).
+
+## Results
+
+### Performance of Memory Operations (Outside Compartments)
+
+| Block Size (MB) | Allocation (ms) | Write (ms) | Read (ms) | Free (ms) |
+|---------------|----------------|------------|-----------|-----------|
+| 100  | 2 ± 4.77  | 282,584 ± 13.86  | 282,581 ± 12.79  | 6 ± 4.52   |
+| 200  | 4 ± 4.19  | 565,164 ± 17.12  | 565,163 ± 18.85  | 10 ± 4.03  |
+| 300  | 4 ± 1.77  | 847,755 ± 21.18  | 847,752 ± 64.89  | 13 ± 3.66  |
+| 400  | 5 ± 3.09  | 1,130,330 ± 21.00 | 1,130,328 ± 28.20 | 14 ± 2.27  |
+| 500  | 5 ± 3.07  | 1,412,907 ± 31.49 | 1,412,903 ± 28.92 | 15 ± 2.37  |
+| 600  | 5 ± 1.56  | 1,695,493 ± 32.97 | 1,695,493 ± 30.19 | 16 ± 1.28  |
+| 700  | 5 ± 1.52  | 1,978,083 ± 52.24 | 1,978,098 ± 79.47 | 17 ± 0.86  |
+| 800  | 5 ± 1.73  | 2,260,662 ± 41.09 | 2,260,660 ± 53.11 | 18 ± 0.62  |
+| 900  | 5 ± 0.54  | 2,543,249 ± 47.19 | 2,543,234 ± 42.16 | 18 ± 0.97  |
+| 1000 | 5 ± 0.50  | 2,825,823 ± 47.72 | 2,825,818 ± 41.68 | 18 ± 0.64  |
+
+## Comparison of Results
+
+- **Allocation time**: Memory allocation inside compartments is significantly slower. Allocating 100 MB takes **2 ms** without a compartment, **93 ms** in the purecap ABI, and **81 ms** in the purecap-benchmark ABI.
+- **Write time**: Execution inside compartments consistently takes longer. Writing 100 MB takes **282,584 ms** without a compartment, **283,239 ms** in the purecap ABI, and **40,369 ms** in the purecap-benchmark ABI.
+- **Read time**: Read times increase linearly, but execution inside compartments results in higher delays. Reading 100 MB takes **282,581 ms** without a compartment, **283,133 ms** in the purecap ABI, and **80,737 ms** in the purecap-benchmark ABI.
+- **Free time**: Freeing memory inside compartments introduces significant delays. Without a compartment, free times range from **6 to 18 ms**, while in compartments, they range from **89 to 444 ms** in the purecap ABI and **86 to 443 ms** in the purecap-benchmark ABI.
+
+### Execution Time Dispersion
+
+Boxplots reveal greater dispersion and outliers in allocation and free operations inside compartments, indicating **higher unpredictability and memory management overhead**. Execution outside compartments remains stable and predictable.
+
+![Performance Comparison](figs/perfor_mem_oper_compare.png)
+
+## Summary
+
+This experiment demonstrates that **compartmentalisation increases execution time variability**, particularly in allocation and free operations. While write and read times remain linear, **memory management overhead inside compartments significantly affects performance**.
+```
 
 
 
