@@ -1,9 +1,4 @@
 /*
- * Programmer   : Regis Rodolfo Schuch
- * Date         : 10 June 2024
- *              : Applied Computing Research Group, Unijui University, Brazil
- *              : regis.schuch@unijui.edu.br
- *              :
  * Title        : memory-in-experiment.c 
  *              :
  * Description  : The memory-in-experiment.c programme carries out memory performance tests, measuring the times required to allocate,
