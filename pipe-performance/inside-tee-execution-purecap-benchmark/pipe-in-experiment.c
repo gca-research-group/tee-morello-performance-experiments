@@ -1,8 +1,4 @@
-/*
- * Programmer : Carlos Molina Jimenez
- * Institution: Computer Lab, University of Cambridge
- * 9 Sep 2024
- *
+/* 
  * Carlos Molina 
  * 21 Dec 2024
  *
