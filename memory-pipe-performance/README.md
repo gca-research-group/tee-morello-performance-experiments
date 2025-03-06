@@ -45,7 +45,7 @@ We connect to the remote Morello Board through SSH from a laptop connected to th
 
 The figure below shows the main configuration parameters of the Morello Board under evaluation. **Table 1** lists additional parameters and the CheriBSD commands that can be used to double-check the configuration parameters.
 
-![Morello boards used in the evaluation](figs/experimentsetup_morelloboard.pdf)
+![Morello boards used in the evaluation](memory-pipe-performance/figs/experimentsetup_morelloboard.pdf)
 *Figure 1: Morello boards used in the evaluation.*
 
 ## Morello Board Configuration
