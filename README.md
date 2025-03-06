@@ -89,8 +89,6 @@ We use the example shown above in subsequent sections to compile and execute the
 
 # 2. Memory performance in the execution of allocate, release, read and write operations
 
-# Memory Performance in the Execution of Allocate, Release, Read, and Write Operations
-
 ## Experiment Overview
 
 This experiment evaluates memory operations on large blocks, measuring execution time for the following operations:
@@ -110,19 +108,22 @@ As shown in the figure below, we evaluate memory blocks ranging from **100 MB to
 
 The following pseudocode outlines the experiment:
 
-```c
-perform_tests(log_file, total_time)
-begin
- foreach block_size in MIN_BLOCK_SIZE to MAX_BLOCK_SIZE step BLOCK_STEP do        
-   foreach test_num from 1 to num_of_trials do
-      allocation_time= time(malloc(block_size))
-      write_time= time(write_to_memory(block, block_size))
-      read_time= time(read_from_memory(block, block_size))
-      free_time= time(free(block))
-      log(log_file, block_size, test_num, allocation_time, write_time, read_time, free_time)
-   endfor
- endfor
-end
+<pre style="border: 1px solid #ddd; padding: 10px; background-color: #f9f9f9; font-family: monospace;">
+Algorithm 1: Execution of memory operations and metric collections from their executions.
+
+1. perform_tests(log_file, total_time)
+2. begin
+3.     foreach block_size in MIN_BLOCK_SIZE to MAX_BLOCK_SIZE step BLOCK_STEP do
+4.         foreach test_num from 1 to NUM_TESTS do
+5.             allocation_time = time(malloc(block_size))
+6.             write_time = time(write_to_memory(block, block_size))
+7.             read_time = time(read_from_memory(block, block_size))
+8.             free_time = time(free(block))
+9.             log(log_file, block_size, test_num, allocation_time, write_time, read_time, free_time)
+10.        endfor
+11.    endfor
+12. end
+</pre>
 
 
 
