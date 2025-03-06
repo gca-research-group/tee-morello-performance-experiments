@@ -373,8 +373,16 @@ raw collected metrics and present results graphically. They produce aggregated C
    
 - [Memory performance plots](https://github.com/gca-research-group/tee-morello-performance-experiments/tree/main/plotting/memory-performance-plots)
 
-- [Pipe communications performance plots](https://github.com/gca-research-group/tee-morello-performance-experiments/tree/main/plotting/pipe-performance-plots) 
- 
+- [Pipe communications performance plots](https://github.com/gca-research-group/tee-morello-performance-experiments/tree/main/plotting/pipe-performance-plots)
+  
+
+
+ ## 4.3  Python script for outliers
+
+   
+- [Outlier detect](https://github.com/gca-research-group/tee-morello-performance-experiments/tree/main/outliers/outlier-detect)
+
+- [Outlier trimmed](https://github.com/gca-research-group/tee-morello-performance-experiments/tree/main/outliers/trimmed-outlier) 
 
 _________________________________________________________________________________________________________________________________________________________________
 
