@@ -35,10 +35,9 @@ The figure below shows the main configuration parameters of the Morello Board un
 | **Compiler**         | clang (with Morello support)                          | `clang-morello --version`                        |
 | **Tool**              | proccontrol (for CHERI compartments)                  | `proccontrol -m cheric18n -s enable ./binary`    |
 | **Python**           | Python 3 (required for Experiments 1, 5, and 6)        | `python3 --version`                              |
-| **Scripts Used**     | cheri-cap-experiment.py, cpu-in-experiment.c, memory-in-experiment.c, pipe-in-experiment.c, pipe-trampoline-in-experiment.c, library_a.c, library_b.c, memory_reader.py, integration_process.c | Not applicable |
 | **Access**            | Remote via SSH                                       | `ssh -i private_key user@server`                |
 
----
+
 
 ## 1.2. Compilation and Execution
 
@@ -160,7 +159,7 @@ The execution starts with the `perform_tests` function, which takes a log file n
 
 The **C program** was executed both **outside compartments** and **inside compartments**.  
 The source code for the memory experiment inside compartments is available here:  
-[memory-in-experiment.c](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/memory-performance/inside-tee-execution/memory-in-experiment.c)
+[memory-in-experiment.c](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/memory-performance/inside-tee-execution-purecap/memory-in-experiment-purecap.c)
 
 
 ### **Execution Without Compartments**
@@ -171,7 +170,7 @@ clang-morello -o memory-out-experiment memory-out-experiment.c -lm
 ```
 
 The collected metrics are stored in:  
-[memory-out-experiment-results.csv](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/memory-performance/outside-tee-exection/memory-out-experiment-results.csv)
+[memory-out-experiment-results.csv](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/memory-performance/outside-tee-execution/memory-out-experiment-results.csv)
 
 #### **Performance Results (Without Compartments)**
 
@@ -197,7 +196,7 @@ proccontrol -m cheric18n -s enable memory-in-experiment-purecap
 ```
 
 Metrics are stored in:  
-[memory-in-experiment-purecap-results.csv](https://github.com/CAMB-DSbD/tee-morello-performance-experiments/blob/main/memory-performance/inside-tee-execution-purecap/memory-in-experiment-purecap-results.csv)
+[memory-in-experiment-purecap-results.csv](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/memory-performance/inside-tee-execution-purecap/memory-in-experiment-purecap-results.csv)
 
 ### **Performance of Memory Operations in Compartments (Purecap-Benchmark ABI)**
 
@@ -216,6 +215,9 @@ The following table presents the execution time (mean ± standard deviation) of 
 | 900   | 283 ± 1,535.56  | 363,315 ± 14.68  | 726,626 ± 17.13  | 818 ± 1,587.88  |
 | 1000  | 246 ± 1,538.68  | 403,685 ± 15.61  | 807,368 ± 18.86  | 443 ± 1,004.74  |
 
+
+Metrics are stored in:  
+[memory-in-experiment-purecap-benchmark-results.csv](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/memory-performance/inside-tee-execution-purecap-benchmark/memory-in-experiment-purecap-benchmark-results.csv)
 
 ## **Comparison of Results**
 
@@ -303,9 +305,9 @@ start_test(log_file)
 
 We collected the execution metrics and stored them in CSV files:
 
-- **Inside Compartments (Purecap ABI)**: [pipe-in-experiment-purecap-results.csv](https://github.com/CAMB-DSbD/tee-morello-performance-experiments/blob/main/pipe-performance/inside-tee-execution-purecap/pipe-in-experiment-purecap-results.csv)
-- **Inside Compartments (Purecap-Benchmark ABI)**: [pipe-in-experiment-purecap-benchmark-results.csv](https://github.com/CAMB-DSbD/tee-morello-performance-experiments/blob/main/pipe-performance/inside-tee-execution-purecap-benchmark/pipe-in-experiment-purecap-benchmark-results.csv)
-- **Outside Compartments**: [pipe-out-experiment-results.csv](https://github.com/CAMB-DSbD/tee-morello-performance-experiments/blob/main/pipe-performance/outside-tee-execution/pipe-out-experiment-results.csv)
+- **Inside Compartments (Purecap ABI)**: [pipe-in-experiment-purecap-results.csv](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/pipe-performance/inside-tee-execution/pipe-in-experiment-purecap-benchmark-results.csv)
+- **Inside Compartments (Purecap-Benchmark ABI)**: [pipe-in-experiment-purecap-benchmark-results.csv](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/pipe-performance/inside-tee-execution-purecap-benchmark/pipe-in-experiment-purecap-benchmark-results.csv)
+- **Outside Compartments**: [pipe-out-experiment-results.csv](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/pipe-performance/outside-tee-execution/pipe-out-experiment-results.csv)
 
 ### Performance of Write and Read Operations
 
@@ -363,19 +365,15 @@ raw collected metrics and present results graphically. They produce aggregated C
 
 ## 4.1 Python scripst for summary views  
 
-- [Summarise CPU performance results](https://github.com/CAMB-DSbD/tee-morello-performance-experiments/tree/main/cpu-performance/summarise-results)
-- [Summarise memory performance results](https://github.com/CAMB-DSbD/tee-morello-performance-experiments/tree/main/memory-performance/summarise-results)
+- [Summarise memory performance results](https://github.com/gca-research-group/tee-morello-performance-experiments/tree/main/summarise)
 
 
 ## 4.2  Python script for plotting
 
-- [Maximum number of compartments plots](https://github.com/CAMB-DSbD/tee-morello-performance-experiments/tree/main/max_num_of_compartments_performance/plot-graph)
    
-- [Memory performance plots](https://github.com/CAMB-DSbD/tee-morello-performance-experiments/tree/main/memory-performance/plot-graph)
+- [Memory performance plots](https://github.com/gca-research-group/tee-morello-performance-experiments/tree/main/plotting/memory-performance-plots)
 
-- [CPU performance plots](https://github.com/CAMB-DSbD/tee-morello-performance-experiments/tree/main/cpu-performance/plot-graph)   
-
-- [Pipe communications performance plots](https://github.com/CAMB-DSbD/tee-morello-performance-experiments/tree/main/pipe-performance/plot-graph) 
+- [Pipe communications performance plots](https://github.com/gca-research-group/tee-morello-performance-experiments/tree/main/plotting/pipe-performance-plots) 
  
 
 _________________________________________________________________________________________________________________________________________________________________
@@ -386,4 +384,4 @@ A PDF version of this document is available for download. Please note that the P
 (Safari ver 16.6.1 produces _Error rendering embedded code_), download 
 it first and then open it.
 
-[📄 Download PDF Version](https://github.com/CAMB-DSbD/tee-morello-performance-experiments/blob/main/documents/library_based_compartments_evaluation.pdf)
+[📄 Download PDF Version](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/documents/library_based_compartments_evaluation.pdf)
