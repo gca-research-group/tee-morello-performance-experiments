@@ -1,0 +1,14 @@
+cm770@morello-camb-3:$ ls
+memory-in-experiment	memory-in-experiment.c
+cm770@morello-camb-3:$ 
+cm770@morello-camb-3:$ proccontrol -m cheric18n -s enable ./memory-in-experiment
+Each operation will be executed 100 times 
+csv file has been created and is now ready for collecting results!
+
+This program has been launched at (date and time): Tue Dec 10 23:30:26 2024
+ 
+memory allocate, write, read, free in execution now (using cheri compartments) ...
+cm770@morello-camb-3:$ 
+
+
+
