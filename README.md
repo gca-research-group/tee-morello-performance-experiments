@@ -3,86 +3,119 @@
 This repository evaluates compartments created using the library-based compartmentalisation tool available on Morello Boards running the cheriBSD 24.5 operating system. It  evaluates the performance costs incurred by the compartments and the strengths of the memory isolation that they provide. It provides links to the Git repositories that store the C and Python codes used in the evaluation and the metrics collected in CSV files. It also includes the plots of the results, a discussion of our interpretation and detailed instructions to encourage practitioners to repeat our experiments and compare their results against ours. 
 
 
-# 1. Experiments set up
 
-We use a Morello Board, which is physically located in Toronto, within the premises of [TODAQ](https://engineering.todaq.net/), a non-funding partner of the [CAMB project](https://www.cl.cam.ac.uk/research/srg/projects/camb/). A laptop connected to the network of the [Applied Computing Research Group (GCA)](http://gca.unijui.edu.br/) at Unijuí, Brazil, is used to access the Morello Board via an SSH connection. Below is the main configuration of the Morello Board and additional parameters, including the CheriBSD commands required to output these configurations directly from the board. The Fig. 1 illustrates the Morello Board's physical location and the network connection used to access it.
+# 1. Experiments Setup
 
-<p align="center">
-  <img src="figs/experimentsetup_morelloboard.png" alt="Morello Boards location" width="700"/>
-</p>
-<p align="center"><em>Figure 1: Morello Boards location.</em></p>
+To run the experiments reported in this document, we use four Morello Boards connected as shown in **Figure 1**.
+
+- Three local Morello Boards are physically located in the William Gates building of the Computer Laboratory.
+- A remote Morello Board is physically located in Toronto, within the premises of [TODAQ](https://engineering.todaq.net/), a non-funding partner of the [CAMB project](https://www.cl.cam.ac.uk/research/srg/projects/camb/).
+
+We connect to the remote Morello Board through SSH from a laptop connected to the network of the [Applied Computing Research Group (GCA)](http://gca.unijui.edu.br/) at Unijuí, Brazil.
+
+The figure below shows the main configuration parameters of the Morello Board under evaluation. **Table 1** lists additional parameters and the CheriBSD commands that can be used to double-check the configuration parameters.
+
+![Morello boards used in the evaluation](figs/experimentsetup_morelloboard.pdf)
+*Figure 1: Morello boards used in the evaluation.*
+
+## 1.1. Morello Board Configuration
+
+**Table 1** lists the configuration parameters of the Morello Board used in the experiments, along with CheriBSD commands to verify them.
+
+| **Component**           | **Specification**                                     | **Command**                                        |
+|------------------------|-----------------------------------------------------|---------------------------------------------------|
+| **Operating System**   | CheriBSD 24.5 (FreeBSD 15.0-CURRENT)                 | `uname -a`                                        |
+| **Kernel Version**     | FreeBSD 15.0-CURRENT, releng/24.05                   | `uname -v`                                        |
+| **Board**             | Morello System Development Platform                   | `kenv | grep smbios.system.product`              |
+| **RAM**               | 17 GB detected (16 GB DDR4, 2933 MT/s, ECC)           | `dmidecode --type memory`                        |
+| **Storage**           | SSD                                                  | `camcontrol identify ada0`                       |
+| **Architecture**      | aarch64c (with CHERI support)                         | `sysctl hw.machine_arch`                         |
+| **Processor Model**   | Research Morello SoC r0p0                            | `sysctl hw.model`                                |
+| **Number of CPUs**    | 4                                                    | `sysctl hw.ncpu`                                 |
+| **Compiler**         | clang (with Morello support)                          | `clang-morello --version`                        |
+| **Tool**              | proccontrol (for CHERI compartments)                  | `proccontrol -m cheric18n -s enable ./binary`    |
+| **Python**           | Python 3 (required for Experiments 1, 5, and 6)        | `python3 --version`                              |
+| **Scripts Used**     | cheri-cap-experiment.py, cpu-in-experiment.c, memory-in-experiment.c, pipe-in-experiment.c, pipe-trampoline-in-experiment.c, library_a.c, library_b.c, memory_reader.py, integration_process.c | Not applicable |
+| **Access**            | Remote via SSH                                       | `ssh -i private_key user@server`                |
+
+---
+
+## 1.2. Compilation and Execution
+
+The inclusion of library-based compartments is determined at compilation and execution time. It is documented in:
+
+- **CHERI Software Compartmentalization** [Robert Watson, 2019](https://www.cl.cam.ac.uk/research/security/ctsrd/cheri/cheri-compartmentalization.html).
+- **Library-based Compartmentalisation** [Cheri team, 2022](https://github.com/CTSRD-CHERI/cheripedia/wiki/Library-based-Compartmentalisation).
+- **User-level software compartmentalization (experimental)** [Cheri team, 2024](https://ctsrd-cheri.github.io/cheribsd-getting-started/features/c18n.html).
+- **Compartmentalization, c18n — Library-based software compartmentalization** [Dapeng Gao, 2024](https://man.cheribsd.org/cgi-bin/man.cgi/c18n).
+- **Library-based Compartmentalisation on CHERI** [Dapeng Gao and Robert Watson, Plarch2023](https://github.com/CAMB-DSbD/tee-morello-performance-experiments/blob/main/documents/LibraryBasedCompartmentalisationOnCHERI_Dapeng2023.pdf).
+- **Dapeng's Video Presentation** (Plarch2023) provides a summary of the architecture. [Watch here](https://www.youtube.com/watch?v=0Zk0NzfiQJA).
 
 
-We specify the hardware and software configurations of the Morello Board used in the experiments in Table 1.
+### Userspace Execution Environments
 
-<div align="center">
-<p><em>Table 1. Morello board configuration parameters used in the experiments and the online cheriBSD commands to output them.</em></p>
+As explained in the [User Level Process Environments](https://ctsrd-cheri.github.io/cheribsd-getting-started/features/processes.html), in CheriBSD 24.05, a user can compile a program to run in three different execution environments:
 
-| **Component**       | **Specification**                                   | **Command**                                      |
-|----------------------|-----------------------------------------------------|-------------------------------------------------|
-| Operating System     | CheriBSD 24.5 (FreeBSD 15.0-CURRENT)                | `uname -a`                                      |
-| Kernel Version       | FreeBSD 15.0-CURRENT, releng/24.05                  | `uname -v`                                      |
-| Board                | Morello System Development Platform                 | `kenv \| grep smbios.system.product`             |
-| RAM                  | 17 GB detected (16 GB DDR4, 2933 MT/s, ECC)         | `dmidecode --type memory`                       |
-| Storage              | SSD                                                | `camcontrol identify ada0`                      |
-| Architecture         | aarch64c (with CHERI support)                       | `sysctl hw.machine_arch`                        |
-| Processor Model      | Research Morello SoC r0p0                           | `sysctl hw.model`                               |
-| Number of CPUs       | 4                                                   | `sysctl hw.ncpu`                                |
-| Compiler             | clang (with Morello support)                        | `clang-morello --version`                       |
-| Tool                 | proccontrol (for CHERI compartments)                | `proccontrol -m cheric18n -s enable ./binary`   |
-| Python               | Python 3 (required for Experiments 1, 5, and 6)     | `python3 --version`                             |
-| Scripts used         | `cheri-cap-experiment.py`<br>`cpu-in-experiment.c`<br>`memory-in-experiment.c`<br>`pipe-in-experiment.c`<br>`pipe-trampoline-in-experiment.c`<br>`library_a.c`<br>`library_b.c`<br>`memory_reader.py`<br>`integration_process.c` | Not applicable                                  |
-| Access               | Remote via SSH                                      | `ssh -i private_key user@server`               |
+- **CheriABI processes**: Use `-mabi=purecap`.
+- **Benchmark ABI processes**: Use `-mabi=purecap-benchmark`.
 
-</div>
+A useful example of the compilation of `helloworld.c` can be found [here](https://ctsrd-cheri.github.io/cheribsd-getting-started/helloworld/index.html).
 
+To verify the ABI targeted by the compiler, the following command can be used:
 
-It is worth explaining that, as shown in the CSV files available in this repository, we repeated the execution of each operation 100 times during our experiments, collected the measurements, and averaged the results. The choice of 100 repetitions was based on the Central Limit Theorem, which suggests that a sample size of 100 is often adequate to yield a statistically meaningful average.
+```bash
+root# file binary
+```
 
+Programs to be run in **library-based compartments** can be compiled with either `-mabi=purecap` or `-mabi=purecap-benchmark`. However, for performance evaluation, the latter is recommended. See [man compartmentalization](https://man.cheribsd.org/cgi-bin/man.cgi/c18n) for details.
 
-## 1.1. Compilation and Execution
+---
 
-The inclusion or exclusion of library-based compartments is determined at compilation and execution time, as documented in the manuals:
-- [Gao, 2024](https://man.cheribsd.org/cgi-bin/man.cgi/c18n)
-- [Cheri Team, 2022](https://github.com/CTSRD-CHERI/cheripedia/wiki/Library-based-%20Compartmentalisation)
-- [Watson, 2019](https://www.cl.cam.ac.uk/research/security/ctsrd/cheri/cheri-compartmentalization.html)
+## 1.3. Compilation and Execution Without Library-Based Compartments
 
-
-
-### 1.1.1. Compilation and Execution Without Library-Based Compartments
-
-The normal compilation (without the inclusion of library-based compartments) is demonstrated in the following example for a `helloworld.c` program:
+To compile and execute a program **without** using library-based compartments, use:
 
 ```bash
 $ clang-morello -o hello hello.c
-```
 
-To execute `helloworld`, the programmer can type:
-
-```bash
 $ ./helloworld
 ```
 
-### 1.1.2. Compilation and Execution With Library-Based Compartments
 
-The following command demonstrates the compilation flags required to enable library-based compartments:
+## 1.4. Compilation and Execution With Library-Based Compartments
+
+### 1.4.1.  **Compilation for Purecap ABI**
+
+To enable **library-based compartments** during compilation, use:
 
 ```bash
 $ clang-morello -march=morello+c64 -mabi=purecap -o helloworld helloworld.c
 ```
 
-- The `-march=morello+c64` parameter defines the 64-bit Morello architecture.
-- The `-mabi=purecap` flag sets the Application Binary Interface (ABI) for the secure environment, representing all memory references and pointers as capabilities.
+#### **Explanation of Compilation Parameters**
+- `-march=morello+c64`: Defines the 64-bit Morello architecture.
+- `-mabi=purecap`: Targets the **Application Binary Interface (ABI)**, implementing all memory references and pointers as **capabilities**.
 
-To execute the `helloworld` program in a library-based compartment, the programmer can type:
+To execute the compiled program **within a library-based compartment**, use:
 
 ```bash
 $ proccontrol -m cheric18n -s enable helloworld
 ```
 
-The binary is executed with library compartmentalisation enabled using `proccontrol`.
+The **proccontrol** command enables execution within a **library-based compartment**.
 
-We use the example shown above in subsequent sections to compile and execute the programs used in the evaluation.
+---
+
+### 1.4.2. **Compilation for Purecap-Benchmark ABI**
+
+The compilation and execution process for **purecap-benchmark ABI** is similar to **purecap ABI**, with the exception of using:
+
+```bash
+$ clang-morello -march=morello+c64 -mabi=purecap-benchmark -o helloworld helloworld.c
+
+$ proccontrol -m cheric18n -s enable helloworld
+```
+
 
 
 
@@ -152,7 +185,6 @@ The collected metrics are stored in:
 | 900  | 4.54 ± 0.54  | 2,543,248.84 ± 47.19 | 2,543,233.58 ± 42.16 | 17.57 ± 0.97  |
 | 1000 | 4.57 ± 0.50  | 2,825,822.71 ± 47.72 | 2,825,817.71 ± 41.68 | 17.80 ± 0.64  |
 
----
 
 ### **Execution Inside Compartments (Purecap ABI)**
 
@@ -181,7 +213,6 @@ The following table presents the execution time (mean ± standard deviation) of 
 | 900   | 283 ± 1,535.56  | 363,315 ± 14.68  | 726,626 ± 17.13  | 818 ± 1,587.88  |
 | 1000  | 246 ± 1,538.68  | 403,685 ± 15.61  | 807,368 ± 18.86  | 443 ± 1,004.74  |
 
----
 
 ## **Comparison of Results**
 
