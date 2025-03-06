@@ -37,7 +37,7 @@ We specify the hardware and software configurations of the Morello Board used in
 </div>
 
 
-It is worth explaining that, as shown in the CSV files available in this repository, we repeated the execution of each operation 100 times during our experiments, collected the measurements, and averaged the results. The choice of 100 repetitions was based on the Central Limit Theorem, which suggests that a sample size of 100 is often adequate to yield a statistically meaningful average [Statistics How To 2023](https://www.statisticshowto.com/probability-and-statistics/normal-distributions/central-limit-theorem-definition-examples/).
+It is worth explaining that, as shown in the CSV files available in this repository, we repeated the execution of each operation 100 times during our experiments, collected the measurements, and averaged the results. The choice of 100 repetitions was based on the Central Limit Theorem, which suggests that a sample size of 100 is often adequate to yield a statistically meaningful average.
 
 
 ## 1.1. Compilation and Execution
@@ -86,262 +86,53 @@ We use the example shown above in subsequent sections to compile and execute the
 
 
 
-# 2. Evaluation of the Maximum Number of Library-Based Compartments
 
-The main aim of this experiment is to measure and analyse how the memory of a Morello Board is consumed by instances (also called replicas) of attestables. To this end, we create and attestable and load it with a C program compiled with the library compartmentalisation tool. We use the enterprise application integration (see yellow box) use case implemented in - [tee-compartimentalisation-study-case](https://github.com/gca-research-group/tee-compartimentalisation-study-case) repository.
+# 2. Memory performance in the execution of allocate, release, read and write operations
 
-The parameter to measure is the number of attestables that can be created on a Morello Board before consuming 90% of its memory. In addition to the number of attestables, we took the opportunity to collect metrics about the time it takes the operating system to wipe the memory used by the attestable. The setup of the experiment is shown in Fig. 2.
+# Memory Performance in the Execution of Allocate, Release, Read, and Write Operations
 
-<p align="center">
-  <img src="./figs/maxnumberofatts.png" alt="Max number of attestable that can be created before exhausting memory" width="55%"/>
-</p>
-<p align="center"><em>Figure 2: Max number of attestables that can be created before exhausting memory.</em></p>
+## Experiment Overview
 
-Imagine that user Alice is conducting the experiment. To create the attestables and collect the metrics, Alice executes the following steps:
+This experiment evaluates memory operations on large blocks, measuring execution time for the following operations:
 
-1. **Initiation**: Alice initiates `cheri-cap-experiment.py` on a Morello Board.
+- **malloc**: Time taken to allocate a memory block.
+- **write**: Time taken to write data to fill the memory block.
+- **read**: Time taken to read the data from the memory block.
+- **free**: Time taken to release the memory block.
 
-2. **Launch**: Alice executes `cheri-cap-experiment.py` to launch the attestable:
+### Memory Block Sizes
 
-   [% cheri-cap-experiment.py](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/cheri-caps-executable-performance/cheri-cap-experiment.py)
+As shown in the figure below, we evaluate memory blocks ranging from **100 MB to 1000 MB**. These sizes are representative of applications that process large datasets, such as image processing and database management.
 
-3. `% python3 cheri-cap-experiment.py` runs incrementally, creating attestable replicas until it detects that the attestables have consumed 90% of the 17118.4 MB of the Morello Board's memory, that is, about 15406.5 MB.
+![Memory block sizes](figs/mem_blocks_num_trials.png)
 
+## Code Execution
 
+The following pseudocode outlines the experiment:
 
-## 2.1. Results
+```c
+perform_tests(log_file, total_time)
+begin
+ foreach block_size in MIN_BLOCK_SIZE to MAX_BLOCK_SIZE step BLOCK_STEP do        
+   foreach test_num from 1 to num_of_trials do
+      allocation_time= time(malloc(block_size))
+      write_time= time(write_to_memory(block, block_size))
+      read_time= time(read_from_memory(block, block_size))
+      free_time= time(free(block))
+      log(log_file, block_size, test_num, allocation_time, write_time, read_time, free_time)
+   endfor
+ endfor
+end
 
-The results are logged in the CSV file [cheri-cap-experiment-results.csv](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/cheri-caps-executable-performance/cheri-cap-experiment-results.csv), which contains detailed data on the number of compartments, memory usage, and elapsed time.
 
-The first few lines of the CSV file are shown in Table 2 to be read as follows:
 
 
-<div align="center">
-<p><em>Table 2: Metrics of memory consumed by different numbers of attestables and elapsed time.</em></p>
 
-| **Number of Compartments** | **Memory Used (MB)** | **Time Elapsed (ms)** |
-|-----------------------------|----------------------|-----------------------|
-| 1                           | 1628.40             | 514.99               |
-| 2                           | 1631.00             | 3070.37              |
-| 3                           | 1634.03             | 5656.81              |
-| 4                           | 1637.11             | 8222.68              |
-| 5                           | 1640.39             | 10808.39             |
-| ...                         | ...                 | ...                  |
-| 8991                        | 13066.42            | 26773287.54          |
 
-</div>
 
 
-The table contains the following measurements:
 
-- **Number of Compartments:** The number of compartments created.
-- **Memory Used (MB):** The amount of memory consumed by the given number of compartments.
-- **Time Elapsed:** The time elapsed since the beginning of the experiment that is assumed to start at time zero.
 
-Let us assume that the experiment stars at time zero, with 0 number of compartments which has consumed zero MB of memory.
-
-The first row shows that it took 514.00 ms to `cheri-cap-experiment.py` to create one compartment that consumes 1628.40 MB of memory.  
-As a second example take the 5th row. It shows that after 10808.39 ms, `cheri-cap-experiment.py` has created 5 compartments that have consumed 1640.39 MB.
-
-The blue line in the plot of Fig. 3 illustrates how memory is consumed as the number of compartments increases. The orange line illustrates the elapsed time as the number of compartments increases.
-
-<p align="center">
-  <img src="./figs/memconsumedbycompartreplicas.png" alt="Memory consumed by incremental replication of compartments and time to create compartments" width="100%"/>
-</p>
-<p align="center"><em>Figure 3: Memory consumed by incremental replication of compartments and time to create compartments.</em></p>
-
-We initially expected memory consumption to increase steadily from 1,628.3 MB, corresponding to a single attestable replica, to 15,406.5 MB (90% of total memory) consumed by N attestable replicas. The objective was to determine the exact value of N.
-
-However, the results revealed unexpected behaviour: memory consumption increased consistently only until approximately 3,800 attestable replicas consumed 14,582.5 MB. After this point, memory consumption began to decrease as the number of attestable replicas continued to rise. The final data point shows that 8,991 attestable replicas consumed 13,066.4 MB, or roughly 76% of the total memory.
-
-We did not expect the behaviours exhibited by the blue line of Fig. 3. We have no sound explanation for it. These preliminary results highlight an area for further exploration. Additionally, the analysis of the time required to wipe the memory of the attestable replicas remains pending.
-
-
-
-
-# 3. Memory performance in the execution of allocate, release, read and write operations
-
-To collect metrics we execute a C program compiled and executed without compartments and with compartments:
-
-- **Compilation and execution without compartments:**  
-  [memory-out-experiment.c](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/memory-performance/outside-tee-exection/memory-out-experiment.c).
-
-  ```bash
-  $ clang-morello -o memory-in-experiment memory-in-experiment.c -lm
-  
-  $ ./memory-in-experiment
-  ```
-
-- **Compilation and execution with compartments:**  
-  [memory-in-experiment.c](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/memory-performance/inside-tee-execution/memory-in-experiment.c).
-
-  ```bash
-  $ clang-morello -march=morello+c64 -mabi=purecap -o memory-in-experiment memory-in-experiment.c -lm
-  
-  $ proccontrol -m cheric18n -s enable memory-in-experiment
-  ```
-
-In this experiment, we use the code shown in Algorithm 1. It executes the following operations on large blocks of memory:
-
-a) **allocation:** time required to allocate a block of memory.  
-b) **write:** time required to write data to fill the entire memory block.  
-c) **read:** time taken to read the data from the entire memory block.  
-d) **free:** time taken to release the memory block back into the main memory.
-
-As shown in Fig. 4, we use blocks of `100, 200, 300,...,100 000 MB` as large blocks of memory. Blocks of these sizes are typical of applications that process images and access databases.
-
-<p align="center">
-  <img src="./figs/memory.png" alt="Performance of memory operations on memory blocks of different sizes" width="65%"/>
-</p>
-<p align="center"><em>Figure 4: Performance of memory operations on memory blocks of different sizes.</em></p>
-
-
-<pre style="border: 1px solid #ddd; padding: 10px; background-color: #f9f9f9; font-family: monospace;">
-Algorithm 1: Execution of memory operations and metric collections of their executions
-
-1. perform_trials(results_file, total_execution_time)
-2. begin
-3.     foreach current_block_size in MIN_BLOCK_SIZE to MAX_BLOCK_SIZE step BLOCK_STEP do
-4.         foreach trial_number from 1 to NUM_TRIALS do
-5.             allocation_duration = time(allocate_memory(current_block_size))
-6.             write_duration = time(write_to_memory(memory_block, current_block_size))
-7.             read_duration = time(read_from_memory(memory_block, current_block_size))
-8.             free_duration = time(deallocate_memory(memory_block))
-9.             log(results_file, current_block_size, trial_number, allocation_duration, write_duration, read_duration, free_duration)
-10.        endfor
-11.    endfor
-12. end
-</pre>
-
-Execution begins with the `perform_trials` function (line 1), which receives a log file as an input parameter to store performance metrics, including the total time taken to run the trials. The for-loop (line 3) iterates over memory blocks of different sizes ranging from `MIN_BLOCK_SIZE` to `MAX_BLOCK_SIZE` with increments specified by `BLOCK_STEP`. The inner for-loop (line 4) repeats the trial `NUM_TRIALS` times for each block size. `NUM_TRIALS` is defined by the programmer as a constant.
-
-At each iteration, the memory allocation time is measured with the time function (line 5); the time to write to the block is measured in line 6, the time to read the block is measured in line 7 and, finally, the time to free the memory is measured in line 8. The metrics collected are recorded in the log file along with the trial number (line 9).
-
-
-
-## 3.1. Results - purecap ABI
-
-The metrics collected are stored in two separate CSV files: [cpu-in-experiment-result.csv](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/cpu-performance/inside-tee-execution/cpu_in-experiment-result.csv) for the run inside a compartment. The file [cpu-out-experiment-result.csv](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/cpu-performance/outside-tee-exection/cpu-out-experiment-result.csv) collects metrics of the run without compartments. We calculate the average time that it takes to allocate, write, read and free for  each block size of 100 MB, 200 MB, 300 MB, etc.).The results are summarised in Tables 3 and 4.
-
-
-<div align="center">
-<p><em>Table 3: Metrics of runs inside a compartment, including mean and standard deviation.</em></p>
-
-| **Block Size (MB)** | **Allocation Time (ms)** | **Write Time (ms)** | **Read Time (ms)** | **Free Time (ms)** |
-|---------------------|--------------------------|---------------------|--------------------|--------------------|
-| 100                 | 93 ± 171.27             | 283,239 ± 58.31     | 283,133 ± 28.83    | 89 ± 180.05        |
-| 200                 | 98 ± 221.17             | 566,458 ± 82.10     | 566,269 ± 65.02    | 214 ± 397.35       |
-| 300                 | 99 ± 295.44             | 849,705 ± 131.43    | 849,396 ± 87.16    | 222 ± 452.92       |
-| 400                 | 127 ± 430.92            | 1,132,983 ± 189.58  | 1,132,550 ± 106.44 | 430 ± 788.02       |
-| 500                 | 159 ± 599.09            | 1,416,190 ± 189.97  | 1,415,698 ± 123.68 | 217 ± 420.54       |
-| 600                 | 151 ± 648.00            | 1,699,454 ± 255.41  | 1,698,795 ± 174.82 | 439 ± 921.59       |
-| 700                 | 195 ± 880.05            | 1,982,654 ± 245.07  | 1,981,909 ± 122.70 | 453 ± 979.92       |
-| 800                 | 216 ± 1,084.49          | 2,265,901 ± 235.38  | 2,265,075 ± 139.94 | 818 ± 1,513.98     |
-| 900                 | 288 ± 1,536.92          | 2,549,115 ± 258.37  | 2,548,205 ± 196.83 | 816 ± 1,579.74     |
-| 1000                | 248 ± 1,543.50          | 2,832,372 ± 337.74  | 2,831,332 ± 167.56 | 444 ± 1,003.29     |
-
-</div>
-
-
-<div align="center">
-<p><em>Table 4: Metrics of runs outside a compartment, including mean and standard deviation.</em></p>
-
-| **Block Size (MB)** | **Allocation Time (ms)** | **Write Time (ms)** | **Read Time (ms)** | **Free Time (ms)** |
-|---------------------|--------------------------|---------------------|--------------------|--------------------|
-| 100                 | 2 ± 4.77                | 282,584 ± 13.86     | 282,581 ± 12.79    | 6 ± 4.52           |
-| 200                 | 4 ± 4.19                | 565,164 ± 17.12     | 565,163 ± 18.85    | 10 ± 4.03          |
-| 300                 | 4 ± 1.77                | 847,755 ± 21.18     | 847,752 ± 64.89    | 13 ± 3.66          |
-| 400                 | 5 ± 3.09                | 1,130,330 ± 21.00   | 1,130,328 ± 28.20  | 14 ± 2.27          |
-| 500                 | 5 ± 3.07                | 1,412,907 ± 31.49   | 1,412,903 ± 28.92  | 15 ± 2.37          |
-| 600                 | 5 ± 1.56                | 1,695,493 ± 32.97   | 1,695,493 ± 30.19  | 16 ± 1.28          |
-| 700                 | 5 ± 1.52                | 1,978,083 ± 52.24   | 1,978,098 ± 79.47  | 17 ± 0.86          |
-| 800                 | 5 ± 1.73                | 2,260,662 ± 41.09   | 2,260,660 ± 53.11  | 18 ± 0.62          |
-| 900                 | 5 ± 0.54                | 2,543,249 ± 47.19   | 2,543,234 ± 42.16  | 18 ± 0.97          |
-| 1000                | 5 ± 0.50                | 2,825,823 ± 47.72   | 2,825,818 ± 41.68  | 18 ± 0.64          |
-
-</div>
-
-
-<p align="center">
-  <img src="./figs/performancememOperations.png" alt="Time to execute allocate, write, read and release memory operations" width="100%"/>
-</p>
-<p align="center"><em>Figure 5: Time to execute allocate, write, read and release memory operations.</em></p>
-
-
-- **Allocation time:** A comparison of Table 1 against Table 2 reveals that it takes longer to allocate memory blocks inside compartments. For example, the allocation of 100 MB takes 2 ms without a compartment, while it takes 106 ms inside a compartment. Allocation times vary from 1 to 3 ms without a compartment but from 106 to 265 ms inside a compartment. In contrast, the time to allocate memory within  a compartment varies significantly from 106 to 265 and depends on the size of the block. Times range from 106 ms for 100 MB blocks to 251 ms for 700 MB blocks. In contrast, the time to allocate memory without compartments is shorter, it ranges from 2 to 7 ms for all block sizes.
-
-- **Write time:** Both tables show a linear increase in write time as the block size increases. However, execution inside a compartment takes longer. The difference becomes more evident when the sizes of the blocks increases.
-
-- **Read time:** The time to execute read operations increases linearly in both executions. However, execution within a compartment takes longer than execution without compartments.
-
-- **Free time:** The metrics in the tables show contrasting performances. Table 3 shows that it takes significantly longer to free memory in executions inside a compartment. The times rages from 97 to 1 197 ms. In contrast, Table 4 shows times that range from 3 to 9 ms in executions without compartments.
-
-Plots of the results from Tables 3 and 4 shown in Figs. 5 and 6. Full records are available from [memory-in-experiment-result.csv](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/memory-performance/inside-tee-execution/memory-in-experiment-resuls.csv) and [memory-out-experiment-result.csv](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/memory-performance/outside-tee-exection/memory-out-experiment-resuls.csv).
-
-
-<p align="center">
-  <img src="./figs/boxplot_allocate_rd_wr_free_mem.png" alt="Dispersion of the time to execute allocate, write, read, and free operations" width="100%"/>
-</p>
-<p align="center"><em>Figure 6: Dispersion of the time to execute allocate, write, read, and free operations.</em></p>
-
-
-## 3.2. Results - purecap benchmark ABI
-
-
-<div align="center">
-<p><em>Table 5: Metrics of runs inside a compartment, including mean and standard deviation.</em></p>
-
-| **Block Size (MB)** | **Allocation Time (ms)** | **Write Time (ms)** | **Read Time (ms)** | **Free Time (ms)** |
-|---------------------|--------------------------|---------------------|--------------------|--------------------|
-| 100                 | 81 ± 158.99             | 40,369 ± 4.84       | 80,737 ± 7.56      | 86 ± 178.33        |
-| 200                 | 92 ± 219.79             | 80,737 ± 6.36       | 161,472 ± 10.22    | 210 ± 395.51       |
-| 300                 | 94 ± 295.34             | 121,105 ± 7.88      | 242,209 ± 12.70    | 219 ± 452.59       |
-| 400                 | 122 ± 430.07            | 161,472 ± 8.04      | 322,946 ± 17.29    | 425 ± 783.85       |
-| 500                 | 153 ± 596.27            | 201,842 ± 11.20     | 403,681 ± 14.85    | 215 ± 417.51       |
-| 600                 | 146 ± 646.07            | 242,210 ± 12.87     | 484,417 ± 17.45    | 436 ± 917.23       |
-| 700                 | 191 ± 879.02            | 282,579 ± 13.21     | 565,154 ± 18.71    | 453 ± 987.35       |
-| 800                 | 213 ± 1,088.59          | 322,947 ± 14.35     | 645,893 ± 17.43    | 822 ± 1,529.08     |
-| 900                 | 283 ± 1,535.56          | 363,315 ± 14.68     | 726,626 ± 17.13    | 818 ± 1,587.88     |
-| 1000                | 246 ± 1,538.68          | 403,685 ± 15.61     | 807,368 ± 18.86    | 443 ± 1,004.74     |
-
-</div>
-
-
-<p align="center">
-  <img src="./figs/performancememOperations_benchmarkABI.png" alt="Time to execute allocate, write, read and release memory operations" width="100%"/>
-</p>
-<p align="center"><em>Figure 7: Time to execute allocate, write, read and release memory operations.</em></p>
-
-
-- **Allocation time:** A comparison of Table 4 against Table 5 reveals that it takes longer to allocate memory blocks inside compartments. For example, the allocation of 100 MB takes 2 ms without a compartment, while it takes 81 ms inside a compartment. Allocation times inside compartments range from 81 ms for 100 MB blocks to 283 ms for 900 MB blocks, showing a significant increase as the block size grows. In contrast, the time to allocate memory without compartments is much shorter, varying from 1 to 7 ms for all block sizes.
-
-- **Write time:** Both tables show a linear increase in write time as the block size increases. However, execution inside a compartment takes longer. For instance, writing a 100 MB block takes 40,369 ms inside a compartment compared to significantly shorter times without compartments. The performance gap becomes more pronounced as the block size increases, with a write time of 403,685 ms for 1,000 MB inside compartments.
-
-- **Read time:** The time to execute read operations also increases linearly in both executions. However, execution within a compartment consistently takes longer. For example, reading a 100 MB block takes 80,737 ms inside a compartment, while it takes much less time without compartments. Similarly, for 1,000 MB blocks, read times are 807,368 ms inside a compartment.
-
-- **Free time:** The metrics in the tables show contrasting performances. Inside a compartment, the time to free memory varies from 86 ms for 100 MB blocks to 443 ms for 1,000 MB blocks. In contrast, freeing memory without compartments is significantly faster, with times ranging from 3 to 9 ms for all block sizes. This highlights a notable performance cost associated with memory deallocation inside compartments.
-
-Plots of the results from Tables 4 and 5 shown in Figs. 7 and 8.
-
-<p align="center">
-  <img src="./figs/boxplot_allocate_rd_wr_free_mem_benchmarkABI.png" alt="Dispersion of the time to execute allocate, write, read, and free operations" width="100%"/>
-</p>
-<p align="center"><em>Figure 8: Dispersion of the time to execute allocate, write, read, and free operations.</em></p>
-
-
-## 3.3. Results - comparison between the three experiments
-
-<p align="center">
-  <img src="./figs/performancememOperations_benchmarkABI_comparasion.png" alt="Time to execute allocate, write, read and release memory operations" width="100%"/>
-</p>
-<p align="center"><em>Figure 7: Time to execute allocate, write, read and release memory operations.</em></p>
-
-
-
-<p align="center">
-  <img src="./figs/boxplot_allocate_rd_wr_free_mem_benchmarkABI_comparasion.png" alt="Dispersion of the time to execute allocate, write, read, and free operations" width="100%"/>
-</p>
-<p align="center"><em>Figure 8: Dispersion of the time to execute allocate, write, read, and free operations.</em></p>
 
 
 # 4. CPU performance in the execution of demanding arithmetic operations
