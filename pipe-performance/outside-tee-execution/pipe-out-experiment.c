@@ -1,8 +1,4 @@
 /*
- * Programmer : Carlos Molina Jimenez
- * Institution: Computer Lab, University of Cambridge
- * 9 Sep 2024
- *
  * pipe-out-experiment.c 
  * communicates a parent and a child process through a pipe.
  * The parent: 
