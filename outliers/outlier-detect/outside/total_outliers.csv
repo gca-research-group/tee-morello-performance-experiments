@@ -1,0 +1,4 @@
+Method,Total Outliers
+Z-score,9 outliers detected
+IQR,250 outliers detected
+Tukey’s Fences,250 outliers detected
