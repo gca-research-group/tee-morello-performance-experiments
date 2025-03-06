@@ -91,103 +91,114 @@ We use the example shown above in subsequent sections to compile and execute the
 
 ## Experiment Overview
 
-This experiment evaluates memory operations on large blocks, measuring execution time for the following operations:
+In this experiment, we executed a set of memory operations on large blocks and measured their execution time. The operations evaluated were:
 
-- **malloc**: Time taken to allocate a memory block.
-- **write**: Time taken to write data to fill the memory block.
-- **read**: Time taken to read the data from the memory block.
+- **malloc**: Time taken to allocate the block of memory.
+- **write**: Time taken to write data to fill the entire memory block.
+- **read**: Time taken to read the data from the entire memory block.
 - **free**: Time taken to release the memory block.
 
-### Memory Block Sizes
+We used blocks of **100 MB, 200 MB, 300 MB, ..., 1000 MB**, which are typical sizes for applications that process images and access databases.
 
-As shown in the figure below, we evaluate memory blocks ranging from **100 MB to 1000 MB**. These sizes are representative of applications that process large datasets, such as image processing and database management.
+![Performance of memory operations on memory blocks](figs/mem_blocks_num_trials.png)
 
-![Memory block sizes](figs/mem_blocks_num_trials.png)
-
-## Code Execution
-
-The following pseudocode outlines the experiment:
+### Memory Operations Execution Code
 
 ```c
 perform_tests(log_file, total_time)
 begin
  foreach block_size in MIN_BLOCK_SIZE to MAX_BLOCK_SIZE step BLOCK_STEP do        
    foreach test_num from 1 to num_of_trials do
-      allocation_time= time(malloc(block_size))
-      write_time= time(write_to_memory(block, block_size))
-      read_time= time(read_from_memory(block, block_size))
-      free_time= time(free(block))
+      allocation_time = time(malloc(block_size))
+      write_time = time(write_to_memory(block, block_size))
+      read_time = time(read_from_memory(block, block_size))
+      free_time = time(free(block))
       log(log_file, block_size, test_num, allocation_time, write_time, read_time, free_time)
    endfor
  endfor
 end
 ```
 
-The experiment iterates over different memory block sizes, measuring the execution time of each operation and logging the results.
+### Explanation
+
+The execution starts with the `perform_tests` function, which takes a log file name as input to store performance metrics. The **outer loop** iterates over different block sizes, while the **inner loop** repeats the test multiple times (`num_of_trials`) for statistical consistency. The measured times for **allocation**, **writing**, **reading**, and **freeing** operations are logged.
 
 ## Compilation and Execution
 
-### Without Compartments
+The **C program** was executed both **outside compartments** and **inside compartments**.
+
+### **Execution Without Compartments**
 
 ```bash
 clang-morello -o memory-out-experiment memory-out-experiment.c -lm
 ./memory-out-experiment
 ```
 
-Metrics collected are stored in the [CSV file](https://github.com/CAMB-DSbD/tee-morello-performance-experiments/blob/main/memory-performance/outside-tee-execution/memory-out-experiment-results.csv).
+The collected metrics are stored in:  
+[memory-out-experiment-results.csv](https://github.com/CAMB-DSbD/tee-morello-performance-experiments/blob/main/memory-performance/outside-tee-execution/memory-out-experiment-results.csv)
 
-### Inside Compartments (Purecap ABI)
+#### **Performance Results (Without Compartments)**
+
+| Block Size (MB) | Allocation Time (ms) | Write Time (ms) | Read Time (ms) | Free Time (ms) |
+|----------------|--------------------|----------------|---------------|--------------|
+| 100  | 2.27 ± 4.77  | 282,583.77 ± 13.86  | 282,580.70 ± 12.79  | 6.06 ± 4.52   |
+| 200  | 3.58 ± 4.19  | 565,164.33 ± 17.12  | 565,163.29 ± 18.85  | 10.29 ± 4.03  |
+| 300  | 3.95 ± 1.77  | 847,755.11 ± 21.18  | 847,752.32 ± 64.89  | 13.42 ± 3.66  |
+| 400  | 4.51 ± 3.09  | 1,130,330.18 ± 21.00 | 1,130,327.53 ± 28.20 | 14.38 ± 2.27  |
+| 500  | 4.56 ± 3.07  | 1,412,907.30 ± 31.49 | 1,412,903.42 ± 28.92 | 15.17 ± 2.37  |
+| 600  | 4.69 ± 1.56  | 1,695,492.67 ± 32.97 | 1,695,492.69 ± 30.19 | 16.20 ± 1.28  |
+| 700  | 4.80 ± 1.52  | 1,978,083.02 ± 52.24 | 1,978,097.85 ± 79.47 | 17.07 ± 0.86  |
+| 800  | 4.71 ± 1.73  | 2,260,662.02 ± 41.09 | 2,260,660.49 ± 53.11 | 17.57 ± 0.62  |
+| 900  | 4.54 ± 0.54  | 2,543,248.84 ± 47.19 | 2,543,233.58 ± 42.16 | 17.57 ± 0.97  |
+| 1000 | 4.57 ± 0.50  | 2,825,822.71 ± 47.72 | 2,825,817.71 ± 41.68 | 17.80 ± 0.64  |
+
+---
+
+### **Execution Inside Compartments (Purecap ABI)**
 
 ```bash
 clang-morello -march=morello+c64 -mabi=purecap -o memory-in-experiment-purecap memory-in-experiment-purecap.c -lm
 proccontrol -m cheric18n -s enable memory-in-experiment-purecap
 ```
 
-Metrics are stored in the [CSV file](https://github.com/CAMB-DSbD/tee-morello-performance-experiments/blob/main/memory-performance/inside-tee-execution-purecap/memory-in-experiment-purecap-results.csv).
+Metrics are stored in:  
+[memory-in-experiment-purecap-results.csv](https://github.com/CAMB-DSbD/tee-morello-performance-experiments/blob/main/memory-performance/inside-tee-execution-purecap/memory-in-experiment-purecap-results.csv)
 
-### Inside Compartments (Purecap-Benchmark ABI)
+### **Performance of Memory Operations in Compartments (Purecap-Benchmark ABI)**
 
-```bash
-clang-morello -march=morello+c64 -mabi=purecap-benchmark -o memory-in-experiment-purecap-benchmark memory-in-experiment-purecap-benchmark.c -lm
-proccontrol -m cheric18n -s enable memory-in-experiment-purecap-benchmark
-```
+The following table presents the execution time (mean ± standard deviation) of memory operations performed within compartments created for the **purecap-benchmark ABI**.
 
-Metrics are stored in the [CSV file](https://github.com/CAMB-DSbD/tee-morello-performance-experiments/blob/main/memory-performance/inside-tee-execution-purecap-benchmark/memory-in-experiment-purecap-benchmark-results.csv).
+| Block Size (MB) | Allocation Time (ms) | Write Time (ms) | Read Time (ms) | Free Time (ms) |
+|----------------|--------------------|----------------|---------------|--------------|
+| 100   | 81 ± 158.99  | 40,369 ± 4.84  | 80,737 ± 7.56  | 86 ± 178.33  |
+| 200   | 92 ± 219.79  | 80,737 ± 6.36  | 161,472 ± 10.22  | 210 ± 395.51  |
+| 300   | 94 ± 295.34  | 121,105 ± 7.88  | 242,209 ± 12.70  | 219 ± 452.59  |
+| 400   | 122 ± 430.07  | 161,472 ± 8.04  | 322,946 ± 17.29  | 425 ± 783.85  |
+| 500   | 153 ± 596.27  | 201,842 ± 11.20  | 403,681 ± 14.85  | 215 ± 417.51  |
+| 600   | 146 ± 646.07  | 242,210 ± 12.87  | 484,417 ± 17.45  | 436 ± 917.23  |
+| 700   | 191 ± 879.02  | 282,579 ± 13.21  | 565,154 ± 18.71  | 453 ± 987.35  |
+| 800   | 213 ± 1,088.59  | 322,947 ± 14.35  | 645,893 ± 17.43  | 822 ± 1,529.08  |
+| 900   | 283 ± 1,535.56  | 363,315 ± 14.68  | 726,626 ± 17.13  | 818 ± 1,587.88  |
+| 1000  | 246 ± 1,538.68  | 403,685 ± 15.61  | 807,368 ± 18.86  | 443 ± 1,004.74  |
 
-## Results
+---
 
-### Performance of Memory Operations (Outside Compartments)
+## **Comparison of Results**
 
-| Block Size (MB) | Allocation (ms) | Write (ms) | Read (ms) | Free (ms) |
-|---------------|----------------|------------|-----------|-----------|
-| 100  | 2 ± 4.77  | 282,584 ± 13.86  | 282,581 ± 12.79  | 6 ± 4.52   |
-| 200  | 4 ± 4.19  | 565,164 ± 17.12  | 565,163 ± 18.85  | 10 ± 4.03  |
-| 300  | 4 ± 1.77  | 847,755 ± 21.18  | 847,752 ± 64.89  | 13 ± 3.66  |
-| 400  | 5 ± 3.09  | 1,130,330 ± 21.00 | 1,130,328 ± 28.20 | 14 ± 2.27  |
-| 500  | 5 ± 3.07  | 1,412,907 ± 31.49 | 1,412,903 ± 28.92 | 15 ± 2.37  |
-| 600  | 5 ± 1.56  | 1,695,493 ± 32.97 | 1,695,493 ± 30.19 | 16 ± 1.28  |
-| 700  | 5 ± 1.52  | 1,978,083 ± 52.24 | 1,978,098 ± 79.47 | 17 ± 0.86  |
-| 800  | 5 ± 1.73  | 2,260,662 ± 41.09 | 2,260,660 ± 53.11 | 18 ± 0.62  |
-| 900  | 5 ± 0.54  | 2,543,249 ± 47.19 | 2,543,234 ± 42.16 | 18 ± 0.97  |
-| 1000 | 5 ± 0.50  | 2,825,823 ± 47.72 | 2,825,818 ± 41.68 | 18 ± 0.64  |
+The following plot compares the execution times of allocate, write, read, and free operations **with and without compartments**.
 
-## Comparison of Results
+![Memory Performance Comparison](figs/perfor_mem_oper_compare.png)
 
-- **Allocation time**: Memory allocation inside compartments is significantly slower. Allocating 100 MB takes **2 ms** without a compartment, **93 ms** in the purecap ABI, and **81 ms** in the purecap-benchmark ABI.
-- **Write time**: Execution inside compartments consistently takes longer. Writing 100 MB takes **282,584 ms** without a compartment, **283,239 ms** in the purecap ABI, and **40,369 ms** in the purecap-benchmark ABI.
-- **Read time**: Read times increase linearly, but execution inside compartments results in higher delays. Reading 100 MB takes **282,581 ms** without a compartment, **283,133 ms** in the purecap ABI, and **80,737 ms** in the purecap-benchmark ABI.
-- **Free time**: Freeing memory inside compartments introduces significant delays. Without a compartment, free times range from **6 to 18 ms**, while in compartments, they range from **89 to 444 ms** in the purecap ABI and **86 to 443 ms** in the purecap-benchmark ABI.
+### **Key Observations:**
+- **Allocation Time:** Memory allocation is significantly slower inside compartments. **100 MB takes ~2ms without a compartment but 93ms in Purecap ABI and 81ms in Purecap-Benchmark ABI**.
+- **Write Time:** Write operations increase linearly with block size, with execution inside compartments always taking longer.
+- **Read Time:** Read operations also take longer inside compartments compared to non-compartmentalized execution.
+- **Free Time:** Memory release is significantly delayed inside compartments, increasing execution time variability.
 
-### Execution Time Dispersion
+A boxplot visualizing execution time dispersion is shown below:
 
-Boxplots reveal greater dispersion and outliers in allocation and free operations inside compartments, indicating **higher unpredictability and memory management overhead**. Execution outside compartments remains stable and predictable.
+![Dispersion of Memory Operations](figs/boxplot_perfor_mem_oper_compare.png)
 
-![Performance Comparison](figs/perfor_mem_oper_compare.png)
-
-## Summary
-
-This experiment demonstrates that **compartmentalisation increases execution time variability**, particularly in allocation and free operations. While write and read times remain linear, **memory management overhead inside compartments significantly affects performance**.
-```
 
 
 
@@ -305,7 +316,4 @@ The figure below compares write and read times in different configurations.
 - **Write Time**: Execution inside compartments consistently shows higher latency. Write time ranges from **0.016 ms to 0.003 ms** in the purecap ABI and **0.014 ms to 0.003 ms** in the purecap-benchmark ABI. Outside compartments, write time is significantly lower, consistently around **0.001 ms**.
 - **Read Time**: The effect of compartments is less severe but still noticeable. The first test for purecap ABI shows **0.161 ms**, compared to **0.059 ms** outside compartments. The purecap-benchmark ABI performs slightly better but remains slower than the non-compartmentalised case.
 
-### Conclusion
 
-The results indicate that **compartmentalisation introduces additional overhead in inter-process communication**. Although compartments provide **security benefits**, they incur a **performance cost**, which could be significant in applications requiring **high-speed IPC**.
-```
