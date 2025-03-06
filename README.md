@@ -171,7 +171,7 @@ clang-morello -o memory-out-experiment memory-out-experiment.c -lm
 ```
 
 The collected metrics are stored in:  
-[memory-out-experiment-results.csv](https://github.com/CAMB-DSbD/tee-morello-performance-experiments/blob/main/memory-performance/outside-tee-execution/memory-out-experiment-results.csv)
+[memory-out-experiment-results.csv](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/memory-performance/outside-tee-exection/memory-out-experiment-results.csv)
 
 #### **Performance Results (Without Compartments)**
 
@@ -354,3 +354,36 @@ The figure below compares write and read times in different configurations.
 - **Read Time**: The effect of compartments is less severe but still noticeable. The first test for purecap ABI shows **0.161 ms**, compared to **0.059 ms** outside compartments. The purecap-benchmark ABI performs slightly better but remains slower than the non-compartmentalised case.
 
 
+
+
+# 4. Python scripts that can help to summarise and visualise results
+
+If needed, these Python scripts can be used to summarise the 
+raw collected metrics and present results graphically. They produce aggregated CSV files and comparative plots.
+
+## 4.1 Python scripst for summary views  
+
+- [Summarise CPU performance results](https://github.com/CAMB-DSbD/tee-morello-performance-experiments/tree/main/cpu-performance/summarise-results)
+- [Summarise memory performance results](https://github.com/CAMB-DSbD/tee-morello-performance-experiments/tree/main/memory-performance/summarise-results)
+
+
+## 4.2  Python script for plotting
+
+- [Maximum number of compartments plots](https://github.com/CAMB-DSbD/tee-morello-performance-experiments/tree/main/max_num_of_compartments_performance/plot-graph)
+   
+- [Memory performance plots](https://github.com/CAMB-DSbD/tee-morello-performance-experiments/tree/main/memory-performance/plot-graph)
+
+- [CPU performance plots](https://github.com/CAMB-DSbD/tee-morello-performance-experiments/tree/main/cpu-performance/plot-graph)   
+
+- [Pipe communications performance plots](https://github.com/CAMB-DSbD/tee-morello-performance-experiments/tree/main/pipe-performance/plot-graph) 
+ 
+
+_________________________________________________________________________________________________________________________________________________________________
+
+# 5. PDF version of this report
+
+A PDF version of this document is available for download. Please note that the PDF might be slightly behind this page in terms of updates. If it fails to open 
+(Safari ver 16.6.1 produces _Error rendering embedded code_), download 
+it first and then open it.
+
+[📄 Download PDF Version](https://github.com/CAMB-DSbD/tee-morello-performance-experiments/blob/main/documents/library_based_compartments_evaluation.pdf)
