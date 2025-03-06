@@ -1,18 +1,5 @@
 
 /*
- * Programmer   : Regis Rodolfo Schuch
- * Date         : 10 June 2024
- *              : Applied Computing Research Group, Unijui University, Brazil
- *              : regis.schuch@unijui.edu.br
- *              :
- *              : Carlos Molina Jimenez  (carlos.molina@cl.cam.ac.uk)
- * Date         : 12 Aug 2024
- *
- *              : Carlos Molina Jimenez 
- * Date         : 7 Dec 2024
- *              : Carlos Molina Jimenez 
- * Date         : 10 Dec 2024
- *
  * Title        : memory-in-experiment-benchmarkABI-benchmarkABI.c 
  *              :
  * Description  : The memory-out-experiment.c programme carries out memory performance tests, measuring the times required to allocate,
