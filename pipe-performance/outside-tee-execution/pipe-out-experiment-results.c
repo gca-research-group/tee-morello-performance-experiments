@@ -3,7 +3,7 @@
  * Institution: Computer Lab, University of Cambridge
  * 9 Sep 2024
  *
- * pipe-out-experiment.c 
+ * pipe.c 
  * communicates a parent and a child process through a pipe.
  * The parent: 
  * 1) creates a pipe 
@@ -16,9 +16,9 @@
  * 
  *
  * I) Compile and run without library compartmentalisation:
- * cm770@morello-camb-2: $ clang-morello -o pipe-out-experiment pipe-out-experiment.c
+ * cm770@morello-camb-2: $ clang-morello -o pipe pipe.c
  *
- * cm770@morello-camb-2: $ ./pipe-out-experiment
+ * cm770@morello-camb-2: $ ./pipe
  * I'm the PARENT process!
  * I'm the CHILD process!
  * i= 0
@@ -69,7 +69,7 @@ int main()
 {
     int pipechan[2], child;
     
-    FILE *log_file = fopen("pipe-out-experiment-results.csv", "w");
+    FILE *log_file = fopen("pipe-out-experiment-result.csv", "w");
     if (log_file == NULL) {
         printf("error: opening CSV file.\n");
         exit(1);
@@ -95,7 +95,7 @@ int main()
         char buf1[STRLEN];
         struct timespec start_read, end_read;
         
-        log_file = fopen("pipe-out-experiment-results.csv", "a");
+        log_file = fopen("pipe-out-experiment-result.csv", "a");
         if (log_file == NULL) {
             printf("error: opening CSV file.\n");
             exit(1);
