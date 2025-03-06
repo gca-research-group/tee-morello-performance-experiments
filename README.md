@@ -158,7 +158,10 @@ The execution starts with the `perform_tests` function, which takes a log file n
 
 ## Compilation and Execution
 
-The **C program** was executed both **outside compartments** and **inside compartments**.
+The **C program** was executed both **outside compartments** and **inside compartments**.  
+The source code for the memory experiment inside compartments is available here:  
+[memory-in-experiment.c](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/memory-performance/inside-tee-execution/memory-in-experiment.c)
+
 
 ### **Execution Without Compartments**
 
@@ -247,7 +250,10 @@ The parent process writes a **1024-byte random string** to the pipe, and the chi
 
 ### Code Execution
 
-The program was executed **inside compartments** and **without compartments**:
+The program was executed **inside compartments** and **without compartments**.  
+The source code for the pipe experiment inside compartments is available here:  
+[pipe-in-experiment.c](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/pipe-performance/inside-tee-execution/pipe-in-experiment.c)
+
 
 #### Compilation and Execution Inside a Compartment
 
