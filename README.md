@@ -133,7 +133,7 @@ In this experiment, we executed a set of memory operations on large blocks and m
 
 We used blocks of **100 MB, 200 MB, 300 MB, ..., 1000 MB**, which are typical sizes for applications that process images and access databases.
 
-![Performance of memory operations on memory blocks](figs/mem_blocks_num_trials.png)
+![Performance of memory operations on memory blocks](figs/memory.png)
 
 ### Memory Operations Execution Code
 
