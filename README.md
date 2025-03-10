@@ -6,19 +6,7 @@ This repository evaluates compartments created using the library-based compartme
 
 # 1. Experiments Setup
 
-To run the experiments reported in this document, we use four Morello Boards connected as shown in **Figure 1**.
-
-- Three local Morello Boards are physically located in the William Gates building of the Computer Laboratory.
-- A remote Morello Board is physically located in Toronto, within the premises of [TODAQ](https://engineering.todaq.net/), a non-funding partner of the [CAMB project](https://www.cl.cam.ac.uk/research/srg/projects/camb/).
-
-We connect to the remote Morello Board through SSH from a laptop connected to the network of the [Applied Computing Research Group (GCA)](http://gca.unijui.edu.br/) at Unijuí, Brazil.
-
-The figure below shows the main configuration parameters of the Morello Board under evaluation. **Table 1** lists additional parameters and the CheriBSD commands that can be used to double-check the configuration parameters.
-
-![Morello boards used in the evaluation](figs/experimentsetup_morelloboard.png)
-*Figure 1: Morello boards used in the evaluation.*
-
-## 1.1. Morello Board Configuration
+We utilise a Morello Board, physically located in Toronto. A laptop connected to the network in Brazil is used to access the Morello Board via an SSH connection. Presented below is the primary configuration of the Morello Board, along with additional parameters, including the CheriBSD commands required to retrieve these configurations directly from the board. We specify the hardware and software configurations of the Morello Board used in the experiments in Table 1.
 
 **Table 1** lists the configuration parameters of the Morello Board used in the experiments, along with CheriBSD commands to verify them.
 
@@ -39,7 +27,7 @@ The figure below shows the main configuration parameters of the Morello Board un
 
 
 
-## 1.2. Compilation and Execution
+## 1.1. Compilation and Execution
 
 The inclusion of library-based compartments is determined at compilation and execution time. It is documented in:
 
@@ -70,7 +58,7 @@ Programs to be run in **library-based compartments** can be compiled with either
 
 ---
 
-## 1.3. Compilation and Execution Without Library-Based Compartments
+## 1.2. Compilation and Execution Without Library-Based Compartments
 
 To compile and execute a program **without** using library-based compartments, use:
 
@@ -81,9 +69,9 @@ $ ./helloworld
 ```
 
 
-## 1.4. Compilation and Execution With Library-Based Compartments
+## 1.3. Compilation and Execution With Library-Based Compartments
 
-### 1.4.1.  **Compilation for Purecap ABI**
+### 1.3.1.  **Compilation for Purecap ABI**
 
 To enable **library-based compartments** during compilation, use:
 
@@ -105,7 +93,7 @@ The **proccontrol** command enables execution within a **library-based compartme
 
 ---
 
-### 1.4.2. **Compilation for Purecap-Benchmark ABI**
+### 1.3.2. **Compilation for Purecap-Benchmark ABI**
 
 The compilation and execution process for **purecap-benchmark ABI** is similar to **purecap ABI**, with the exception of using:
 
