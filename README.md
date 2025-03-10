@@ -158,9 +158,14 @@ The execution starts with the `perform_tests` function, which takes a log file n
 ## Compilation and Execution
 
 The **C program** was executed both **outside compartments** and **inside compartments**.  
-The source code for the memory experiment inside compartments is available here:  
-[memory-in-experiment.c](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/memory-performance/inside-tee-execution-purecap/memory-in-experiment-purecap.c)
 
+
+The source codes for the memory experiments are available here:
+[memory-out-experiment.c](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/memory-performance/outside-tee-execution/memory-out-experiment.c)
+[memory-in-experiment.c](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/memory-performance/inside-tee-execution-purecap/memory-in-experiment-purecap.c)
+[memory-in-experiment-purecap-benchmark.c](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/memory-performance/inside-tee-execution-purecap-benchmark/memory-in-experiment-purecap-benchmark.c)
+
+The following tables present the execution times (mean ± standard deviation) of memory operations, summarised by block size, for executions inside compartments (purecap ABI and purecap-benchmark ABI) and outside compartments.
 
 ### **Execution Without Compartments**
 
@@ -214,6 +219,14 @@ The following table presents the execution time (mean ± standard deviation) of 
 | 800   | 213 ± 1,088.59  | 322,947 ± 14.35  | 645,893 ± 17.43  | 822 ± 1,529.08  |
 | 900   | 283 ± 1,535.56  | 363,315 ± 14.68  | 726,626 ± 17.13  | 818 ± 1,587.88  |
 | 1000  | 246 ± 1,538.68  | 403,685 ± 15.61  | 807,368 ± 18.86  | 443 ± 1,004.74  |
+
+
+### **Execution Inside Compartments (Purecap-Benchmark ABI)**
+
+```bash
+clang-morello -march=morello+c64 -mabi=purecap -o memory-in-experiment-purecap-benchmark memory-in-experiment-purecap-benchmark.c -lm
+proccontrol -m cheric18n -s enable memory-in-experiment-purecap-benchmark
+```
 
 
 Metrics are stored in:  
