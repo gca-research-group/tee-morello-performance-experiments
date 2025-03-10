@@ -149,9 +149,7 @@ The **C program** was executed both **outside compartments** and **inside compar
 
 
 The source codes for the memory experiments are available here:
-[memory-out-experiment.c](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/memory-performance/outside-tee-execution/memory-out-experiment.c)
-[memory-in-experiment.c](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/memory-performance/inside-tee-execution-purecap/memory-in-experiment-purecap.c)
-[memory-in-experiment-purecap-benchmark.c](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/memory-performance/inside-tee-execution-purecap-benchmark/memory-in-experiment-purecap-benchmark.c)
+[memory-out-experiment.c](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/memory-performance/outside-tee-execution/memory-out-experiment.c), [memory-in-experiment.c](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/memory-performance/inside-tee-execution-purecap/memory-in-experiment-purecap.c) and [memory-in-experiment-purecap-benchmark.c](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/memory-performance/inside-tee-execution-purecap-benchmark/memory-in-experiment-purecap-benchmark.c)
 
 The following tables present the execution times (mean ± standard deviation) of memory operations, summarised by block size, for executions inside compartments (purecap ABI and purecap-benchmark ABI) and outside compartments.
 
