@@ -384,13 +384,3 @@ raw collected metrics and present results graphically. They produce aggregated C
 - [Outlier detect](https://github.com/gca-research-group/tee-morello-performance-experiments/tree/main/outliers/outlier-detect)
 
 - [Outlier trimmed](https://github.com/gca-research-group/tee-morello-performance-experiments/tree/main/outliers/trimmed-outlier) 
-
-_________________________________________________________________________________________________________________________________________________________________
-
-# 5. PDF version of this report
-
-A PDF version of this document is available for download. Please note that the PDF might be slightly behind this page in terms of updates. If it fails to open 
-(Safari ver 16.6.1 produces _Error rendering embedded code_), download 
-it first and then open it.
-
-[📄 Download PDF Version](https://github.com/gca-research-group/tee-morello-performance-experiments/blob/main/documents/library_based_compartments_evaluation.pdf)
